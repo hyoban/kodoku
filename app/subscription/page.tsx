@@ -15,6 +15,8 @@ import {
 
 const { timeZone } = siteConfig
 
+export const revalidate = 3600
+
 export default async function SubscriptionPage() {
   const feedInfoList = await getFeedInfoList()
   const feedList = await getFeedList(feedInfoList ?? [])

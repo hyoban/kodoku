@@ -3,6 +3,8 @@ import Link from "next/link"
 import { getFeedInfoList } from "@/lib/notion"
 import { Separator } from "@/components/ui/separator"
 
+export const revalidate = 3600
+
 export default async function SubscriptionPage() {
   const feedInfoList = await getFeedInfoList()
   if (!feedInfoList) return null
