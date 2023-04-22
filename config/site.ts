@@ -5,8 +5,8 @@ export const siteConfig = {
   description: "A website that helps you track RSS subscription updates",
   mainNav: [
     {
-      title: "Home",
-      href: "/",
+      title: "Subscription",
+      href: "/subscription",
     },
   ],
   links: {
