@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 
 import { getFeedInfoList } from "@/lib/notion"
@@ -18,11 +19,12 @@ export default async function SubscriptionPage() {
             key={feedInfo.id}
             className="group mx-auto my-4 flex w-full max-w-xl items-center rounded-md px-4 py-3 hover:bg-accent"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={feedInfo.avatar}
-              className="h-12 w-12 rounded-full"
+              className="h-12 w-12 shrink-0 grow-0 rounded-full bg-white object-cover"
               alt="avatar"
+              width={48}
+              height={48}
             />
             <div className="ml-4 flex w-full flex-col self-stretch">
               <Link
