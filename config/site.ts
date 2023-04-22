@@ -8,9 +8,14 @@ export const siteConfig = {
       title: "Subscription",
       href: "/subscription",
     },
+    {
+      title: "People",
+      href: "/people",
+    },
   ],
   links: {
     twitter: "https://twitter.com/0xhyoban",
     github: "https://github.com/hyoban/kodoku",
   },
+  timeZone: "Asia/Shanghai",
 }
