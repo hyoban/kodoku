@@ -1,23 +1,7 @@
-# next-template
+# Kodoku
 
-A Next.js 13 template for building apps with Radix UI and Tailwind CSS.
+A website that helps you track RSS subscription updates
 
-## Usage
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhyoban%2Fkodoku&env=NOTION_FEED_ID,NOTION_TOKEN)
 
-```bash
-npx create-next-app -e https://github.com/shadcn/next-template
-```
-
-## Features
-
-- Radix UI Primitives
-- Tailwind CSS
-- Fonts with `next/font`
-- Icons from [Lucide](https://lucide.dev)
-- Dark mode with `next-themes`
-- Automatic import sorting with `@ianvs/prettier-plugin-sort-imports`
-- Tailwind CSS class sorting, merging and linting.
-
-## License
-
-Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).
+You can get a notion template [here](https://hyoban.notion.site/dfebcfeeaf2e4f049304cf113eb90252?v=9d9ccbc838b84e75b324d2ab28f053c0)
