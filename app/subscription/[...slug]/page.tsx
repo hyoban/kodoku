@@ -23,44 +23,39 @@ export default async function SubscriptionPage({
     notFound()
   }
 
-  const feedList = await getFeedList()
-  if (!feedList) {
+  const type = params.slug[0]
+  const language = params.slug[1]
+
+  const feedInfoList = await getFeedInfoList()
+  if (!feedInfoList) {
     return null
   }
 
   const typeSet = ["all"].concat(
-    Array.from(new Set(feedList.map((feed) => feed.type.toLowerCase())))
-  )
-  const languageSet = ["all"].concat(
-    Array.from(new Set(feedList.map((feed) => feed.language.toLowerCase())))
+    Array.from(
+      new Set(feedInfoList.map((feedInfo) => feedInfo.type.toLowerCase()))
+    )
   )
 
-  const feedListGroupedByYearAndMonth = feedList
-    .filter((feed) => {
-      if (
-        params.slug[0] !== "all" &&
-        feed.type.toLowerCase() !== params.slug[0]
-      ) {
-        return false
-      }
-      if (
-        params.slug[1] !== "all" &&
-        feed.language.toLowerCase() !== params.slug[1]
-      ) {
-        return false
-      }
-      return true
-    })
-    .reduce((acc, feed) => {
-      const feedYearWithMonth = dayjs(feed.isoDate)
-        .tz(timeZone)
-        .format("YYYY MM")
-      if (!acc[feedYearWithMonth]) {
-        acc[feedYearWithMonth] = []
-      }
-      acc[feedYearWithMonth].push(feed)
-      return acc
-    }, {} as Record<string, typeof feedList>)
+  const languageSet = ["all"].concat(
+    Array.from(
+      new Set(feedInfoList.map((feedInfo) => feedInfo.language.toLowerCase()))
+    )
+  )
+
+  const feedList = await getFeedList(feedInfoList, type, language)
+  if (!feedList) {
+    return null
+  }
+
+  const feedListGroupedByYearAndMonth = feedList.reduce((acc, feed) => {
+    const feedYearWithMonth = dayjs(feed.isoDate).tz(timeZone).format("YYYY MM")
+    if (!acc[feedYearWithMonth]) {
+      acc[feedYearWithMonth] = []
+    }
+    acc[feedYearWithMonth].push(feed)
+    return acc
+  }, {} as Record<string, typeof feedList>)
 
   return (
     <>

@@ -96,8 +96,12 @@ export async function getFeedInfoList() {
   })
 }
 
-export async function getFeedList() {
-  const feedInfoList = await getFeedInfoList()
+export async function getFeedList(
+  feedInfoListFromArg?: FeedInfoList,
+  type: string = "all",
+  language: string = "all"
+) {
+  const feedInfoList = feedInfoListFromArg ?? (await getFeedInfoList())
   if (!feedInfoList) return
   try {
     const feedList = await Promise.all(
@@ -122,6 +126,21 @@ export async function getFeedList() {
     // sort by published time
     return feedList
       .flat()
+      .filter((feed) => {
+        if (
+          type.toLowerCase() !== "all" &&
+          feed.type.toLowerCase() !== type.toLowerCase()
+        ) {
+          return false
+        }
+        if (
+          language.toLowerCase() !== "all" &&
+          feed.language.toLowerCase() !== language.toLowerCase()
+        ) {
+          return false
+        }
+        return true
+      })
       .sort((a, b) => {
         if (a.isoDate && b.isoDate) {
           return new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
