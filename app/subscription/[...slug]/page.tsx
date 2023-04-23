@@ -115,7 +115,7 @@ export async function generateStaticParams() {
     )
   )
 
-  return [
+  const params = [
     ...typeSet.flatMap((type) =>
       languageSet.map((language) => ({
         params: {
@@ -124,4 +124,6 @@ export async function generateStaticParams() {
       }))
     ),
   ]
+
+  return params
 }
