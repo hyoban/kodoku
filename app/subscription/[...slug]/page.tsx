@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 import dayjs from "dayjs"
 
 import { siteConfig } from "@/config/site"
-import { getFeedList } from "@/lib/notion"
+import { getFeedInfoList, getFeedList } from "@/lib/notion"
 import { capitalize } from "@/lib/utils"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import FeedListGroup from "@/components/feed-list-group"
@@ -95,4 +95,33 @@ export default async function SubscriptionPage({
       </div>
     </>
   )
+}
+
+export async function generateStaticParams() {
+  const feedInfoList = await getFeedInfoList()
+  if (!feedInfoList) {
+    return []
+  }
+
+  const typeSet = ["all"].concat(
+    Array.from(
+      new Set(feedInfoList.map((feedInfo) => feedInfo.type.toLowerCase()))
+    )
+  )
+
+  const languageSet = ["all"].concat(
+    Array.from(
+      new Set(feedInfoList.map((feedInfo) => feedInfo.language.toLowerCase()))
+    )
+  )
+
+  return [
+    ...typeSet.flatMap((type) =>
+      languageSet.map((language) => ({
+        params: {
+          slug: [type, language],
+        },
+      }))
+    ),
+  ]
 }
