@@ -18,10 +18,12 @@ export default async function SubscriptionPage() {
   }
 
   const typeSet = ["all"].concat(
-    Array.from(new Set(feedList.map((feed) => feed.type.toLowerCase())))
+    Array.from(new Set(feedList.map((feed) => feed.type.toLowerCase()))).sort()
   )
   const languageSet = ["all"].concat(
-    Array.from(new Set(feedList.map((feed) => feed.language.toLowerCase())))
+    Array.from(
+      new Set(feedList.map((feed) => feed.language.toLowerCase()))
+    ).sort()
   )
 
   const feedListGroupedByYearAndMonth = feedList.reduce((acc, feed) => {

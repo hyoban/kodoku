@@ -34,13 +34,13 @@ export default async function SubscriptionPage({
   const typeSet = ["all"].concat(
     Array.from(
       new Set(feedInfoList.map((feedInfo) => feedInfo.type.toLowerCase()))
-    )
+    ).sort()
   )
 
   const languageSet = ["all"].concat(
     Array.from(
       new Set(feedInfoList.map((feedInfo) => feedInfo.language.toLowerCase()))
-    )
+    ).sort()
   )
 
   const feedList = await getFeedList(feedInfoList, type, language)

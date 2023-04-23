@@ -36,7 +36,15 @@ export default function FeedListGroup({
                     key={feed.link}
                   >
                     <CardHeader>
-                      <CardTitle>{feed.title}</CardTitle>
+                      <CardTitle>
+                        <Link
+                          href={feed.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {feed.title}
+                        </Link>
+                      </CardTitle>
                       <CardDescription>
                         <Link
                           href={feed.homeUrl}
@@ -51,14 +59,9 @@ export default function FeedListGroup({
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <Link
-                        href={feed.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="break-all"
-                      >
-                        {firstSentence(feed.contentSnippet ?? "").slice(0, 100)}
-                      </Link>
+                      <p className="break-all">
+                        {(feed.contentSnippet ?? "").slice(0, 100) + "..."}
+                      </p>
                     </CardContent>
                     <CardFooter className="flex flex-wrap gap-2">
                       {feed.categories?.map((category) => (
