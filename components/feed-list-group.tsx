@@ -49,7 +49,6 @@ export default function FeedListGroup({
                       <CardDescription>
                         {dayjs(feed.isoDate).tz(timeZone).format("MM-DD HH:mm")}
                       </CardDescription>
-                      <CardDescription>{feed.language}</CardDescription>
                     </CardHeader>
                     <CardContent>
                       <Link

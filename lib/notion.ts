@@ -119,28 +119,13 @@ export async function getFeedList() {
         })
     )
 
-    const numberOfFeedSent = 100
-    const numberOfAuthor = feedList.filter((i) => i.length > 0).length
-    const maxNumberOfFeedSentPerAuthor = Math.floor(
-      (numberOfFeedSent / numberOfAuthor) * 1.5
-    )
-
     // sort by published time
-    return feedList
-      .map((i) => {
-        if (i.length > maxNumberOfFeedSentPerAuthor) {
-          return i.slice(0, maxNumberOfFeedSentPerAuthor)
-        }
-        return i
-      })
-      .flat()
-      .sort((a, b) => {
-        if (a.isoDate && b.isoDate) {
-          return new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
-        }
-        return 0
-      })
-      .slice(0, numberOfFeedSent)
+    return feedList.flat().sort((a, b) => {
+      if (a.isoDate && b.isoDate) {
+        return new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
+      }
+      return 0
+    })
   } catch (e) {
     console.error("getFeedList", e)
   }
