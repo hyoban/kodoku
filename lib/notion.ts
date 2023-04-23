@@ -91,6 +91,7 @@ export async function getFeedInfoList() {
       feedUrl: (page as any).properties.RSS.url,
       avatar: (page.cover as any).external.url,
       type: (page as any).properties.Type.select.name as string,
+      language: (page as any).properties.Language.select.name as string,
     }
   })
 }
@@ -112,6 +113,7 @@ export async function getFeedList() {
               type: i.type,
               author: i.title,
               homeUrl: i.url,
+              language: i.language,
             }
           })
         })

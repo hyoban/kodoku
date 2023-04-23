@@ -3,7 +3,7 @@ import dayjs from "dayjs"
 
 import { siteConfig } from "@/config/site"
 import { getFeedList } from "@/lib/notion"
-import { firstSentence } from "@/lib/utils"
+import { capitalize, firstSentence } from "@/lib/utils"
 import {
   Card,
   CardContent,
@@ -12,6 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const { timeZone } = siteConfig
 
@@ -22,6 +23,14 @@ export default async function SubscriptionPage() {
   if (!feedList) {
     return null
   }
+
+  const languageSet = ["all"].concat(
+    Array.from(new Set(feedList.map((feed) => feed.language.toLowerCase())))
+  )
+
+  const typeSet = ["all"].concat(
+    Array.from(new Set(feedList.map((feed) => feed.type.toLowerCase())))
+  )
 
   const feedListGroupedByYearAndMonth = feedList.reduce((acc, feed) => {
     const feedYearWithMonth = dayjs(feed.isoDate).tz(timeZone).format("YYYY MM")
@@ -34,22 +43,40 @@ export default async function SubscriptionPage() {
 
   return (
     <>
-      {Object.keys(feedListGroupedByYearAndMonth)
-        .sort((a, b) => Number(b) - Number(a))
-        .map((feedMonth) => {
-          const feedListByYear = feedListGroupedByYearAndMonth[feedMonth]
-          return (
-            <div className="container my-14 max-w-5xl" key={feedMonth}>
-              <h2 className="my-4 text-2xl font-bold">{feedMonth}</h2>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {feedListByYear.map((feed) => (
-                  <Link
-                    href={feed.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    key={feed.link}
-                  >
-                    <Card className="h-full transition-transform hover:scale-105">
+      <div className="container my-14 w-full max-w-5xl">
+        <Tabs defaultValue={"all"} className="mb-4">
+          <TabsList>
+            {languageSet.map((language) => (
+              <TabsTrigger key={language} value={language}>
+                {capitalize(language)}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+
+        <Tabs defaultValue={"all"}>
+          <TabsList>
+            {typeSet.map((type) => (
+              <TabsTrigger key={type} value={type}>
+                {capitalize(type)}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
+
+        {Object.keys(feedListGroupedByYearAndMonth)
+          .sort((a, b) => Number(b) - Number(a))
+          .map((feedMonth) => {
+            const feedListByYear = feedListGroupedByYearAndMonth[feedMonth]
+            return (
+              <div className="my-10" key={feedMonth}>
+                <h2 className="my-4 text-2xl font-bold">{feedMonth}</h2>
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                  {feedListByYear.map((feed) => (
+                    <Card
+                      className="h-full transition-transform hover:scale-105"
+                      key={feed.link}
+                    >
                       <CardHeader>
                         <CardTitle>{feed.title}</CardTitle>
                         <CardDescription>
@@ -66,14 +93,20 @@ export default async function SubscriptionPage() {
                             .tz(timeZone)
                             .format("MM-DD HH:mm")}
                         </CardDescription>
+                        <CardDescription>{feed.language}</CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <p className="break-all">
+                        <Link
+                          href={feed.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="break-all"
+                        >
                           {firstSentence(feed.contentSnippet ?? "").slice(
                             0,
                             100
                           )}
-                        </p>
+                        </Link>
                       </CardContent>
                       <CardFooter className="flex flex-wrap gap-2">
                         {feed.categories?.map((category) => (
@@ -86,12 +119,12 @@ export default async function SubscriptionPage() {
                         ))}
                       </CardFooter>
                     </Card>
-                  </Link>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+      </div>
     </>
   )
 }
