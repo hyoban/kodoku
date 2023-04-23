@@ -62,3 +62,12 @@ export function timeout<T>(
     promise,
   ])
 }
+
+export function firstSentence(text: string): string {
+  // . or 。
+  const isEnglish = text.match(/^[a-zA-Z0-9]/)
+  const end = isEnglish ? "." : "。"
+  const index = text.indexOf(end)
+  if (index === -1) return text
+  return text.slice(0, index + 1)
+}

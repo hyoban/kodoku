@@ -95,7 +95,9 @@ export async function getFeedInfoList() {
   })
 }
 
-export async function getFeedList(feedInfoList: FeedInfoList) {
+export async function getFeedList() {
+  const feedInfoList = await getFeedInfoList()
+  if (!feedInfoList) return
   try {
     const feedList = await Promise.all(
       feedInfoList

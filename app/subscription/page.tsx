@@ -2,8 +2,8 @@ import Link from "next/link"
 import dayjs from "dayjs"
 
 import { siteConfig } from "@/config/site"
-import { getFeedInfoList, getFeedList } from "@/lib/notion"
-import { extractFirstImageUrl } from "@/lib/utils"
+import { getFeedList } from "@/lib/notion"
+import { firstSentence } from "@/lib/utils"
 import {
   Card,
   CardContent,
@@ -18,8 +18,7 @@ const { timeZone } = siteConfig
 export const revalidate = 3600
 
 export default async function SubscriptionPage() {
-  const feedInfoList = await getFeedInfoList()
-  const feedList = await getFeedList(feedInfoList ?? [])
+  const feedList = await getFeedList()
   if (!feedList) {
     return null
   }
@@ -69,18 +68,12 @@ export default async function SubscriptionPage() {
                         </CardDescription>
                       </CardHeader>
                       <CardContent>
-                        {extractFirstImageUrl(feed.content ?? "") ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
-                            src={extractFirstImageUrl(feed.content ?? "")}
-                            className="h-48 w-full rounded-md object-cover"
-                            alt="article image"
-                          />
-                        ) : (
-                          <p className="break-all">
-                            {feed.contentSnippet?.slice(0, 120) + "..." ?? ""}
-                          </p>
-                        )}
+                        <p className="break-all">
+                          {firstSentence(feed.contentSnippet ?? "").slice(
+                            0,
+                            100
+                          )}
+                        </p>
                       </CardContent>
                       <CardFooter className="flex flex-wrap gap-2">
                         {feed.categories?.map((category) => (
