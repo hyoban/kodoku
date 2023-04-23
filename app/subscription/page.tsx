@@ -38,29 +38,31 @@ export default async function SubscriptionPage() {
   return (
     <>
       <div className="container my-14 w-full max-w-5xl">
-        <Tabs defaultValue={"all"} className="mb-4">
-          <TabsList>
-            {typeSet.map((type) => (
-              <TabsTrigger key={type} value={type}>
-                <Link href={`/subscription/${type}/all`}>
-                  {capitalize(type)}
-                </Link>
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
+        <div className="flex flex-col gap-4 md:flex-row">
+          <Tabs defaultValue={"all"}>
+            <TabsList>
+              {typeSet.map((type) => (
+                <TabsTrigger key={type} value={type}>
+                  <Link href={`/subscription/${type}/all`}>
+                    {capitalize(type)}
+                  </Link>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
 
-        <Tabs defaultValue={"all"} className="mb-4">
-          <TabsList>
-            {languageSet.map((language) => (
-              <TabsTrigger key={language} value={language}>
-                <Link href={`/subscription/all/${language}`}>
-                  {capitalize(language)}
-                </Link>
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
+          <Tabs defaultValue={"all"}>
+            <TabsList>
+              {languageSet.map((language) => (
+                <TabsTrigger key={language} value={language}>
+                  <Link href={`/subscription/all/${language}`}>
+                    {capitalize(language)}
+                  </Link>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
+        </div>
 
         <FeedListGroup
           feedListGroupedByYearAndMonth={feedListGroupedByYearAndMonth}
