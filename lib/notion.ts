@@ -117,40 +117,63 @@ export async function getFeedList(
         .map(async (i) => {
           const feed = await parseRssFeed(i.feedUrl)
           if (!feed) return []
-          return feed.items.filter(isFeedItemValid).map((j) => {
-            return {
-              ...j,
-              link: joinFeedItemUrl(feed.feedUrl ? feed.link : i.url, j.link),
-              feedInfo: i,
-            }
-          })
+          return feed.items
+            .filter(isFeedItemValid)
+            .filter((feed) => {
+              if (
+                type.toLowerCase() !== "all" &&
+                feed.feedInfo.type.toLowerCase() !== type.toLowerCase()
+              ) {
+                return false
+              }
+              if (
+                language.toLowerCase() !== "all" &&
+                feed.feedInfo.language.toLowerCase() !== language.toLowerCase()
+              ) {
+                return false
+              }
+              return true
+            })
+            .map((j) => {
+              return {
+                ...j,
+                link: joinFeedItemUrl(feed.feedUrl ? feed.link : i.url, j.link),
+                feedInfo: i,
+              }
+            })
+            .sort((a, b) => {
+              if (a.isoDate && b.isoDate) {
+                return (
+                  new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
+                )
+              }
+              return 0
+            })
         })
+    )
+
+    const numberOfFeedSent = 100
+    const numberOfAuthor = feedList.filter((i) => i.length > 0).length
+    const maxNumberOfFeedSentPerAuthor = Math.floor(
+      (numberOfFeedSent / numberOfAuthor) * 1.5
     )
 
     // sort by published time
     return feedList
-      .flat()
-      .filter((feed) => {
-        if (
-          type.toLowerCase() !== "all" &&
-          feed.feedInfo.type.toLowerCase() !== type.toLowerCase()
-        ) {
-          return false
+      .map((i) => {
+        if (i.length > maxNumberOfFeedSentPerAuthor) {
+          return i.slice(0, maxNumberOfFeedSentPerAuthor)
         }
-        if (
-          language.toLowerCase() !== "all" &&
-          feed.feedInfo.language.toLowerCase() !== language.toLowerCase()
-        ) {
-          return false
-        }
-        return true
+        return i
       })
+      .flat()
       .sort((a, b) => {
         if (a.isoDate && b.isoDate) {
           return new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
         }
         return 0
       })
+      .slice(0, numberOfFeedSent)
   } catch (e) {
     console.error("getFeedList", e)
   }
