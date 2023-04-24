@@ -42,10 +42,12 @@ export default async function SubscriptionPage() {
           <Tabs defaultValue={"all"}>
             <TabsList>
               {typeSet.map((type) => (
-                <TabsTrigger key={type} value={type}>
-                  <Link href={`/subscription/${type}/all`}>
-                    {capitalize(type)}
-                  </Link>
+                <TabsTrigger
+                  key={type}
+                  value={type}
+                  href={`/subscription/${type}/all`}
+                >
+                  {capitalize(type)}
                 </TabsTrigger>
               ))}
             </TabsList>
@@ -54,10 +56,12 @@ export default async function SubscriptionPage() {
           <Tabs defaultValue={"all"}>
             <TabsList>
               {languageSet.map((language) => (
-                <TabsTrigger key={language} value={language}>
-                  <Link href={`/subscription/all/${language}`}>
-                    {capitalize(language)}
-                  </Link>
+                <TabsTrigger
+                  key={language}
+                  value={language}
+                  href={`/subscription/all/${language}`}
+                >
+                  {capitalize(language)}
                 </TabsTrigger>
               ))}
             </TabsList>
