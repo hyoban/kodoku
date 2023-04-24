@@ -119,6 +119,13 @@ export async function getFeedList(
           if (!feed) return []
           return feed.items
             .filter(isFeedItemValid)
+            .map((j) => {
+              return {
+                ...j,
+                link: joinFeedItemUrl(feed.feedUrl ? feed.link : i.url, j.link),
+                feedInfo: i,
+              }
+            })
             .filter((feed) => {
               if (
                 type.toLowerCase() !== "all" &&
@@ -133,13 +140,6 @@ export async function getFeedList(
                 return false
               }
               return true
-            })
-            .map((j) => {
-              return {
-                ...j,
-                link: joinFeedItemUrl(feed.feedUrl ? feed.link : i.url, j.link),
-                feedInfo: i,
-              }
             })
             .sort((a, b) => {
               if (a.isoDate && b.isoDate) {
