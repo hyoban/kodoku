@@ -1,11 +1,8 @@
 import { clsx, type ClassValue } from "clsx"
-import dayjs from "dayjs"
 import Parser from "rss-parser"
 import { twMerge } from "tailwind-merge"
 
-import { siteConfig } from "@/config/site"
-
-const { timeZone } = siteConfig
+import { FeedItem } from "./notion"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -39,7 +36,7 @@ export function isFeedItemValid(item: Parser.Item): boolean {
 }
 
 export function delay(ms: number) {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(resolve, ms)
   })
 }
@@ -56,15 +53,19 @@ export function timeout<T>(
   ])
 }
 
-export function firstSentence(text: string): string {
-  // . or 。
-  const isEnglish = text.match(/^[a-zA-Z0-9]/)
-  const end = isEnglish ? "." : "。"
-  const index = text.indexOf(end)
-  if (index === -1) return text
-  return text.slice(0, index + 1)
-}
-
 export function capitalize(text: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1)
+}
+
+const PEOPLE_USE_COVER_IMAGE = ["Sukka"]
+
+export function getFeedContent(item: FeedItem): string {
+  if (PEOPLE_USE_COVER_IMAGE.includes(item.feedInfo.title)) {
+    return extractFirstImageUrl(item.content ?? "") ?? ""
+  }
+  return (
+    Array.from(item.contentSnippet ?? "")
+      .slice(0, 100)
+      .join("") + "..."
+  )
 }

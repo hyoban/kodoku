@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
 import dayjs from "dayjs"
 
 import { siteConfig } from "@/config/site"
 import { FeedList } from "@/lib/notion"
-import { firstSentence } from "@/lib/utils"
+import { getFeedContent } from "@/lib/utils"
 import {
   Card,
   CardContent,
@@ -47,11 +48,11 @@ export default function FeedListGroup({
                       </CardTitle>
                       <CardDescription>
                         <Link
-                          href={feed.homeUrl}
+                          href={feed.feedInfo.url}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          {feed.author}
+                          {feed.feedInfo.title}
                         </Link>
                       </CardDescription>
                       <CardDescription>
@@ -60,7 +61,15 @@ export default function FeedListGroup({
                     </CardHeader>
                     <CardContent>
                       <p className="break-all">
-                        {(feed.contentSnippet ?? "").slice(0, 100) + "..."}
+                        {getFeedContent(feed).startsWith("http") ? (
+                          <img
+                            src={getFeedContent(feed)}
+                            alt="feed cover"
+                            className="rounded-md"
+                          />
+                        ) : (
+                          getFeedContent(feed)
+                        )}
                       </p>
                     </CardContent>
                     <CardFooter className="flex flex-wrap gap-2">

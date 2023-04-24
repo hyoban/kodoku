@@ -1,9 +1,13 @@
-import Link from "next/link"
 import { notFound } from "next/navigation"
 import dayjs from "dayjs"
 
 import { siteConfig } from "@/config/site"
-import { getFeedInfoList, getFeedList } from "@/lib/notion"
+import {
+  getFeedInfoList,
+  getFeedList,
+  getFeedListGroupedByYearAndMonth,
+  getFilters,
+} from "@/lib/notion"
 import { capitalize } from "@/lib/utils"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import FeedListGroup from "@/components/feed-list-group"
@@ -19,75 +23,42 @@ export default async function SubscriptionPage({
     slug: string[]
   }
 }) {
-  if (params.slug.length !== 2) {
-    notFound()
-  }
-
-  const type = params.slug[0]
-  const language = params.slug[1]
+  if (params.slug.length !== 2) notFound()
 
   const feedInfoList = await getFeedInfoList()
-  if (!feedInfoList) {
-    return null
-  }
+  if (!feedInfoList) return null
+  const filters = await getFilters(feedInfoList)
+  if (!filters) return null
 
-  const typeSet = ["all"].concat(
-    Array.from(
-      new Set(feedInfoList.map((feedInfo) => feedInfo.type.toLowerCase()))
-    ).sort()
+  const feedListGroupedByYearAndMonth = getFeedListGroupedByYearAndMonth(
+    (await getFeedList(feedInfoList, params.slug[0], params.slug[1])) ?? []
   )
-
-  const languageSet = ["all"].concat(
-    Array.from(
-      new Set(feedInfoList.map((feedInfo) => feedInfo.language.toLowerCase()))
-    ).sort()
-  )
-
-  const feedList = await getFeedList(feedInfoList, type, language)
-  if (!feedList) {
-    return null
-  }
-
-  const feedListGroupedByYearAndMonth = feedList.reduce((acc, feed) => {
-    const feedYearWithMonth = dayjs(feed.isoDate).tz(timeZone).format("YYYY MM")
-    if (!acc[feedYearWithMonth]) {
-      acc[feedYearWithMonth] = []
-    }
-    acc[feedYearWithMonth].push(feed)
-    return acc
-  }, {} as Record<string, typeof feedList>)
 
   return (
     <>
       <div className="container my-14 w-full max-w-5xl">
         <div className="flex flex-col gap-4 md:flex-row">
-          <Tabs defaultValue={params.slug[0]}>
-            <TabsList>
-              {typeSet.map((type) => (
-                <TabsTrigger
-                  key={type}
-                  value={type}
-                  href={`/subscription/${type}/${params.slug[1]}`}
-                >
-                  {capitalize(type)}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
-
-          <Tabs defaultValue={params.slug[1]}>
-            <TabsList>
-              {languageSet.map((language) => (
-                <TabsTrigger
-                  key={language}
-                  value={language}
-                  href={`/subscription/${params.slug[0]}/${language}`}
-                >
-                  {capitalize(language)}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
+          {params.slug.map((slug, index) => {
+            return (
+              <Tabs defaultValue={slug} key={index}>
+                <TabsList>
+                  {filters[index].map((filter) => (
+                    <TabsTrigger
+                      key={filter}
+                      value={filter}
+                      href={
+                        index === 0
+                          ? `/subscription/${filter}/${params.slug[1]}`
+                          : `/subscription/${params.slug[0]}/${filter}`
+                      }
+                    >
+                      {capitalize(filter)}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </Tabs>
+            )
+          })}
         </div>
 
         <FeedListGroup
@@ -99,32 +70,16 @@ export default async function SubscriptionPage({
 }
 
 export async function generateStaticParams() {
-  const feedInfoList = await getFeedInfoList()
-  if (!feedInfoList) {
-    return []
-  }
+  const filter = await getFilters()
+  if (!filter) return []
 
-  const typeSet = ["all"].concat(
-    Array.from(
-      new Set(feedInfoList.map((feedInfo) => feedInfo.type.toLowerCase()))
-    )
-  )
-
-  const languageSet = ["all"].concat(
-    Array.from(
-      new Set(feedInfoList.map((feedInfo) => feedInfo.language.toLowerCase()))
-    )
-  )
-
-  const params = [
-    ...typeSet.flatMap((type) =>
-      languageSet.map((language) => ({
+  return [
+    ...filter[0].flatMap((type) =>
+      filter[1].map((language) => ({
         params: {
           slug: [type, language],
         },
       }))
     ),
   ]
-
-  return params
 }

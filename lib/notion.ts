@@ -28,16 +28,6 @@ const headers = {
 
 const revalidate = 7200
 
-export type FeedItem = Parser.Item & {
-  feedInfo: {
-    id: string
-    title: string
-    url: string
-    feedUrl: string
-    avatar: string
-  }
-}
-
 async function getDatabaseItems(databaseId: string) {
   try {
     const response = (await fetch(
@@ -96,6 +86,23 @@ export async function getFeedInfoList() {
   })
 }
 
+export async function getFilters(feedInfoListFromArg?: FeedInfoList) {
+  const feedInfoList = feedInfoListFromArg ?? (await getFeedInfoList())
+  if (!feedInfoList) return
+
+  const typeFilter = ["all"].concat(
+    Array.from(new Set(feedInfoList.map((i) => i.type.toLowerCase()))).sort()
+  )
+
+  const languageFilter = ["all"].concat(
+    Array.from(
+      new Set(feedInfoList.map((i) => i.language.toLowerCase()))
+    ).sort()
+  )
+
+  return [typeFilter, languageFilter] as const
+}
+
 export async function getFeedList(
   feedInfoListFromArg?: FeedInfoList,
   type: string = "all",
@@ -114,10 +121,7 @@ export async function getFeedList(
             return {
               ...j,
               link: joinFeedItemUrl(feed.feedUrl ? feed.link : i.url, j.link),
-              type: i.type,
-              author: i.title,
-              homeUrl: i.url,
-              language: i.language,
+              feedInfo: i,
             }
           })
         })
@@ -129,13 +133,13 @@ export async function getFeedList(
       .filter((feed) => {
         if (
           type.toLowerCase() !== "all" &&
-          feed.type.toLowerCase() !== type.toLowerCase()
+          feed.feedInfo.type.toLowerCase() !== type.toLowerCase()
         ) {
           return false
         }
         if (
           language.toLowerCase() !== "all" &&
-          feed.language.toLowerCase() !== language.toLowerCase()
+          feed.feedInfo.language.toLowerCase() !== language.toLowerCase()
         ) {
           return false
         }
@@ -147,13 +151,27 @@ export async function getFeedList(
         }
         return 0
       })
-      .slice(0, 150)
   } catch (e) {
     console.error("getFeedList", e)
   }
 }
 
+export function getFeedListGroupedByYearAndMonth(feedListFromArg: FeedList) {
+  return feedListFromArg.reduce((acc, feed) => {
+    const feedYearWithMonth = dayjs(feed.isoDate).tz(timeZone).format("YYYY MM")
+    if (!acc[feedYearWithMonth]) {
+      acc[feedYearWithMonth] = []
+    }
+    acc[feedYearWithMonth].push(feed)
+    return acc
+  }, {} as Record<string, FeedList>)
+}
+
 export type FeedInfoList = NonNullable<
   Awaited<ReturnType<typeof getFeedInfoList>>
 >
+export type FeedInfo = FeedInfoList[number]
+export type FeedItem = Parser.Item & {
+  feedInfo: FeedInfo
+}
 export type FeedList = NonNullable<Awaited<ReturnType<typeof getFeedList>>>
