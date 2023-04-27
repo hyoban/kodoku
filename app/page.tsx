@@ -13,7 +13,7 @@ export default function IndexPage() {
         Based on the Incremental Static Regeneration function of Next.js and
         shadcn/ui
       </p>
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row">
         <Link
           href={siteConfig.links.vercel}
           target="_blank"
