@@ -59,8 +59,14 @@ export function capitalize(text: string): string {
 
 export function getFeedContent(item: FeedItem): string {
   if (item.feedInfo.useCover) {
-    if (item.enclosure?.url) {
+    if (item.image?.url) {
+      return item.image.url
+    }
+    if (item.enclosure?.url && item.enclosure.type?.startsWith("image")) {
       return item.enclosure.url
+    }
+    if (item.itunes?.image) {
+      return item.itunes.image
     }
     const cover = extractFirstImageUrl(
       item["content:encoded"] ?? item.content ?? ""

@@ -197,5 +197,7 @@ export type FeedInfoList = NonNullable<
 export type FeedInfo = FeedInfoList[number]
 export type FeedItem = Parser.Item & {
   feedInfo: FeedInfo
+} & {
+  [key: string]: any
 }
 export type FeedList = NonNullable<Awaited<ReturnType<typeof getFeedList>>>
