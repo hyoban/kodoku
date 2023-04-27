@@ -82,6 +82,7 @@ export async function getFeedInfoList() {
       avatar: (page.cover as any).external.url,
       type: (page as any).properties.Type.select.name as string,
       language: (page as any).properties.Language.select.name as string,
+      useCover: (page as any).properties.UseCover.checkbox as boolean,
     }
   })
 }

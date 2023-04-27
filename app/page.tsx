@@ -5,19 +5,17 @@ import { buttonVariants } from "@/components/ui/button"
 
 export default function IndexPage() {
   return (
-    <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
-      <div className="flex max-w-[900px] flex-col items-start gap-2">
-        <h1 className="text-3xl font-extrabold leading-tight tracking-tighter sm:text-3xl md:text-5xl lg:text-6xl">
-          {siteConfig.description}
-        </h1>
-        <p className="max-w-[700px] text-lg text-muted-foreground sm:text-xl">
-          Based on the Incremental Static Regeneration function of Next.js and
-          shadcn/ui
-        </p>
-      </div>
+    <section className="container flex h-full flex-col items-center justify-center gap-6">
+      <h1 className="max-w-4xl bg-gradient-to-br from-neutral-400 via-accent-foreground to-slate-400 bg-clip-text text-center text-4xl font-bold text-transparent drop-shadow-sm sm:text-5xl md:text-6xl lg:text-7xl">
+        {siteConfig.description}
+      </h1>
+      <p className="max-w-3xl text-center text-muted-foreground/80 md:text-xl">
+        Based on the Incremental Static Regeneration function of Next.js and
+        shadcn/ui
+      </p>
       <div className="flex gap-4">
         <Link
-          href={siteConfig.links.deployUrl}
+          href={siteConfig.links.vercel}
           target="_blank"
           rel="noreferrer"
           className={buttonVariants({ size: "lg" })}
@@ -25,10 +23,12 @@ export default function IndexPage() {
           Deploy Now
         </Link>
         <Link
-          href="/subscription"
+          href={siteConfig.links.notion}
+          target="_blank"
+          rel="noreferrer"
           className={buttonVariants({ variant: "outline", size: "lg" })}
         >
-          Demo
+          Notion Template
         </Link>
       </div>
     </section>

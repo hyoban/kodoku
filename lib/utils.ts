@@ -57,11 +57,15 @@ export function capitalize(text: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1)
 }
 
-const PEOPLE_USE_COVER_IMAGE = ["Sukka"]
-
 export function getFeedContent(item: FeedItem): string {
-  if (PEOPLE_USE_COVER_IMAGE.includes(item.feedInfo.title)) {
-    return extractFirstImageUrl(item.content ?? "") ?? ""
+  if (item.feedInfo.useCover) {
+    if (item.enclosure?.url) {
+      return item.enclosure.url
+    }
+    const cover = extractFirstImageUrl(
+      item["content:encoded"] ?? item.content ?? ""
+    )
+    return cover ?? ""
   }
   return (
     Array.from(item.contentSnippet ?? "")
