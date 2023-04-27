@@ -74,6 +74,7 @@ export async function getFeedInfoList() {
 
   return feedInfoListInDB.map((i) => {
     const page = i as PageObjectResponse
+    console.log(page)
     return {
       id: i.id,
       title: (page as any).properties.ID.title[0].plain_text,
@@ -83,6 +84,8 @@ export async function getFeedInfoList() {
       type: (page as any).properties.Type.select.name as string,
       language: (page as any).properties.Language.select.name as string,
       useCover: (page as any).properties.UseCover.checkbox as boolean,
+      twitter: (page as any).properties.Twitter.url as string | null,
+      github: (page as any).properties.Github.url as string | null,
     }
   })
 }

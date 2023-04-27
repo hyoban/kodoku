@@ -3,6 +3,7 @@ import Link from "next/link"
 
 import { getFeedInfoList } from "@/lib/notion"
 import { Separator } from "@/components/ui/separator"
+import { Icons } from "@/components/icons"
 
 export const revalidate = 3600
 
@@ -11,7 +12,7 @@ export default async function SubscriptionPage() {
   if (!feedInfoList) return null
 
   return (
-    <div className="m-10">
+    <div className="m-5 sm:m-10">
       {feedInfoList
         .sort((a, b) => a.title.localeCompare(b.title))
         .map((feedInfo) => (
@@ -27,14 +28,38 @@ export default async function SubscriptionPage() {
               height={48}
             />
             <div className="ml-4 flex w-full flex-col self-stretch">
-              <Link
-                href={feedInfo.url}
-                className="flex grow items-center"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <h3 className="text-lg font-semibold">{feedInfo.title}</h3>
-              </Link>
+              <div className="flex grow justify-between">
+                <Link
+                  href={feedInfo.url}
+                  className="flex items-center"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <h3 className="text-lg font-semibold">{feedInfo.title}</h3>
+                </Link>
+                <span className="flex gap-3">
+                  {feedInfo.twitter && (
+                    <Link
+                      href={feedInfo.twitter}
+                      className="flex items-center"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Icons.twitter className="h-4 w-4" />
+                    </Link>
+                  )}
+                  {feedInfo.github && (
+                    <Link
+                      href={feedInfo.github}
+                      className="flex items-center"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Icons.gitHub className="h-4 w-4" />
+                    </Link>
+                  )}
+                </span>
+              </div>
               <Separator className="group-hover:bg-accent" />
             </div>
           </div>
