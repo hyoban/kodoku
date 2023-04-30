@@ -3,14 +3,21 @@
 import Image from "next/image"
 import dayjs from "dayjs"
 import relativeTime from "dayjs/plugin/relativeTime"
+import timezone from "dayjs/plugin/timezone"
+import utc from "dayjs/plugin/utc"
 import { useAtom } from "jotai"
 
+import { siteConfig } from "@/config/site"
 import { FeedList } from "@/lib/notion"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 
 import { selectedTypeAtom } from "./state"
 
+const { timeZone } = siteConfig
+
+dayjs.extend(utc)
+dayjs.extend(timezone)
 dayjs.extend(relativeTime)
 
 export default function GitHubTimelineList({
@@ -50,7 +57,7 @@ export default function GitHubTimelineList({
                     className="text-sm text-muted-foreground"
                     title={item.isoDate}
                   >
-                    {dayjs(item.isoDate).fromNow()}
+                    {dayjs(item.isoDate).tz(timeZone).fromNow()}
                   </p>
                   <p className="text-sm font-medium leading-relaxed">
                     {item.contentSnippet?.split("\n").slice(10).join("\n")}
