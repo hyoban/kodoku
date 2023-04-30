@@ -135,7 +135,7 @@ export async function getGithubTimeline() {
     })
 
   // id: tag:github.com,2008:PushEvent/28747740914
-  const res = await getFeedList(githubFeedInfoList)
+  const res = await getFeedList(githubFeedInfoList, "all", "all", false)
 
   return res?.map((i) => {
     return {
@@ -151,7 +151,8 @@ export async function getGithubTimeline() {
 export async function getFeedList(
   feedInfoListFromArg?: FeedInfoList,
   type: string = "all",
-  language: string = "all"
+  language: string = "all",
+  enableAutoFilter = true
 ) {
   const feedInfoList = feedInfoListFromArg ?? (await getFeedInfoList())
   if (!feedInfoList) return
@@ -205,21 +206,40 @@ export async function getFeedList(
     )
 
     // sort by published time
-    return feedList
-      .map((i) => {
-        if (i.length > maxNumberOfFeedSentPerAuthor) {
-          return i.slice(0, maxNumberOfFeedSentPerAuthor)
-        }
-        return i
-      })
-      .flat()
-      .sort((a, b) => {
-        if (a.isoDate && b.isoDate) {
-          return new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
-        }
-        return 0
-      })
-      .slice(0, numberOfFeedSent)
+    return enableAutoFilter
+      ? feedList
+          .map((i) => {
+            if (i.length > maxNumberOfFeedSentPerAuthor) {
+              return i.slice(0, maxNumberOfFeedSentPerAuthor)
+            }
+            return i
+          })
+          .flat()
+          .sort((a, b) => {
+            if (a.isoDate && b.isoDate) {
+              return (
+                new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
+              )
+            }
+            return 0
+          })
+          .slice(0, numberOfFeedSent)
+      : feedList
+          .flat()
+          .filter((i) => {
+            // only today's feed
+            return dayjs(i.isoDate).tz(timeZone).isSame(dayjs(), "day")
+          })
+          .sort((a, b) => {
+            if (a.isoDate && b.isoDate) {
+              return (
+                new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
+              )
+            }
+            return 0
+          })
+          // max 200 feeds
+          .slice(0, 200)
   } catch (e) {
     console.error("getFeedList", e)
   }
