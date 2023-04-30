@@ -1,15 +1,14 @@
 "use client"
 
 import "@/lib/dayjs"
-import Image from "next/image"
 import dayjs from "dayjs"
-import { useAtom } from "jotai"
 
-import { siteConfig } from "@/config/site"
-import { FeedList } from "@/lib/notion"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-
+import { siteConfig } from "@/config/site"
+import { FeedList } from "@/lib/notion"
+import { useAtom } from "jotai"
+import Image from "next/image"
 import { selectedTypeAtom } from "./state"
 
 const { timeZone } = siteConfig

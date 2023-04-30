@@ -1,11 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import "@/lib/dayjs"
-import Link from "next/link"
 import dayjs from "dayjs"
 
-import { siteConfig } from "@/config/site"
-import { FeedList } from "@/lib/notion"
-import { getFeedContent } from "@/lib/utils"
 import {
 	Card,
 	CardContent,
@@ -14,6 +10,10 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card"
+import { siteConfig } from "@/config/site"
+import { FeedList } from "@/lib/notion"
+import { getFeedContent } from "@/lib/utils"
+import Link from "next/link"
 
 const { timeZone } = siteConfig
 
