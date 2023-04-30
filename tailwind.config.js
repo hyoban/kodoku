@@ -79,5 +79,6 @@ module.exports = {
       // Select the icon collections you want to use
       collections: getIconCollections(["carbon"]),
     }),
+    require("@tailwindcss/typography"),
   ],
 }

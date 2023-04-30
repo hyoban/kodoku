@@ -12,6 +12,10 @@ export const siteConfig = {
       title: "People",
       href: "/people",
     },
+    {
+      title: "Github",
+      href: "/github",
+    },
   ],
   links: {
     twitter: "https://twitter.com/0xhyoban",

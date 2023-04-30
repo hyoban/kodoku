@@ -74,7 +74,6 @@ export async function getFeedInfoList() {
 
   return feedInfoListInDB.map((i) => {
     const page = i as PageObjectResponse
-    console.log(page)
     return {
       id: i.id,
       title: (page as any).properties.ID.title[0].plain_text,
@@ -90,21 +89,63 @@ export async function getFeedInfoList() {
   })
 }
 
-export async function getFilters(feedInfoListFromArg?: FeedInfoList) {
+export async function getFilters(
+  feedInfoListFromArg?: FeedInfoList,
+  convertToLowerCase = true,
+  includeAll = true
+) {
   const feedInfoList = feedInfoListFromArg ?? (await getFeedInfoList())
   if (!feedInfoList) return
 
-  const typeFilter = ["all"].concat(
-    Array.from(new Set(feedInfoList.map((i) => i.type.toLowerCase()))).sort()
-  )
+  const typeFilter = Array.from(new Set(feedInfoList.map((i) => i.type))).sort()
 
-  const languageFilter = ["all"].concat(
-    Array.from(
-      new Set(feedInfoList.map((i) => i.language.toLowerCase()))
-    ).sort()
-  )
+  const languageFilter = Array.from(
+    new Set(feedInfoList.map((i) => i.language))
+  ).sort()
+
+  if (convertToLowerCase) {
+    typeFilter.forEach((i, index) => {
+      typeFilter[index] = i.toLowerCase()
+    })
+
+    languageFilter.forEach((i, index) => {
+      languageFilter[index] = i.toLowerCase()
+    })
+  }
+
+  if (includeAll) {
+    typeFilter.unshift(convertToLowerCase ? "all" : "All")
+    languageFilter.unshift(convertToLowerCase ? "all" : "All")
+  }
 
   return [typeFilter, languageFilter] as const
+}
+
+export async function getGithubTimeline() {
+  const feedInfoList = await getFeedInfoList()
+  if (!feedInfoList) return
+
+  const githubFeedInfoList = feedInfoList
+    .filter((i) => i.github)
+    .map((i) => {
+      return {
+        ...i,
+        feedUrl: i.github + ".atom",
+      }
+    })
+
+  // id: tag:github.com,2008:PushEvent/28747740914
+  const res = await getFeedList(githubFeedInfoList)
+
+  return res?.map((i) => {
+    return {
+      ...i,
+      feedInfo: {
+        ...i.feedInfo,
+        type: i.id?.split("/")[0].split(":")[2].slice(0, -5) ?? "unknown",
+      },
+    }
+  })
 }
 
 export async function getFeedList(
@@ -126,6 +167,7 @@ export async function getFeedList(
             .map((j) => {
               return {
                 ...j,
+                id: j.id as string | undefined,
                 link: joinFeedItemUrl(feed.feedUrl ? feed.link : i.url, j.link),
                 feedInfo: i,
               }
