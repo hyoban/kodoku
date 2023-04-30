@@ -1,10 +1,8 @@
 "use client"
 
+import "@/lib/dayjs"
 import Image from "next/image"
 import dayjs from "dayjs"
-import relativeTime from "dayjs/plugin/relativeTime"
-import timezone from "dayjs/plugin/timezone"
-import utc from "dayjs/plugin/utc"
 import { useAtom } from "jotai"
 
 import { siteConfig } from "@/config/site"
@@ -15,10 +13,6 @@ import { Separator } from "@/components/ui/separator"
 import { selectedTypeAtom } from "./state"
 
 const { timeZone } = siteConfig
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
-dayjs.extend(relativeTime)
 
 export default function GitHubTimelineList({
   githubTimeline,

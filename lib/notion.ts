@@ -1,20 +1,15 @@
+import "@/lib/dayjs"
 import {
   PageObjectResponse,
   QueryDatabaseResponse,
 } from "@notionhq/client/build/src/api-endpoints"
 import dayjs from "dayjs"
-import timezone from "dayjs/plugin/timezone"
-import utc from "dayjs/plugin/utc"
 import Parser from "rss-parser"
 
 import { siteConfig } from "@/config/site"
 import { isFeedItemValid, joinFeedItemUrl, timeout } from "@/lib/utils"
 
 const { timeZone } = siteConfig
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
-dayjs.tz.setDefault(timeZone)
 
 const notionToken = process.env.NOTION_TOKEN!
 const feedId = process.env.NOTION_FEED_ID!

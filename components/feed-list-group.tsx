@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import "@/lib/dayjs"
 import Link from "next/link"
 import dayjs from "dayjs"
 

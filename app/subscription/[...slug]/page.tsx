@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation"
-import dayjs from "dayjs"
 
 import { siteConfig } from "@/config/site"
 import {
