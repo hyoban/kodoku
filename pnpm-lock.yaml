@@ -29,6 +29,7 @@ specifiers:
   react: ^18.2.0
   react-day-picker: ^8.6.0
   react-dom: ^18.2.0
+  react-wrap-balancer: ^0.4.1
   rss-parser: ^3.13.0
   sharp: ^0.31.3
   tailwind-merge: ^1.12.0
@@ -51,6 +52,7 @@ dependencies:
   react: 18.2.0
   react-day-picker: 8.7.1_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-wrap-balancer: 0.4.1_react@18.2.0
   rss-parser: 3.13.0
   sharp: 0.31.3
   tailwind-merge: 1.12.0
@@ -2971,6 +2973,14 @@ packages:
       invariant: 2.2.4
       react: 18.2.0
       tslib: 2.5.0
+    dev: false
+
+  /react-wrap-balancer/0.4.1_react@18.2.0:
+    resolution: {integrity: sha512-KbIwnnCBCxj5u4yr76NXKKriM94VL33LtO9bE0sedCp4yqdGYJD8TGU+2zlPxkguH5xxKxdapBtMYdMAODk/QQ==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react/18.2.0:
