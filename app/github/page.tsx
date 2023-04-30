@@ -6,23 +6,23 @@ import GitHubTimelineList from "./list"
 export const revalidate = 100
 
 export default async function SubscriptionPage() {
-  const githubTimeline = (await getGithubTimeline()) ?? []
-  const filters = await getFilters(
-    githubTimeline.map((item) => item.feedInfo),
-    false,
-    false
-  )
-  if (!filters) return null
+	const githubTimeline = (await getGithubTimeline()) ?? []
+	const filters = await getFilters(
+		githubTimeline.map((item) => item.feedInfo),
+		false,
+		false
+	)
+	if (!filters) return null
 
-  return (
-    <>
-      <div className="container my-8 w-full max-w-5xl sm:my-12">
-        <GithubTimelineFilter filters={filters.at(0) ?? []} />
+	return (
+		<>
+			<div className="container my-8 w-full max-w-5xl sm:my-12">
+				<GithubTimelineFilter filters={filters.at(0) ?? []} />
 
-        <main className="mx-auto my-4 max-w-2xl">
-          <GitHubTimelineList githubTimeline={githubTimeline} />
-        </main>
-      </div>
-    </>
-  )
+				<main className="mx-auto my-4 max-w-2xl">
+					<GitHubTimelineList githubTimeline={githubTimeline} />
+				</main>
+			</div>
+		</>
+	)
 }
