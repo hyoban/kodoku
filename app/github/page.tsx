@@ -16,7 +16,7 @@ export default async function SubscriptionPage() {
 
   return (
     <>
-      <div className="container my-14 w-full max-w-5xl">
+      <div className="container my-8 w-full max-w-5xl sm:my-12">
         <GithubTimelineFilter filters={filters.at(0) ?? []} />
 
         <main className="mx-auto my-4 max-w-2xl">

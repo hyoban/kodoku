@@ -27,12 +27,12 @@ export default function GitHubTimelineList({
         .map((item) => {
           return (
             <div key={item.contentSnippet}>
-              <div className="flex items-center gap-10 py-4">
+              <div className="flex items-center gap-4 py-4 md:gap-10">
                 <Image
                   src={item.feedInfo.avatar}
                   alt={item.feedInfo.title}
-                  width={50}
-                  height={50}
+                  width={36}
+                  height={36}
                   className="my-4 self-start rounded-full ring-2 ring-ring ring-offset-2"
                 ></Image>
                 <div className="space-y-3">
@@ -41,7 +41,7 @@ export default function GitHubTimelineList({
                       href={item.link}
                       target="_blank"
                       rel="noreferrer"
-                      className="hover:underline"
+                      className="break-all hover:underline"
                     >
                       {item.title}
                     </a>
@@ -52,7 +52,7 @@ export default function GitHubTimelineList({
                   >
                     {dayjs(item.isoDate).fromNow()}
                   </p>
-                  <p className="text-sm font-medium leading-none">
+                  <p className="text-sm font-medium leading-relaxed">
                     {item.contentSnippet?.split("\n").slice(10).join("\n")}
                   </p>
                   <Badge variant={"outline"}>{item.feedInfo.type}</Badge>
