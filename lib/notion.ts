@@ -133,6 +133,7 @@ export async function getGithubTimeline() {
         feedUrl: i.github + ".atom",
       }
     })
+    .filter((i) => i.feedUrl.match(/https:\/\/github.com\/\w+.atom/g))
 
   // id: tag:github.com,2008:PushEvent/28747740914
   const res = await getFeedList(githubFeedInfoList, "all", "all", false)
