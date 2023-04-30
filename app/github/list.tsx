@@ -33,7 +33,7 @@ export default function GitHubTimelineList({
                   alt={item.feedInfo.title}
                   width={50}
                   height={50}
-                  className="my-4 rounded-full ring-2 ring-ring ring-offset-2"
+                  className="my-4 self-start rounded-full ring-2 ring-ring ring-offset-2"
                 ></Image>
                 <div className="space-y-3">
                   <h2 className="my-4 text-lg font-semibold">
