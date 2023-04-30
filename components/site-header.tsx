@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
+import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { MainNav } from "@/components/main-nav"
@@ -19,12 +20,15 @@ export function SiteHeader() {
               rel="noreferrer"
             >
               <div
-                className={buttonVariants({
-                  size: "sm",
-                  variant: "ghost",
-                })}
+                className={cn(
+                  buttonVariants({
+                    size: "sm",
+                    variant: "ghost",
+                  }),
+                  "text-2xl"
+                )}
               >
-                <Icons.gitHub className="h-5 w-5" />
+                <div className="i-carbon-logo-github" />
                 <span className="sr-only">GitHub</span>
               </div>
             </Link>
@@ -34,12 +38,15 @@ export function SiteHeader() {
               rel="noreferrer"
             >
               <div
-                className={buttonVariants({
-                  size: "sm",
-                  variant: "ghost",
-                })}
+                className={cn(
+                  buttonVariants({
+                    size: "sm",
+                    variant: "ghost",
+                  }),
+                  "text-2xl"
+                )}
               >
-                <Icons.twitter className="h-5 w-5 fill-current" />
+                <div className="i-carbon-logo-twitter" />
                 <span className="sr-only">Twitter</span>
               </div>
             </Link>
