@@ -52,7 +52,7 @@ export default function GitHubTimelineList({
 									>
 										{dayjs(item.isoDate).tz(timeZone).fromNow()}
 									</p>
-									<p className="text-sm font-medium leading-relaxed">
+									<p className="break-all text-sm font-medium leading-relaxed">
 										{item.contentSnippet?.split("\n").slice(10).join("\n")}
 									</p>
 									<Badge variant={"outline"}>{item.feedInfo.type}</Badge>
