@@ -78,8 +78,15 @@ export async function getFeedInfoList() {
 			type: (page as any).properties.Type.select.name as string,
 			language: (page as any).properties.Language.select.name as string,
 			useCover: (page as any).properties.UseCover.checkbox as boolean,
-			twitter: (page as any).properties.Twitter.url as string | null,
-			github: (page as any).properties.Github.url as string | null,
+			socials:
+				Object.keys((page as any).properties).map((j) => {
+					if (
+						(page as any).properties[j].type === "url" &&
+						(page as any).properties[j].url
+					) {
+						return (page as any).properties[j].url
+					}
+				}) ?? [],
 		}
 	})
 }
@@ -121,11 +128,12 @@ export async function getGithubTimeline() {
 	if (!feedInfoList) return
 
 	const githubFeedInfoList = feedInfoList
-		.filter((i) => i.github)
+		.filter((i) => i.socials.some((j) => j?.includes("github.com")))
 		.map((i) => {
 			return {
 				...i,
-				feedUrl: i.github + ".atom",
+				feedUrl:
+					(i.socials.find((j) => j?.includes("github.com")) ?? "") + ".atom",
 			}
 		})
 		.filter((i) => i.feedUrl.match(/https:\/\/github.com\/\w+.atom/g))
