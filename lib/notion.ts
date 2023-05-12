@@ -126,7 +126,7 @@ export async function getFilters(
 const VALID_RSS_LINK_PATTERNS = [
 	[
 		/https:\/\/www\.youtube\.com\/channel\/(\w+)$/,
-		"https://www.youtube.com/feeds/videos.xml?channel_id=$1",
+		"https://rsshub.app/youtube/channel/$1",
 		"YouTube Channel",
 	],
 	[/https:\/\/github\.com\/(\w+)$/, "https://github.com/$1.atom", "GitHub"],
