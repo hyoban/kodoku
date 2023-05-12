@@ -60,7 +60,7 @@ export default function Timeline({ timeline }: { timeline: FeedList }) {
 										className={cn(
 											"prose dark:prose-invert",
 											item.feedInfo.type === "GitHub"
-												? "prose-img:rounded-full"
+												? "prose-blockquote:my-2 prose-img:my-2 prose-img:rounded-full"
 												: "prose-img:rounded"
 										)}
 										dangerouslySetInnerHTML={{ __html: item.content ?? "" }}
