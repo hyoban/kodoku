@@ -13,8 +13,8 @@ export const siteConfig = {
 			href: "/people",
 		},
 		{
-			title: "Github",
-			href: "/github",
+			title: "Timeline",
+			href: "/timeline",
 		},
 	],
 	links: {
