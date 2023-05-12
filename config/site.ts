@@ -9,12 +9,12 @@ export const siteConfig = {
 			href: "/subscription",
 		},
 		{
-			title: "People",
-			href: "/people",
-		},
-		{
 			title: "Timeline",
 			href: "/timeline",
+		},
+		{
+			title: "People",
+			href: "/people",
 		},
 	],
 	links: {

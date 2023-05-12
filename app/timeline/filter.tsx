@@ -3,12 +3,12 @@
 import { useAtom } from "jotai"
 import { useHydrateAtoms } from "jotai/utils"
 
-import { capitalize } from "@/lib/utils"
 import { Checkbox } from "@/components/ui/checkbox"
+import { capitalize } from "@/lib/utils"
 
 import { selectedTypeAtom } from "./state"
 
-export default function GithubTimelineFilter({
+export default function TimelineFilter({
 	filters: filtersFromServer,
 }: {
 	filters: string[]

@@ -1,14 +1,14 @@
-import { getFilters, getGithubTimeline } from "@/lib/notion"
+import { getFilters, getTimeline } from "@/lib/notion"
 
-import GithubTimelineFilter from "./filter"
-import GitHubTimelineList from "./list"
+import TimelineFilter from "./filter"
+import Timeline from "./list"
 
 export const revalidate = 100
 
 export default async function SubscriptionPage() {
-	const githubTimeline = (await getGithubTimeline()) ?? []
+	const timeline = (await getTimeline()) ?? []
 	const filters = await getFilters(
-		githubTimeline.map((item) => item.feedInfo),
+		timeline.map((item) => item.feedInfo),
 		false,
 		false
 	)
@@ -17,10 +17,9 @@ export default async function SubscriptionPage() {
 	return (
 		<>
 			<div className="container my-8 w-full max-w-5xl sm:my-12">
-				<GithubTimelineFilter filters={filters.at(0) ?? []} />
-
+				<TimelineFilter filters={filters[0]}></TimelineFilter>
 				<main className="mx-auto my-4 max-w-2xl">
-					<GitHubTimelineList githubTimeline={githubTimeline} />
+					<Timeline timeline={timeline} />
 				</main>
 			</div>
 		</>

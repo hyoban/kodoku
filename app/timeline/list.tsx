@@ -13,16 +13,12 @@ import { selectedTypeAtom } from "./state"
 
 const { timeZone } = siteConfig
 
-export default function GitHubTimelineList({
-	githubTimeline,
-}: {
-	githubTimeline: FeedList
-}) {
+export default function Timeline({ timeline }: { timeline: FeedList }) {
 	const [selectedType] = useAtom(selectedTypeAtom)
 
 	return (
 		<>
-			{githubTimeline
+			{timeline
 				.filter((item) => selectedType.includes(item.feedInfo.type))
 				.map((item) => {
 					return (
