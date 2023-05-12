@@ -13,7 +13,12 @@ export default function TimelineFilter({
 }: {
 	filters: string[]
 }) {
-	useHydrateAtoms([[selectedTypeAtom, filtersFromServer] as const])
+	useHydrateAtoms([
+		[
+			selectedTypeAtom,
+			filtersFromServer.filter((i) => i !== "GitHub"),
+		] as const,
+	])
 	const [selectedType, setSelectedType] = useAtom(selectedTypeAtom)
 
 	return (
