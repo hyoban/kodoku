@@ -279,10 +279,6 @@ export async function getFeedList(
 					.slice(0, numberOfFeedSent)
 			: feedList
 					.flat()
-					.filter((i) => {
-						// only today's feed
-						return dayjs(i.isoDate).tz(timeZone).isSame(dayjs(), "day")
-					})
 					.sort((a, b) => {
 						if (a.isoDate && b.isoDate) {
 							return (
@@ -291,8 +287,8 @@ export async function getFeedList(
 						}
 						return 0
 					})
-					// max 200 feeds
-					.slice(0, 200)
+					// max 100 feeds
+					.slice(0, 100)
 	} catch (e) {
 		console.error("getFeedList", e)
 	}
