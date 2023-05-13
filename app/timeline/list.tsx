@@ -58,11 +58,11 @@ export default function Timeline({ timeline }: { timeline: FeedList }) {
 
 									<div
 										className={cn(
-											"prose dark:prose-invert",
+											"prose break-all dark:prose-invert [&>iframe]:hidden",
 											item.feedInfo.type === "GitHub"
 												? "prose-img:hidden [&>div>div>div>div>div:nth-child(2)>svg]:hidden"
 												: item.feedInfo.type === "Twitter"
-												? "prose-img:my-2 prose-img:max-w-xs prose-img:rounded-lg prose-img:border"
+												? "prose-img:my-2 prose-img:max-w-[calc(100%-1rem)] prose-img:rounded-lg prose-img:border sm:prose-img:max-w-xs"
 												: "prose-img:rounded"
 										)}
 										dangerouslySetInnerHTML={{
