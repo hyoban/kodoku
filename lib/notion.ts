@@ -195,7 +195,16 @@ export async function getTimeline() {
 		.flat()
 
 	const res = await getFeedList(RSSList, "all", "all", false)
-	return res
+	return res?.map((i) => {
+		if (i.feedInfo.type === "GitHub") {
+			const regex = /<a .* href="(\S+)" rel="noreferrer">(\S+)<\/a>/gm
+			const str = i.content ?? ""
+			const subst = `<a href="https://github.com/$1" target="_blank" rel="noreferrer">$2</a>`
+			const result = str.replace(regex, subst)
+			i.content = result
+		}
+		return i
+	})
 }
 
 export async function getFeedList(
