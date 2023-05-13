@@ -2,7 +2,7 @@ import { clsx, type ClassValue } from "clsx"
 import Parser from "rss-parser"
 import { twMerge } from "tailwind-merge"
 
-import { FeedItem } from "./notion"
+import { FeedInfo, FeedItem } from "./notion"
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
@@ -27,7 +27,19 @@ export function joinFeedItemUrl(feedUrl: string, itemUrl?: string): string {
 	return feedUrl + "/" + itemUrl
 }
 
-export function isFeedItemValid(item: Parser.Item): boolean {
+export function isFeedItemValid(
+	item: Parser.Item & { id?: string },
+	feedInfo: FeedInfo
+): boolean {
+	if (feedInfo.type === "GitHub" && feedInfo.feedUrl.endsWith(".atom")) {
+		if (
+			["PushEvent"].some((i) => {
+				return item.id?.includes(i)
+			})
+		)
+			return false
+	}
+
 	if (!item.link) return false
 	if (!item.title) return false
 	if (!item.isoDate) return false

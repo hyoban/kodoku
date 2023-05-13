@@ -218,7 +218,7 @@ export async function getFeedList(
 					const feed = await parseRssFeed(i.feedUrl)
 					if (!feed) return []
 					return feed.items
-						.filter(isFeedItemValid)
+						.filter((j) => isFeedItemValid(j, i))
 						.map((j) => {
 							return {
 								...j,
