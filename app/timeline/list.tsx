@@ -25,15 +25,13 @@ export default function Timeline({ timeline }: { timeline: FeedList }) {
 					return (
 						<div key={item.contentSnippet}>
 							<div className="flex items-center gap-4 py-4 md:gap-10">
-								{item.feedInfo.type !== "GitHub" && (
-									<Image
-										src={item.feedInfo.avatar}
-										alt={item.feedInfo.title}
-										width={36}
-										height={36}
-										className="my-4 h-9 w-9 self-start rounded-full"
-									></Image>
-								)}
+								<Image
+									src={item.feedInfo.avatar}
+									alt={item.feedInfo.title}
+									width={36}
+									height={36}
+									className="my-4 h-9 w-9 self-start rounded-full"
+								></Image>
 								<div className="space-y-3">
 									{item.feedInfo.type !== "GitHub" && (
 										<>
@@ -62,7 +60,7 @@ export default function Timeline({ timeline }: { timeline: FeedList }) {
 										className={cn(
 											"prose dark:prose-invert",
 											item.feedInfo.type === "GitHub"
-												? "prose-blockquote:my-2 prose-img:my-2 prose-img:rounded-full"
+												? "prose-blockquote:my-2 prose-img:my-2 prose-img:rounded-full [&_img.avatar.avatar-user]:hidden"
 												: item.feedInfo.type === "Twitter"
 												? "prose-img:my-2 prose-img:max-w-xs prose-img:rounded-lg prose-img:border"
 												: "prose-img:rounded"
