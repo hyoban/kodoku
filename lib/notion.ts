@@ -128,7 +128,7 @@ const VALID_RSS_LINK_PATTERNS = [
 	[
 		/https:\/\/www\.youtube\.com\/channel\/(\w+)$/,
 		`${RSSHubUrl}/youtube/channel/$1`,
-		"YouTube Channel",
+		"YouTube",
 	],
 	[/https:\/\/github\.com\/(\w+)$/, "https://github.com/$1.atom", "GitHub"],
 	[
