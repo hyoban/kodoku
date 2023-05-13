@@ -193,9 +193,10 @@ export async function getTimeline() {
 	return res?.map((i) => {
 		if (i.feedInfo.type === "GitHub") {
 			const regex = /<a.*href="(\S+)".*>(.+)<\/a>/gm
+			const removeClassRegex = /(class=".*?")/gm
 			const str = i.content ?? ""
 			const subst = `<a href="https://github.com$1" target="_blank" rel="noreferrer">$2</a>`
-			const result = str.replace(regex, subst)
+			const result = str.replace(regex, subst).replace(removeClassRegex, "")
 			i.content = result
 		}
 		return i

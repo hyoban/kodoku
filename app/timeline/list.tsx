@@ -60,7 +60,7 @@ export default function Timeline({ timeline }: { timeline: FeedList }) {
 										className={cn(
 											"prose dark:prose-invert",
 											item.feedInfo.type === "GitHub"
-												? "prose-blockquote:my-2 prose-img:my-2 prose-img:rounded-full [&_img.avatar.avatar-user]:hidden"
+												? "prose-img:hidden [&>div>div>div>div>div:nth-child(2)>svg]:hidden"
 												: item.feedInfo.type === "Twitter"
 												? "prose-img:my-2 prose-img:max-w-xs prose-img:rounded-lg prose-img:border"
 												: "prose-img:rounded"
