@@ -22,8 +22,6 @@ const headers = {
 	Authorization: `Bearer ${notionToken}`,
 }
 
-const revalidate = 7200
-
 async function getDatabaseItems(databaseId: string) {
 	try {
 		const response = (await fetch(
@@ -31,9 +29,6 @@ async function getDatabaseItems(databaseId: string) {
 			{
 				method: "POST",
 				headers,
-				next: {
-					revalidate,
-				},
 			}
 		).then((i) => i.json())) as QueryDatabaseResponse
 

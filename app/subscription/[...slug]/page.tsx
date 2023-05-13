@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation"
 
-import { siteConfig } from "@/config/site"
+import FeedListGroup from "@/components/feed-list-group"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
 	getFeedInfoList,
 	getFeedList,
@@ -8,10 +9,6 @@ import {
 	getFilters,
 } from "@/lib/notion"
 import { capitalize } from "@/lib/utils"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import FeedListGroup from "@/components/feed-list-group"
-
-const { timeZone } = siteConfig
 
 export const revalidate = 3600
 
