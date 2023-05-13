@@ -199,7 +199,7 @@ export async function getTimeline() {
 		if (i.feedInfo.type === "GitHub") {
 			const regex = /<a .* href="(\S+)" rel="noreferrer">(\S+)<\/a>/gm
 			const str = i.content ?? ""
-			const subst = `<a href="https://github.com/$1" target="_blank" rel="noreferrer">$2</a>`
+			const subst = `<a href="https://github.com$1" target="_blank" rel="noreferrer">$2</a>`
 			const result = str.replace(regex, subst)
 			i.content = result
 		}
