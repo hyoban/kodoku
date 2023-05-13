@@ -37,16 +37,31 @@ export default function Timeline({ timeline }: { timeline: FeedList }) {
 								<div className="space-y-3">
 									{item.feedInfo.type !== "GitHub" && (
 										<>
-											<h2 className="my-4 text-lg font-semibold">
+											{item.feedInfo.type === "Twitter" ? (
 												<a
 													href={item.link}
 													target="_blank"
 													rel="noreferrer"
-													className="break-all hover:underline"
-												>
-													{item.title}
-												</a>
-											</h2>
+													className={cn(
+														"prose dark:prose-invert prose-img:rounded"
+													)}
+													dangerouslySetInnerHTML={{
+														__html: item.content?.replaceAll("<br>", " ") ?? "",
+													}}
+												></a>
+											) : (
+												<h2 className="my-4 text-lg font-semibold">
+													<a
+														href={item.link}
+														target="_blank"
+														rel="noreferrer"
+														className="break-all hover:underline"
+													>
+														{item.title}
+													</a>
+												</h2>
+											)}
+
 											<p
 												className="text-sm text-muted-foreground"
 												title={item.isoDate}
@@ -56,15 +71,17 @@ export default function Timeline({ timeline }: { timeline: FeedList }) {
 										</>
 									)}
 
-									<div
-										className={cn(
-											"prose dark:prose-invert",
-											item.feedInfo.type === "GitHub"
-												? "prose-blockquote:my-2 prose-img:my-2 prose-img:rounded-full"
-												: "prose-img:rounded"
-										)}
-										dangerouslySetInnerHTML={{ __html: item.content ?? "" }}
-									></div>
+									{item.feedInfo.type !== "Twitter" && (
+										<div
+											className={cn(
+												"prose dark:prose-invert",
+												item.feedInfo.type === "GitHub"
+													? "prose-blockquote:my-2 prose-img:my-2 prose-img:rounded-full"
+													: "prose-img:rounded"
+											)}
+											dangerouslySetInnerHTML={{ __html: item.content ?? "" }}
+										></div>
+									)}
 									<Badge variant={"outline"}>{item.feedInfo.type}</Badge>
 								</div>
 							</div>

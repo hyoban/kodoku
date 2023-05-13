@@ -81,3 +81,7 @@
 		font-feature-settings: "rlig" 1, "calt" 1;
 	}
 }
+
+.rsshub-quote {
+	@apply font-medium italic text-muted-foreground border-l-4 border-accent pl-4 my-4;
+}
