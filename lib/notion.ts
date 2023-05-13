@@ -13,6 +13,7 @@ const { timeZone } = siteConfig
 
 const notionToken = process.env.NOTION_TOKEN!
 const feedId = process.env.NOTION_FEED_ID!
+const RSSHubUrl = process.env.RSSHUB_URL ?? "https://rsshub.app"
 
 const headers = {
 	Accept: "application/json",
@@ -126,20 +127,16 @@ export async function getFilters(
 const VALID_RSS_LINK_PATTERNS = [
 	[
 		/https:\/\/www\.youtube\.com\/channel\/(\w+)$/,
-		"https://rsshub.app/youtube/channel/$1",
+		`${RSSHubUrl}/youtube/channel/$1`,
 		"YouTube Channel",
 	],
 	[/https:\/\/github\.com\/(\w+)$/, "https://github.com/$1.atom", "GitHub"],
 	[
 		/https:\/\/space.bilibili.com\/(\d+)$/,
-		"https://rsshub.app/bilibili/user/dynamic/$1",
+		`${RSSHubUrl}/bilibili/user/dynamic/$1`,
 		"Bilibili",
 	],
-	[
-		/https:\/\/twitter\.com\/(\w+)$/,
-		"https://rsshub.app/twitter/user/$1",
-		"Twitter",
-	],
+	[/https:\/\/twitter\.com\/(\w+)$/, `${RSSHubUrl}/twitter/user/$1`, "Twitter"],
 ] as const
 
 function generateValidRSSLink(
