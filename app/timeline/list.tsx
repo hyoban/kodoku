@@ -43,7 +43,7 @@ export default function Timeline({ timeline }: { timeline: FeedList }) {
 													target="_blank"
 													rel="noreferrer"
 													className={cn(
-														"prose dark:prose-invert prose-img:rounded"
+														"prose dark:prose-invert prose-img:my-2 prose-img:max-w-xs prose-img:rounded-lg prose-img:border"
 													)}
 													dangerouslySetInnerHTML={{
 														__html: item.content?.replaceAll("<br>", " ") ?? "",
