@@ -41,6 +41,7 @@ export function isFeedItemValid(
 	}
 
 	if (!item.link) return false
+	if (item.link.includes("[object Object]")) return false
 	if (!item.title) return false
 	if (!item.isoDate) return false
 	if (item.title === "No title") return false

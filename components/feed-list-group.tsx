@@ -14,6 +14,7 @@ import { siteConfig } from "@/config/site"
 import { FeedList } from "@/lib/notion"
 import { getFeedContent } from "@/lib/utils"
 import Link from "next/link"
+import RevalidateAt from "./revalidate-at"
 
 const { timeZone } = siteConfig
 
@@ -24,6 +25,7 @@ export default function FeedListGroup({
 }) {
 	return (
 		<>
+			<RevalidateAt />
 			{Object.keys(feedListGroupedByYearAndMonth)
 				.sort((a, b) => Number(b) - Number(a))
 				.map((feedMonth) => {

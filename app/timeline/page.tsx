@@ -1,5 +1,6 @@
 import { getFilters, getTimeline } from "@/lib/notion"
 
+import RevalidateAt from "@/components/revalidate-at"
 import TimelineFilter from "./filter"
 import Timeline from "./list"
 
@@ -19,6 +20,7 @@ export default async function SubscriptionPage() {
 			<div className="container my-8 w-full max-w-5xl sm:my-12">
 				<TimelineFilter filters={filters[0]}></TimelineFilter>
 				<main className="mx-auto my-4 max-w-2xl">
+					<RevalidateAt />
 					<Timeline timeline={timeline} />
 				</main>
 			</div>
