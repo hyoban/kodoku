@@ -54,7 +54,7 @@ export default async function SubscriptionPage() {
 						<div className="ml-4 flex w-full flex-col self-stretch">
 							<div className="flex grow flex-col sm:flex-row sm:items-center sm:justify-between">
 								<Link
-									href={feedInfo.url}
+									href={feedInfo.url || "#"}
 									className="flex items-center"
 									target="_blank"
 									rel="noopener noreferrer"

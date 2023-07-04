@@ -39,7 +39,7 @@ export default function FeedListGroup({
 										<CardHeader>
 											<CardTitle>
 												<Link
-													href={feed.link}
+													href={feed.link || "#"}
 													target="_blank"
 													rel="noopener noreferrer"
 												>
@@ -48,7 +48,7 @@ export default function FeedListGroup({
 											</CardTitle>
 											<CardDescription>
 												<Link
-													href={feed.feedInfo.url}
+													href={feed.feedInfo.url || "#"}
 													target="_blank"
 													rel="noopener noreferrer"
 												>
