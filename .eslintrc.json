@@ -1,24 +1,24 @@
 {
-	"$schema": "https://json.schemastore.org/eslintrc",
-	"root": true,
-	"extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended"],
-	"rules": {
-		"@next/next/no-html-link-for-pages": "off",
-		"tailwindcss/classnames-order": "off"
-	},
-	"settings": {
-		"tailwindcss": {
-			"callees": ["cn"],
-			"config": "./tailwind.config.js"
-		},
-		"next": {
-			"rootDir": ["./"]
-		}
-	},
-	"overrides": [
-		{
-			"files": ["*.ts", "*.tsx"],
-			"parser": "@typescript-eslint/parser"
-		}
-	]
+  "$schema": "https://json.schemastore.org/eslintrc",
+  "root": true,
+  "extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended"],
+  "rules": {
+    "@next/next/no-html-link-for-pages": "off",
+    "tailwindcss/classnames-order": "off"
+  },
+  "settings": {
+    "tailwindcss": {
+      "callees": ["cn"],
+      "config": "./tailwind.config.js"
+    },
+    "next": {
+      "rootDir": ["./"]
+    }
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "parser": "@typescript-eslint/parser"
+    }
+  ]
 }
