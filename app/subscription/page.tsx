@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 import FeedListGroup from "@/components/feed-list-group"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
@@ -25,17 +27,18 @@ export default async function SubscriptionPage() {
               <Tabs defaultValue="all" key={index}>
                 <TabsList>
                   {filter.map((filter) => (
-                    <TabsTrigger
+                    <Link
                       key={filter}
-                      value={filter}
-                      // href={
-                      //   index === 0
-                      //     ? `/subscription/${filter}/all`
-                      //     : `/subscription/all/${filter}`
-                      // }
+                      href={
+                        index === 0
+                          ? `/subscription/${filter}/all`
+                          : `/subscription/all/${filter}`
+                      }
                     >
-                      {capitalize(filter)}
-                    </TabsTrigger>
+                      <TabsTrigger value={filter}>
+                        {capitalize(filter)}
+                      </TabsTrigger>
+                    </Link>
                   ))}
                 </TabsList>
               </Tabs>

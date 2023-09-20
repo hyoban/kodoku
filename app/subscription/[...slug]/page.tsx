@@ -1,13 +1,14 @@
+import Link from "next/link"
 import { notFound } from "next/navigation"
 
 import FeedListGroup from "@/components/feed-list-group"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
-  getFeedInfoList,
   getFeedList,
   getFeedListGroupedByYearAndMonth,
   getFilters,
 } from "@/lib/notion"
+import { getFeedInfoList } from "@/lib/unsafe"
 import { capitalize } from "@/lib/utils"
 
 export const revalidate = 3600
@@ -39,17 +40,18 @@ export default async function SubscriptionPage({
               <Tabs defaultValue={slug} key={index}>
                 <TabsList>
                   {filters[index]?.map((filter) => (
-                    <TabsTrigger
+                    <Link
                       key={filter}
-                      value={filter}
-                      // href={
-                      //   index === 0
-                      //     ? `/subscription/${filter}/${params.slug[1]}`
-                      //     : `/subscription/${params.slug[0]}/${filter}`
-                      // }
+                      href={
+                        index === 0
+                          ? `/subscription/${filter}/${params.slug[1]}`
+                          : `/subscription/${params.slug[0]}/${filter}`
+                      }
                     >
-                      {capitalize(filter)}
-                    </TabsTrigger>
+                      <TabsTrigger value={filter}>
+                        {capitalize(filter)}
+                      </TabsTrigger>
+                    </Link>
                   ))}
                 </TabsList>
               </Tabs>

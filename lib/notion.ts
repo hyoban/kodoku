@@ -6,12 +6,14 @@ import Parser from "rss-parser"
 import type { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints"
 
 import { siteConfig } from "@/config/site"
-import { isFeedItemValid, joinFeedItemUrl, timeout } from "@/lib/utils"
+
+import { getFeedInfoList } from "./unsafe"
+import { isFeedItemValid, joinFeedItemUrl, timeout } from "./utils"
 
 const { timeZone } = siteConfig
 
 const notionToken = process.env["NOTION_TOKEN"] as string
-const feedId = process.env["NOTION_FEED_ID"] as string
+export const feedId = process.env["NOTION_FEED_ID"] as string
 
 const headers = {
   Accept: "application/json",
@@ -20,7 +22,7 @@ const headers = {
   Authorization: `Bearer ${notionToken}`,
 }
 
-async function getDatabaseItems(databaseId: string) {
+export async function getDatabaseItems(databaseId: string) {
   try {
     const response = (await fetch(
       `https://api.notion.com/v1/databases/${databaseId}/query`,
@@ -60,57 +62,6 @@ async function parseRssFeed(
     console.error("parseRssFeed", e)
   }
   return null
-}
-
-export async function getFeedInfoList() {
-  const feedInfoListInDB = await getDatabaseItems(feedId)
-  if (!feedInfoListInDB) return
-
-  return feedInfoListInDB.map((i) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const page = i as Record<string, any>
-    return {
-      id: i.id,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      title: page["properties"].ID.title[0].plain_text,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      url: page["properties"].Homepage.url,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      feedUrl: page["properties"].RSS.url,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      avatar: page["cover"].external.url,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      type: page["properties"].Type.select.name,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      language: page["properties"].Language.select.name,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      useCover: page["properties"].UseCover.checkbox,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-      socials:
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unsafe-argument
-        Object.keys(page["properties"]).map((j) => {
-          if (
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            page["properties"][j].type === "url" &&
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            page["properties"][j].url
-          ) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
-            return page["properties"][j].url
-          }
-        }) ?? [],
-    } as {
-      id: string
-      title: string
-      url: string
-      feedUrl?: string | undefined
-      avatar: string
-      type: string
-      language: string
-      useCover: boolean
-      socials: string[]
-    }
-  })
 }
 
 export async function getFilters(
