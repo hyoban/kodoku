@@ -1,4 +1,5 @@
 export type SiteConfig = typeof siteConfig
+export type NavItem = SiteConfig["mainNav"][number]
 
 export const siteConfig = {
   name: "Kodoku",

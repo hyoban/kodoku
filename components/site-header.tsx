@@ -7,9 +7,9 @@ import { siteConfig } from "@/config/site"
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
-      <div className="flex h-16 items-center justify-evenly space-x-4 sm:container sm:justify-between sm:space-x-0">
+      <div className="flex h-16 px-4 sm:px-8">
         <MainNav items={siteConfig.mainNav} />
-        <div className="hidden flex-1 items-center justify-end space-x-4 sm:flex">
+        <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-4">
             <Link
               href={siteConfig.links.github}
@@ -27,8 +27,8 @@ export function SiteHeader() {
             >
               <span className="sr-only">Twitter</span>
             </Link>
-            <AppearanceSwitch enableTransition />
           </nav>
+          <AppearanceSwitch enableTransition />
         </div>
       </div>
     </header>
