@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import "@/lib/dayjs"
+
 import dayjs from "dayjs"
+import Link from "next/link"
 
 import {
   Card,
@@ -13,7 +15,7 @@ import {
 import { siteConfig } from "@/config/site"
 import { FeedList } from "@/lib/notion"
 import { getFeedContent } from "@/lib/utils"
-import Link from "next/link"
+
 import RevalidateAt from "./revalidate-at"
 
 const { timeZone } = siteConfig

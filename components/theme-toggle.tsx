@@ -1,7 +1,7 @@
 "use client"
 
-import { useDark } from "@/hooks/useDark"
 import { Button } from "@/components/ui/button"
+import { useDark } from "@/hooks/useDark"
 
 export function ThemeToggle() {
   const [, toggleDark] = useDark()

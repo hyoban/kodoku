@@ -1,11 +1,11 @@
+import FeedListGroup from "@/components/feed-list-group"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   getFeedList,
   getFeedListGroupedByYearAndMonth,
   getFilters,
 } from "@/lib/notion"
 import { capitalize } from "@/lib/utils"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import FeedListGroup from "@/components/feed-list-group"
 
 export const revalidate = 3600
 

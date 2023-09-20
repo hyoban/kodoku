@@ -1,6 +1,6 @@
-import { useEffect } from "react"
 import { useAtom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
+import { useEffect } from "react"
 import { useMedia } from "react-use"
 
 const appearanceAtom = atomWithStorage<"auto" | "light" | "dark">(

@@ -1,7 +1,8 @@
-import { buttonVariants } from "@/components/ui/button"
-import { siteConfig } from "@/config/site"
 import Link from "next/link"
 import Balancer from "react-wrap-balancer"
+
+import { buttonVariants } from "@/components/ui/button"
+import { siteConfig } from "@/config/site"
 
 export default function IndexPage() {
   return (

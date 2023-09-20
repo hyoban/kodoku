@@ -1,6 +1,6 @@
+import RevalidateAt from "@/components/revalidate-at"
 import { getFilters, getTimeline } from "@/lib/notion"
 
-import RevalidateAt from "@/components/revalidate-at"
 import TimelineFilter from "./filter"
 import Timeline from "./list"
 
