@@ -1,11 +1,7 @@
 import FeedListGroup from "~/components/feed-list-group"
 import Link from "~/components/link"
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs"
-import {
-  getFeedList,
-  getFeedListGroupedByYearAndMonth,
-  getFilters,
-} from "~/lib/notion"
+import { getFeedList, getFilters } from "~/lib/notion"
 import { capitalize } from "~/lib/utils"
 
 export const revalidate = 3600
@@ -13,9 +9,7 @@ export const revalidate = 3600
 export default async function SubscriptionPage() {
   const filters = await getFilters()
   if (!filters) return null
-  const feedListGroupedByYearAndMonth = getFeedListGroupedByYearAndMonth(
-    (await getFeedList()) ?? [],
-  )
+  const feedList = (await getFeedList()) ?? []
 
   return (
     <>
@@ -45,9 +39,7 @@ export default async function SubscriptionPage() {
           })}
         </div>
 
-        <FeedListGroup
-          feedListGroupedByYearAndMonth={feedListGroupedByYearAndMonth}
-        />
+        <FeedListGroup feedList={feedList} />
       </div>
     </>
   )

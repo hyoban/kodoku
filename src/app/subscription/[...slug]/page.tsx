@@ -3,11 +3,7 @@ import { notFound } from "next/navigation"
 import FeedListGroup from "~/components/feed-list-group"
 import Link from "~/components/link"
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs"
-import {
-  getFeedList,
-  getFeedListGroupedByYearAndMonth,
-  getFilters,
-} from "~/lib/notion"
+import { getFeedList, getFilters } from "~/lib/notion"
 import { getFeedInfoList } from "~/lib/unsafe"
 import { capitalize } from "~/lib/utils"
 
@@ -27,9 +23,8 @@ export default async function SubscriptionPage({
   const filters = await getFilters(feedInfoList)
   if (!filters) return null
 
-  const feedListGroupedByYearAndMonth = getFeedListGroupedByYearAndMonth(
-    (await getFeedList(feedInfoList, params.slug[0], params.slug[1])) ?? [],
-  )
+  const feedList =
+    (await getFeedList(feedInfoList, params.slug[0], params.slug[1])) ?? []
 
   return (
     <>
@@ -59,9 +54,7 @@ export default async function SubscriptionPage({
           })}
         </div>
 
-        <FeedListGroup
-          feedListGroupedByYearAndMonth={feedListGroupedByYearAndMonth}
-        />
+        <FeedListGroup feedList={feedList} />
       </div>
     </>
   )

@@ -13,18 +13,16 @@ import {
   CardTitle,
 } from "~/components/ui/card"
 import { siteConfig } from "~/config/site"
-import type { FeedList } from "~/lib/notion"
+import { getFeedListGroupedByYearAndMonth, type FeedList } from "~/lib/notion"
 import { getFeedContent } from "~/lib/unsafe"
 
 import RevalidateAt from "./revalidate-at"
 
 const { timeZone } = siteConfig
 
-export default function FeedListGroup({
-  feedListGroupedByYearAndMonth,
-}: {
-  feedListGroupedByYearAndMonth: Record<string, FeedList>
-}) {
+export default function FeedListGroup({ feedList }: { feedList: FeedList }) {
+  const feedListGroupedByYearAndMonth =
+    getFeedListGroupedByYearAndMonth(feedList)
   return (
     <>
       <RevalidateAt />
