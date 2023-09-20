@@ -1,6 +1,7 @@
-import "@/styles/globals.css"
+import "@hyoban/tailwind-config/globals.css"
 
-import { Metadata } from "next"
+import type { Metadata } from "next"
+import { cn } from "@hyoban/utils"
 import { Analytics } from "@vercel/analytics/react"
 
 import { SiteHeader } from "@/components/site-header"
@@ -8,7 +9,6 @@ import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 import { siteConfig } from "@/config/site"
 import { fontSans } from "@/lib/fonts"
-import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
   title: {

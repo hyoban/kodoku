@@ -1,9 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
+import { cn } from "@hyoban/utils"
 
 import { Separator } from "@/components/ui/separator"
 import { getFeedInfoList } from "@/lib/notion"
-import { cn } from "@/lib/utils"
 
 export const revalidate = 3600
 

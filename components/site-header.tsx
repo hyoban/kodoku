@@ -1,10 +1,10 @@
 import Link from "next/link"
+import { cn } from "@hyoban/utils"
 
 import { MainNav } from "@/components/main-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { buttonVariants } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
 
 export function SiteHeader() {
   return (

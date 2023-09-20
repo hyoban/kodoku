@@ -5,12 +5,12 @@ import "@/lib/dayjs"
 import dayjs from "dayjs"
 import { useAtom } from "jotai"
 import Image from "next/image"
+import { cn } from "@hyoban/utils"
 
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { siteConfig } from "@/config/site"
 import { FeedList } from "@/lib/notion"
-import { cn } from "@/lib/utils"
 
 import { selectedTypeAtom } from "./state"
 

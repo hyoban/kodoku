@@ -1,8 +1,8 @@
 import Link from "next/link"
+import { cn } from "@hyoban/utils"
 
 import { Icons } from "@/components/icons"
 import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
 import { NavItem } from "@/types/nav"
 
 interface MainNavProps {

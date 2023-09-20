@@ -1,12 +1,6 @@
-import { clsx, type ClassValue } from "clsx"
 import Parser from "rss-parser"
-import { twMerge } from "tailwind-merge"
 
-import { FeedInfo, FeedItem } from "./notion"
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
+import type { FeedInfo, FeedItem } from "./notion"
 
 export function extractFirstImageUrl(html: string): string | undefined {
   const img = html.match(/<img.*?src="(.*?)"/)
