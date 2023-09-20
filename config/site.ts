@@ -9,10 +9,6 @@ export const siteConfig = {
       href: "/subscription",
     },
     {
-      title: "Timeline",
-      href: "/timeline",
-    },
-    {
       title: "People",
       href: "/people",
     },

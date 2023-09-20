@@ -17,8 +17,8 @@
     "extends": "@hyoban/eslint-config-next"
   },
   "dependencies": {
-    "@hyoban/components": "^6.3.7",
-    "@hyoban/utils": "^6.3.7",
+    "@hyoban/components": "^6.3.8",
+    "@hyoban/utils": "^6.3.8",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
@@ -39,12 +39,12 @@
     "sharp": "^0.32.6"
   },
   "devDependencies": {
-    "@hyoban/eslint-config-next": "^6.3.7",
-    "@hyoban/prettier-config": "^6.3.7",
-    "@hyoban/tailwind-config": "^6.3.7",
-    "@hyoban/tsconfig": "^6.3.7",
+    "@hyoban/eslint-config-next": "^6.3.8",
+    "@hyoban/prettier-config": "^6.3.8",
+    "@hyoban/tailwind-config": "^6.3.8",
+    "@hyoban/tsconfig": "^6.3.8",
     "@notionhq/client": "^2.2.13",
-    "@types/node": "^20.6.2",
+    "@types/node": "^20.6.3",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
     "autoprefixer": "^10.4.15",
