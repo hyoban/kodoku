@@ -1,3 +1,6 @@
+import Image from "next/image"
+
+import Icon from "~/app/android-chrome-512x512.png"
 import Link from "~/components/link"
 import { siteConfig, type NavItem } from "~/config/site"
 
@@ -8,7 +11,8 @@ interface MainNavProps {
 export function MainNav({ items }: MainNavProps) {
   return (
     <nav className="flex items-center gap-4 md:gap-10">
-      <Link href="/" className="font-bold text-xl">
+      <Link href="/" className="font-bold text-xl flex items-center gap-2">
+        <Image src={Icon} alt={siteConfig.name} className="w-8 h-8" />
         {siteConfig.name}
       </Link>
       {!!items?.length && (
