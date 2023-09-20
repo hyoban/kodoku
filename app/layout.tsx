@@ -4,8 +4,8 @@ import type { Metadata } from "next"
 import { TailwindIndicator, ThemeProvider } from "@hyoban/components"
 import { Analytics } from "@vercel/analytics/react"
 
-import { SiteHeader } from "@/components/site-header"
-import { siteConfig } from "@/config/site"
+import { SiteHeader } from "~/components/site-header"
+import { siteConfig } from "~/config/site"
 
 export const metadata: Metadata = {
   title: {

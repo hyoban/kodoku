@@ -3,7 +3,7 @@ import relativeTime from "dayjs/plugin/relativeTime"
 import timezone from "dayjs/plugin/timezone"
 import utc from "dayjs/plugin/utc"
 
-import { siteConfig } from "@/config/site"
+import { siteConfig } from "~/config/site"
 
 const { timeZone } = siteConfig
 

@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
-import "@/lib/dayjs"
+import "~/lib/dayjs"
 
 import dayjs from "dayjs"
 import Parser from "rss-parser"
 import type { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints"
 
-import { siteConfig } from "@/config/site"
+import { siteConfig } from "~/config/site"
 
 import { getFeedInfoList } from "./unsafe"
 import { isFeedItemValid, joinFeedItemUrl, timeout } from "./utils"

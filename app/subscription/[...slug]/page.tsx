@@ -1,15 +1,15 @@
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
-import FeedListGroup from "@/components/feed-list-group"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import FeedListGroup from "~/components/feed-list-group"
+import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs"
 import {
   getFeedList,
   getFeedListGroupedByYearAndMonth,
   getFilters,
-} from "@/lib/notion"
-import { getFeedInfoList } from "@/lib/unsafe"
-import { capitalize } from "@/lib/utils"
+} from "~/lib/notion"
+import { getFeedInfoList } from "~/lib/unsafe"
+import { capitalize } from "~/lib/utils"
 
 export const revalidate = 3600
 

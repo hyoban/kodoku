@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import "@/lib/dayjs"
+import "~/lib/dayjs"
 
 import dayjs from "dayjs"
 import Link from "next/link"
@@ -11,10 +11,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { siteConfig } from "@/config/site"
-import type { FeedList } from "@/lib/notion"
-import { getFeedContent } from "@/lib/unsafe"
+} from "~/components/ui/card"
+import { siteConfig } from "~/config/site"
+import type { FeedList } from "~/lib/notion"
+import { getFeedContent } from "~/lib/unsafe"
 
 import RevalidateAt from "./revalidate-at"
 

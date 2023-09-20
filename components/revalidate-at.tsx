@@ -1,4 +1,4 @@
-import "@/lib/dayjs"
+import "~/lib/dayjs"
 
 import dayjs from "dayjs"
 

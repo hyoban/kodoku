@@ -1,8 +1,8 @@
 import Link from "next/link"
 import { AppearanceSwitch } from "@hyoban/components"
 
-import { MainNav } from "@/components/main-nav"
-import { siteConfig } from "@/config/site"
+import { MainNav } from "~/components/main-nav"
+import { siteConfig } from "~/config/site"
 
 export function SiteHeader() {
   return (

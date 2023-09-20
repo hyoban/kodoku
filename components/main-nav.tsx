@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { siteConfig, type NavItem } from "@/config/site"
+import { siteConfig, type NavItem } from "~/config/site"
 
 interface MainNavProps {
   items?: NavItem[]
