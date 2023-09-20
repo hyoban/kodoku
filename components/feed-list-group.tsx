@@ -44,6 +44,7 @@ export default function FeedListGroup({
                           href={feed.link || "#"}
                           target="_blank"
                           rel="noopener noreferrer"
+                          className="leading-8"
                         >
                           {feed.title}
                         </Link>

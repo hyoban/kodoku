@@ -2,12 +2,10 @@ import "@hyoban/tailwind-config/globals.css"
 
 import type { Metadata } from "next"
 import { TailwindIndicator, ThemeProvider } from "@hyoban/components"
-import { cn } from "@hyoban/utils"
 import { Analytics } from "@vercel/analytics/react"
 
 import { SiteHeader } from "@/components/site-header"
 import { siteConfig } from "@/config/site"
-import { fontSans } from "@/lib/fonts"
 
 export const metadata: Metadata = {
   title: {
@@ -35,12 +33,7 @@ export default function RootLayout({
     <>
       <html lang="en" suppressHydrationWarning className="h-full">
         <head />
-        <body
-          className={cn(
-            "h-full bg-background font-sans antialiased",
-            fontSans.variable,
-          )}
-        >
+        <body className="h-full bg-background">
           <ThemeProvider>
             <div className="relative flex h-full flex-col">
               <SiteHeader />
