@@ -1,9 +1,7 @@
 import Link from "next/link"
-import { cn } from "@hyoban/utils"
+import { AppearanceSwitch } from "@hyoban/components"
 
 import { MainNav } from "@/components/main-nav"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { buttonVariants } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
 
 export function SiteHeader() {
@@ -12,44 +10,24 @@ export function SiteHeader() {
       <div className="flex h-16 items-center justify-evenly space-x-4 sm:container sm:justify-between sm:space-x-0">
         <MainNav items={siteConfig.mainNav} />
         <div className="hidden flex-1 items-center justify-end space-x-4 sm:flex">
-          <nav className="flex items-center space-x-1">
+          <nav className="flex items-center space-x-4">
             <Link
               href={siteConfig.links.github}
               target="_blank"
               rel="noreferrer"
+              className="i-simple-icons-github text-[1.5rem] hover:text-teal-600 transition-colors"
             >
-              <div
-                className={cn(
-                  buttonVariants({
-                    size: "sm",
-                    variant: "ghost",
-                  }),
-                  "text-2xl",
-                )}
-              >
-                <div className="i-carbon-logo-github" />
-                <span className="sr-only">GitHub</span>
-              </div>
+              <span className="sr-only">GitHub</span>
             </Link>
             <Link
               href={siteConfig.links.twitter}
               target="_blank"
               rel="noreferrer"
+              className="i-simple-icons-twitter text-[1.5rem] hover:text-teal-600 transition-colors"
             >
-              <div
-                className={cn(
-                  buttonVariants({
-                    size: "sm",
-                    variant: "ghost",
-                  }),
-                  "text-2xl",
-                )}
-              >
-                <div className="i-carbon-logo-twitter" />
-                <span className="sr-only">Twitter</span>
-              </div>
+              <span className="sr-only">Twitter</span>
             </Link>
-            <ThemeToggle />
+            <AppearanceSwitch enableTransition />
           </nav>
         </div>
       </div>
