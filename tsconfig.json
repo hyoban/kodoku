@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./*"]
+      "~/*": ["src/*"]
     },
     "incremental": true,
     "jsx": "preserve",
