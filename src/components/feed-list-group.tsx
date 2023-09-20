@@ -2,8 +2,8 @@
 import "~/lib/dayjs"
 
 import dayjs from "dayjs"
-import Link from "next/link"
 
+import Link from "~/components/link"
 import {
   Card,
   CardContent,
@@ -40,21 +40,12 @@ export default function FeedListGroup({
                   <Card className="h-full" key={feed.link}>
                     <CardHeader>
                       <CardTitle>
-                        <Link
-                          href={feed.link || "#"}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="leading-8"
-                        >
+                        <Link href={feed.link} className="leading-8">
                           {feed.title}
                         </Link>
                       </CardTitle>
                       <CardDescription>
-                        <Link
-                          href={feed.feedInfo.url || "#"}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                        <Link href={feed.feedInfo.url}>
                           {feed.feedInfo.title}
                         </Link>
                       </CardDescription>

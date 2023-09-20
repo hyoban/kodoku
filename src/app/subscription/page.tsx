@@ -1,6 +1,5 @@
-import Link from "next/link"
-
 import FeedListGroup from "~/components/feed-list-group"
+import Link from "~/components/link"
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs"
 import {
   getFeedList,

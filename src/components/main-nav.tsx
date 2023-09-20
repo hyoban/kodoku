@@ -1,5 +1,4 @@
-import Link from "next/link"
-
+import Link from "~/components/link"
 import { siteConfig, type NavItem } from "~/config/site"
 
 interface MainNavProps {

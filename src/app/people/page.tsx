@@ -1,7 +1,7 @@
 import Image from "next/image"
-import Link from "next/link"
 import { cn } from "@hyoban/utils"
 
+import Link from "~/components/link"
 import { Separator } from "~/components/ui/separator"
 import { getFeedInfoList } from "~/lib/unsafe"
 
@@ -20,12 +20,7 @@ function IconLink({ link }: { link: string }) {
   if (!ICON_MAP.get(new URL(link).hostname)) return null
 
   return (
-    <Link
-      href={link}
-      className="flex items-center text-xl"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
+    <Link href={link} className="flex items-center text-xl">
       <div className={cn(ICON_MAP.get(new URL(link).hostname))}></div>
     </Link>
   )
@@ -53,14 +48,10 @@ export default async function SubscriptionPage() {
             />
             <div className="ml-4 flex w-full flex-col self-stretch">
               <div className="flex grow flex-col sm:flex-row sm:items-center sm:justify-between">
-                <Link
-                  href={feedInfo.url || "#"}
-                  className="flex items-center"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <Link href={feedInfo.url} className="flex items-center">
                   <h3 className="text-lg font-semibold">{feedInfo.title}</h3>
                 </Link>
+
                 <span className="my-2 flex gap-3">
                   {feedInfo.socials
                     .filter((link) => link)
