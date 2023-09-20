@@ -1,6 +1,10 @@
 import Parser from "rss-parser"
 
-import type { FeedInfo, FeedItem } from "./notion"
+import type { FeedInfo } from "./notion"
+
+export function notNullish<T>(v: T | null | undefined): v is NonNullable<T> {
+  return v != null
+}
 
 export function extractFirstImageUrl(html: string): string | undefined {
   const img = html.match(/<img.*?src="(.*?)"/)
@@ -25,7 +29,7 @@ export function isFeedItemValid(
   item: Parser.Item & { id?: string },
   feedInfo: FeedInfo,
 ): boolean {
-  if (feedInfo.type === "GitHub" && feedInfo.feedUrl.endsWith(".atom")) {
+  if (feedInfo.type === "GitHub" && feedInfo.feedUrl?.endsWith(".atom")) {
     if (
       ["PushEvent"].some((i) => {
         return item.id?.includes(i)
@@ -62,27 +66,4 @@ export function timeout<T>(
 
 export function capitalize(text: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1)
-}
-
-export function getFeedContent(item: FeedItem): string {
-  if (item.feedInfo.useCover) {
-    if (item.image?.url) {
-      return item.image.url
-    }
-    if (item.enclosure?.url && item.enclosure.type?.startsWith("image")) {
-      return item.enclosure.url
-    }
-    if (item.itunes?.image) {
-      return item.itunes.image
-    }
-    const cover = extractFirstImageUrl(
-      item["content:encoded"] ?? item.content ?? "",
-    )
-    return cover ?? ""
-  }
-  return (
-    Array.from(item.contentSnippet ?? "")
-      .slice(0, 100)
-      .join("") + "..."
-  )
 }

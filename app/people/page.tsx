@@ -8,12 +8,12 @@ import { getFeedInfoList } from "@/lib/notion"
 export const revalidate = 3600
 
 const ICON_MAP: Map<string, string> = new Map([
-  ["twitter.com", "i-carbon-logo-twitter"],
-  ["github.com", "i-carbon-logo-github"],
-  ["www.youtube.com", "i-carbon-logo-youtube"],
-  ["space.bilibili.com", "i-ri-bilibili-fill"],
-  ["discord.com", "i-carbon-logo-discord"],
-  ["t.me", "i-ri-telegram-fill"],
+  ["twitter.com", "i-simple-icons-twitter"],
+  ["github.com", "i-simple-icons-github"],
+  ["www.youtube.com", "i-simple-icons-youtube"],
+  ["space.bilibili.com", "i-simple-icons-bilibili"],
+  ["discord.com", "i-simple-icons-discord"],
+  ["t.me", "i-simple-icons-telegram"],
 ])
 
 function IconLink({ link }: { link: string }) {
@@ -65,7 +65,7 @@ export default async function SubscriptionPage() {
                   {feedInfo.socials
                     .filter((link) => link)
                     .map((link) => (
-                      <IconLink key={link} link={link!} />
+                      <IconLink key={link} link={link} />
                     ))}
                 </span>
               </div>

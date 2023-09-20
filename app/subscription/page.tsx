@@ -28,11 +28,11 @@ export default async function SubscriptionPage() {
                     <TabsTrigger
                       key={filter}
                       value={filter}
-                      href={
-                        index === 0
-                          ? `/subscription/${filter}/all`
-                          : `/subscription/all/${filter}`
-                      }
+                      // href={
+                      //   index === 0
+                      //     ? `/subscription/${filter}/all`
+                      //     : `/subscription/all/${filter}`
+                      // }
                     >
                       {capitalize(filter)}
                     </TabsTrigger>

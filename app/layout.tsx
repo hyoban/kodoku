@@ -1,4 +1,3 @@
-import "@hyoban/components/index.css"
 import "@hyoban/tailwind-config/globals.css"
 
 import type { Metadata } from "next"

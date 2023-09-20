@@ -38,15 +38,15 @@ export default async function SubscriptionPage({
             return (
               <Tabs defaultValue={slug} key={index}>
                 <TabsList>
-                  {filters[index].map((filter) => (
+                  {filters[index]?.map((filter) => (
                     <TabsTrigger
                       key={filter}
                       value={filter}
-                      href={
-                        index === 0
-                          ? `/subscription/${filter}/${params.slug[1]}`
-                          : `/subscription/${params.slug[0]}/${filter}`
-                      }
+                      // href={
+                      //   index === 0
+                      //     ? `/subscription/${filter}/${params.slug[1]}`
+                      //     : `/subscription/${params.slug[0]}/${filter}`
+                      // }
                     >
                       {capitalize(filter)}
                     </TabsTrigger>

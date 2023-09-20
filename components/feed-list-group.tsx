@@ -13,8 +13,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { siteConfig } from "@/config/site"
-import { FeedList } from "@/lib/notion"
-import { getFeedContent } from "@/lib/utils"
+import type { FeedList } from "@/lib/notion"
+import { getFeedContent } from "@/lib/unsafe"
 
 import RevalidateAt from "./revalidate-at"
 
@@ -36,7 +36,7 @@ export default function FeedListGroup({
             <div className="my-10" key={feedMonth}>
               <h2 className="my-4 text-2xl font-bold">{feedMonth}</h2>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {feedListByYear.map((feed) => (
+                {feedListByYear?.map((feed) => (
                   <Card className="h-full" key={feed.link}>
                     <CardHeader>
                       <CardTitle>

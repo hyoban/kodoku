@@ -1,20 +1,17 @@
+/* eslint-disable no-console */
 import "@/lib/dayjs"
 
 import dayjs from "dayjs"
 import Parser from "rss-parser"
-import {
-  PageObjectResponse,
-  QueryDatabaseResponse,
-} from "@notionhq/client/build/src/api-endpoints"
+import type { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints"
 
 import { siteConfig } from "@/config/site"
 import { isFeedItemValid, joinFeedItemUrl, timeout } from "@/lib/utils"
 
 const { timeZone } = siteConfig
 
-const notionToken = process.env.NOTION_TOKEN!
-const feedId = process.env.NOTION_FEED_ID!
-const RSSHubUrl = process.env.RSSHUB_URL ?? "https://rsshub.app"
+const notionToken = process.env["NOTION_TOKEN"] as string
+const feedId = process.env["NOTION_FEED_ID"] as string
 
 const headers = {
   Accept: "application/json",
@@ -33,31 +30,36 @@ async function getDatabaseItems(databaseId: string) {
       },
     ).then((i) => i.json())) as QueryDatabaseResponse
 
-    if (response.results) return response.results
+    if (response.results.length) return response.results
   } catch (e) {
     console.error("getDatabaseItemList", e)
   }
+  return null
 }
 
 const parser = new Parser()
 
 async function parseRssFeed(
-  feedUrl: string,
-): Promise<Parser.Output<{ [key: string]: any }> | undefined> {
+  feedUrl?: string | undefined,
+): Promise<Parser.Output<{ [key: string]: unknown }> | null> {
+  if (!feedUrl) return null
   try {
     const feed = await timeout(5000, parser.parseURL(feedUrl))
     return feed
-  } catch (e: any) {
-    if (
-      e.message === "timeout" ||
-      !e.message.includes("Non-whitespace before first tag.")
-    ) {
-      console.error(e.message, feedUrl)
-      return
+  } catch (e) {
+    if (e instanceof Error) {
+      if (
+        e.message === "timeout" ||
+        !e.message.includes("Non-whitespace before first tag.")
+      ) {
+        console.error(e.message, feedUrl)
+        return null
+      }
     }
 
     console.error("parseRssFeed", e)
   }
+  return null
 }
 
 export async function getFeedInfoList() {
@@ -65,25 +67,48 @@ export async function getFeedInfoList() {
   if (!feedInfoListInDB) return
 
   return feedInfoListInDB.map((i) => {
-    const page = i as PageObjectResponse
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const page = i as Record<string, any>
     return {
       id: i.id,
-      title: (page as any).properties.ID.title[0].plain_text,
-      url: (page as any).properties.Homepage.url,
-      feedUrl: (page as any).properties.RSS.url,
-      avatar: (page.cover as any).external.url,
-      type: (page as any).properties.Type.select.name as string,
-      language: (page as any).properties.Language.select.name as string,
-      useCover: (page as any).properties.UseCover.checkbox as boolean,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      title: page["properties"].ID.title[0].plain_text,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      url: page["properties"].Homepage.url,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      feedUrl: page["properties"].RSS.url,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      avatar: page["cover"].external.url,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      type: page["properties"].Type.select.name,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      language: page["properties"].Language.select.name,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      useCover: page["properties"].UseCover.checkbox,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       socials:
-        Object.keys((page as any).properties).map((j) => {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unsafe-argument
+        Object.keys(page["properties"]).map((j) => {
           if (
-            (page as any).properties[j].type === "url" &&
-            (page as any).properties[j].url
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            page["properties"][j].type === "url" &&
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            page["properties"][j].url
           ) {
-            return (page as any).properties[j].url
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+            return page["properties"][j].url
           }
         }) ?? [],
+    } as {
+      id: string
+      title: string
+      url: string
+      feedUrl?: string | undefined
+      avatar: string
+      type: string
+      language: string
+      useCover: boolean
+      socials: string[]
     }
   })
 }
@@ -120,76 +145,11 @@ export async function getFilters(
   return [typeFilter, languageFilter] as const
 }
 
-const VALID_RSS_LINK_PATTERNS = [
-  [
-    /https:\/\/www\.youtube\.com\/channel\/(\w+)$/,
-    `${RSSHubUrl}/youtube/channel/$1`,
-    "YouTube",
-  ],
-  [/https:\/\/github\.com\/(\w+)$/, "https://github.com/$1.atom", "GitHub"],
-  [
-    /https:\/\/space.bilibili.com\/(\d+)$/,
-    `${RSSHubUrl}/bilibili/user/dynamic/$1`,
-    "Bilibili",
-  ],
-  [/https:\/\/twitter\.com\/(\w+)$/, `${RSSHubUrl}/twitter/user/$1`, "Twitter"],
-] as const
-
-function generateValidRSSLink(
-  originalLink: string,
-  matchPattern: RegExp,
-  replacePattern: string,
-): string | undefined {
-  if (
-    typeof originalLink === "string" &&
-    originalLink.length !== 0 &&
-    originalLink.match(matchPattern)
-  ) {
-    return originalLink.replace(matchPattern, replacePattern)
-  }
-}
-
 export async function getTimeline() {
   const feedInfoList = await getFeedInfoList()
   if (!feedInfoList) return
 
   const RSSList = feedInfoList
-    .map((i) => {
-      return {
-        ...i,
-        socials: i.socials
-          .map((j) => {
-            for (const [
-              matchPattern,
-              replacePattern,
-              type,
-            ] of VALID_RSS_LINK_PATTERNS) {
-              const validRSSLink = generateValidRSSLink(
-                j,
-                matchPattern,
-                replacePattern,
-              )
-              if (validRSSLink) {
-                return [validRSSLink, type]
-              }
-            }
-          })
-          .filter((j) => j),
-      }
-    })
-    .map((i) => {
-      return [
-        ...i.socials.map((j) => {
-          return {
-            ...i,
-            feedUrl: j![0],
-            type: j![1],
-          }
-        }),
-      ]
-    })
-    .flat()
-
   const res = await getFeedList(RSSList, "all", "all", false)
   return res?.map((i) => {
     if (i.feedInfo.type === "GitHub") {
@@ -224,8 +184,11 @@ export async function getFeedList(
             .map((j) => {
               return {
                 ...j,
-                id: j.id as string | undefined,
-                link: joinFeedItemUrl(feed.feedUrl ? feed.link : i.url, j.link),
+                id: j["id"] as string | undefined,
+                link: joinFeedItemUrl(
+                  feed.feedUrl ? (feed.link as string) : i.url,
+                  j.link,
+                ),
                 feedInfo: i,
               }
             })
@@ -295,22 +258,18 @@ export async function getFeedList(
   } catch (e) {
     console.error("getFeedList", e)
   }
+  return null
 }
 
 export function getFeedListGroupedByYearAndMonth(feedListFromArg: FeedList) {
-  return feedListFromArg.reduce(
-    (acc, feed) => {
-      const feedYearWithMonth = dayjs(feed.isoDate)
-        .tz(timeZone)
-        .format("YYYY MM")
-      if (!acc[feedYearWithMonth]) {
-        acc[feedYearWithMonth] = []
-      }
-      acc[feedYearWithMonth].push(feed)
-      return acc
-    },
-    {} as Record<string, FeedList>,
-  )
+  return feedListFromArg.reduce<Record<string, FeedList>>((acc, feed) => {
+    const feedYearWithMonth = dayjs(feed.isoDate).tz(timeZone).format("YYYY MM")
+    if (!acc[feedYearWithMonth]) {
+      acc[feedYearWithMonth] = []
+    }
+    acc[feedYearWithMonth]?.push(feed)
+    return acc
+  }, {})
 }
 
 export type FeedInfoList = NonNullable<
@@ -320,6 +279,7 @@ export type FeedInfo = FeedInfoList[number]
 export type FeedItem = Parser.Item & {
   feedInfo: FeedInfo
 } & {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
 export type FeedList = NonNullable<Awaited<ReturnType<typeof getFeedList>>>
