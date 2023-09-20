@@ -2,7 +2,13 @@ import Link from "next/link"
 import { cn } from "@hyoban/utils"
 
 import { siteConfig } from "@/config/site"
-import type { NavItem } from "@/types/nav"
+
+interface NavItem {
+  title: string
+  href?: string
+  disabled?: boolean
+  external?: boolean
+}
 
 interface MainNavProps {
   items?: NavItem[]
