@@ -13,13 +13,13 @@ export function SiteHeader() {
           <nav className="flex items-center space-x-4">
             <Link
               href={siteConfig.links.github}
-              className="i-simple-icons-github text-[1.5rem] hover:text-teal-600 transition-colors"
+              className="i-simple-icons-github hover:text-teal-600 transition-colors"
             >
               <span className="sr-only">GitHub</span>
             </Link>
             <Link
               href={siteConfig.links.twitter}
-              className="i-simple-icons-twitter text-[1.5rem] hover:text-teal-600 transition-colors"
+              className="i-simple-icons-twitter hover:text-teal-600 transition-colors"
             >
               <span className="sr-only">Twitter</span>
             </Link>
