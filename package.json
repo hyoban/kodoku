@@ -13,8 +13,8 @@
   },
   "prettier": "@planet-matrix/prettier-config",
   "dependencies": {
-    "@hyoban/components": "^8.0.10",
-    "@hyoban/utils": "^8.0.10",
+    "@hyoban/components": "^8.0.11",
+    "@hyoban/utils": "^8.0.11",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
@@ -28,10 +28,10 @@
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {
-    "@hyoban/eslint-config": "^8.0.10",
+    "@hyoban/eslint-config": "^8.0.11",
     "@hyoban/eslint-config-next": "^8.0.2",
-    "@hyoban/tailwind-config": "^8.0.10",
-    "@hyoban/tsconfig": "^8.0.10",
+    "@hyoban/tailwind-config": "^8.0.11",
+    "@hyoban/tsconfig": "^8.0.11",
     "@iconify-json/lucide": "^1.1.129",
     "@iconify-json/mdi": "^1.1.54",
     "@iconify-json/simple-icons": "^1.1.72",
