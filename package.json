@@ -6,18 +6,15 @@
     "build": "next build",
     "dev": "next dev",
     "format": "prettier --cache --write .",
-    "lint": "next lint",
+    "lint": "eslint .",
     "preview": "next build && next start",
     "start": "next start",
     "typecheck": "tsc --noEmit"
   },
-  "prettier": "@hyoban/prettier-config",
-  "eslintConfig": {
-    "extends": "@hyoban/eslint-config-next"
-  },
+  "prettier": "@planet-matrix/prettier-config",
   "dependencies": {
-    "@hyoban/components": "^8.0.7",
-    "@hyoban/utils": "^8.0.7",
+    "@hyoban/components": "^8.0.10",
+    "@hyoban/utils": "^8.0.10",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
@@ -31,12 +28,16 @@
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {
+    "@hyoban/eslint-config": "^8.0.10",
     "@hyoban/eslint-config-next": "^8.0.2",
-    "@hyoban/prettier-config": "^8.0.7",
-    "@hyoban/tailwind-config": "^8.0.7",
-    "@hyoban/tsconfig": "^8.0.7",
+    "@hyoban/tailwind-config": "^8.0.10",
+    "@hyoban/tsconfig": "^8.0.10",
+    "@iconify-json/lucide": "^1.1.129",
+    "@iconify-json/mdi": "^1.1.54",
+    "@iconify-json/simple-icons": "^1.1.72",
     "@notionhq/client": "^2.2.13",
-    "@types/node": "^20.6.4",
+    "@planet-matrix/prettier-config": "^0.1.0",
+    "@types/node": "^20.6.5",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
     "autoprefixer": "^10.4.16",

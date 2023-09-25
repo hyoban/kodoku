@@ -20,7 +20,7 @@ function IconLink({ link }: { link: string }) {
   if (!ICON_MAP.get(new URL(link).hostname)) return null
 
   return (
-    <Link href={link} className="flex items-center text-xl">
+    <Link href={link} className="flex items-center text-sm">
       <div className={cn(ICON_MAP.get(new URL(link).hostname))}></div>
     </Link>
   )
