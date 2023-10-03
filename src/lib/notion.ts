@@ -46,7 +46,7 @@ async function parseRssFeed(
 ): Promise<Parser.Output<{ [key: string]: unknown }> | null> {
   if (!feedUrl) return null
   try {
-    const feed = await timeout(5000, parser.parseURL(feedUrl))
+    const feed = await timeout(3000, parser.parseURL(feedUrl))
     return feed
   } catch (e) {
     if (e instanceof Error) {
@@ -96,31 +96,14 @@ export async function getFilters(
   return [typeFilter, languageFilter] as const
 }
 
-export async function getTimeline() {
-  const feedInfoList = await getFeedInfoList()
-  if (!feedInfoList) return
-
-  const RSSList = feedInfoList
-  const res = await getFeedList(RSSList, "all", "all", false)
-  return res?.map((i) => {
-    if (i.feedInfo.type === "GitHub") {
-      const regex = /<a.*href="(\S+)".*>(.+)<\/a>/gm
-      const removeClassRegex = /(class=".*?")/gm
-      const str = i.content ?? ""
-      const subst = `<a href="https://github.com$1" target="_blank" rel="noreferrer">$2</a>`
-      const result = str.replace(regex, subst).replace(removeClassRegex, "")
-      i.content = result
-    }
-    return i
-  })
-}
-
 export async function getFeedList(
   feedInfoListFromArg?: FeedInfoList,
   type: string = "all",
   language: string = "all",
   enableAutoFilter = true,
 ) {
+  console.log("start getFeedList at" + new Date().toISOString())
+  console.time("getFeedList")
   const feedInfoList = feedInfoListFromArg ?? (await getFeedInfoList())
   if (!feedInfoList) return
   try {
@@ -176,7 +159,7 @@ export async function getFeedList(
     )
 
     // sort by published time
-    return enableAutoFilter
+    const finalFeedList = enableAutoFilter
       ? feedList
           .map((i) => {
             if (i.length > maxNumberOfFeedSentPerAuthor) {
@@ -206,6 +189,9 @@ export async function getFeedList(
           })
           // max 100 feeds
           .slice(0, 100)
+
+    console.timeEnd("getFeedList")
+    return finalFeedList
   } catch (e) {
     console.error("getFeedList", e)
   }
