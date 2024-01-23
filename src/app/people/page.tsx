@@ -1,6 +1,9 @@
 import Image from "next/image"
+import { Suspense } from "react"
 
 import Link from "~/components/link"
+import Loading from "~/components/loading"
+import { NewFeedDialog } from "~/components/new-feed"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { Separator } from "~/components/ui/separator"
 import { getFeedInfoList } from "~/lib/unsafe"
@@ -27,17 +30,17 @@ function IconLink({ link }: { link: string }) {
   )
 }
 
-export default async function SubscriptionPage() {
+async function FeedInfoList() {
   const feedInfoList = await getFeedInfoList()
 
   return (
-    <div className="m-5 sm:m-10">
+    <>
       {feedInfoList
         .sort((a, b) => a.title.localeCompare(b.title))
         .map((feedInfo) => (
           <div
             key={feedInfo.id}
-            className="group mx-auto my-4 flex w-full max-w-xl items-center rounded-md px-4 py-3 hover:bg-accent"
+            className="group w-full mx-auto my-4 flex items-center rounded-md px-4 py-3 hover:bg-accent"
           >
             <Avatar>
               <AvatarImage asChild src={feedInfo.avatar ?? ""}>
@@ -72,6 +75,17 @@ export default async function SubscriptionPage() {
             </div>
           </div>
         ))}
+    </>
+  )
+}
+
+export default function Page() {
+  return (
+    <div className="m-5 sm:m-10 self-center md:min-w-[30rem] flex flex-col">
+      <NewFeedDialog />
+      <Suspense fallback={<Loading />}>
+        <FeedInfoList />
+      </Suspense>
     </div>
   )
 }

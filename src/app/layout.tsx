@@ -1,6 +1,7 @@
 import "./globals.css"
 
 import { SiteHeader } from "~/components/site-header"
+import { Toaster } from "~/components/ui/sonner"
 import { siteConfig } from "~/config/site"
 
 import Providers from "./providers"
@@ -29,13 +30,14 @@ export default function RootLayout({
     <>
       <html lang="en" suppressHydrationWarning className="h-full">
         <head />
-        <body className="h-full bg-background">
+        <body className="h-full bg-background overflow-auto">
           <Providers>
             <div className="relative flex h-full flex-col">
               <SiteHeader />
-              <div className="flex-1">{children}</div>
+              {children}
             </div>
           </Providers>
+          <Toaster />
         </body>
       </html>
     </>

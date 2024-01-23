@@ -2,15 +2,17 @@
 import "~/lib/dayjs"
 
 import dayjs from "dayjs"
-import Parser from "rss-parser"
 
 import { siteConfig } from "~/config/site"
 import { env } from "~/env"
 
+import { parseRssFeed } from "./rss"
 import { getFeedInfoList } from "./unsafe"
-import { isFeedItemValid, joinFeedItemUrl, timeout } from "./utils"
+import { isFeedItemValid, joinFeedItemUrl } from "./utils"
 
 import type { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints"
+import type { FeedInfoWithoutId } from "~/schema"
+import type Parser from "rss-parser"
 
 const { timeZone } = siteConfig
 
@@ -22,6 +24,37 @@ const headers = {
   "Content-Type": "application/json",
   "Notion-Version": "2022-06-28",
   Authorization: `Bearer ${notionToken}`,
+}
+
+export async function addFeedInfo(feedInfo: FeedInfoWithoutId) {
+  const database_id = feedId
+  const options = {
+    parent: { database_id },
+    properties: {
+      title: {
+        text: {
+          content: feedInfo.title,
+        },
+      },
+      Homepage: feedInfo.url,
+      RSS: feedInfo.feedUrl,
+    },
+    ...(feedInfo.avatar
+      ? {
+          cover: {
+            type: "external",
+            external: {
+              url: feedInfo.avatar,
+            },
+          },
+        }
+      : {}),
+  }
+  return fetch("https://api.notion.com/v1/pages", {
+    method: "POST",
+    headers,
+    body: JSON.stringify(options),
+  }).then((response) => response.json())
 }
 
 export async function getDatabaseItems(databaseId: string) {
@@ -37,31 +70,6 @@ export async function getDatabaseItems(databaseId: string) {
     if (response.results.length) return response.results
   } catch (e) {
     console.error("getDatabaseItemList", e)
-  }
-  return null
-}
-
-const parser = new Parser()
-
-async function parseRssFeed(
-  feedUrl?: string | undefined,
-): Promise<Parser.Output<Record<string, unknown>> | null> {
-  if (!feedUrl) return null
-  try {
-    const feed = await timeout(3000, parser.parseURL(feedUrl))
-    return feed
-  } catch (e) {
-    if (e instanceof Error) {
-      if (
-        e.message === "timeout" ||
-        !e.message.includes("Non-whitespace before first tag.")
-      ) {
-        console.error(e.message, feedUrl)
-        return null
-      }
-    }
-
-    console.error("parseRssFeed", e)
   }
   return null
 }
