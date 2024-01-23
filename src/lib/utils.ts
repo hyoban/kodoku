@@ -1,4 +1,8 @@
+import { clsx } from "clsx"
+import { twMerge } from "tailwind-merge"
+
 import type { FeedInfo } from "./notion"
+import type { ClassValue } from "clsx"
 import type Parser from "rss-parser"
 
 export function notNullish<T>(v: T | null | undefined): v is NonNullable<T> {
@@ -65,4 +69,8 @@ export function timeout<T>(
 
 export function capitalize(text: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1)
+}
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
 }

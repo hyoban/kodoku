@@ -1,4 +1,4 @@
-import "@hyoban/tailwind-config/globals.css"
+import "./globals.css"
 
 import { TailwindIndicator, ThemeProvider } from "@hyoban/components"
 import { Analytics } from "@vercel/analytics/react"

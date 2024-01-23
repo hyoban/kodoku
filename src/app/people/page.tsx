@@ -1,9 +1,9 @@
-import { cn } from "@hyoban/utils"
 import Image from "next/image"
 
 import Link from "~/components/link"
 import { Separator } from "~/components/ui/separator"
 import { getFeedInfoList } from "~/lib/unsafe"
+import { cn } from "~/lib/utils"
 
 export const revalidate = 3600
 

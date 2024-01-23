@@ -1,3 +1,4 @@
+/* eslint-disable import/no-anonymous-default-export */
 /** @type {import('@ianvs/prettier-plugin-sort-imports').PrettierConfig} */
 export default {
   semi: false,
