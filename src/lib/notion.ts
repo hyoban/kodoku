@@ -13,8 +13,8 @@ import type { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpo
 
 const { timeZone } = siteConfig
 
-const notionToken = process.env["NOTION_TOKEN"] as string
-export const feedId = process.env["NOTION_FEED_ID"] as string
+const notionToken = process.env["NOTION_TOKEN"]!
+export const feedId = process.env["NOTION_FEED_ID"]!
 
 const headers = {
   Accept: "application/json",
@@ -44,7 +44,7 @@ const parser = new Parser()
 
 async function parseRssFeed(
   feedUrl?: string | undefined,
-): Promise<Parser.Output<{ [key: string]: unknown }> | null> {
+): Promise<Parser.Output<Record<string, unknown>> | null> {
   if (!feedUrl) return null
   try {
     const feed = await timeout(3000, parser.parseURL(feedUrl))
@@ -99,8 +99,8 @@ export async function getFilters(
 
 export async function getFeedList(
   feedInfoListFromArg?: FeedInfoList,
-  type: string = "all",
-  language: string = "all",
+  type = "all",
+  language = "all",
   enableAutoFilter = true,
 ) {
   console.log("start getFeedList at" + new Date().toISOString())
@@ -121,7 +121,7 @@ export async function getFeedList(
                 ...j,
                 id: j["id"] as string | undefined,
                 link: joinFeedItemUrl(
-                  feed.feedUrl ? (feed.link as string) : i.url,
+                  feed.feedUrl ? feed.link! : i.url,
                   j.link,
                 ),
                 feedInfo: i,
@@ -216,8 +216,6 @@ export type FeedInfoList = NonNullable<
 export type FeedInfo = FeedInfoList[number]
 export type FeedItem = Parser.Item & {
   feedInfo: FeedInfo
-} & {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
-}
+} & Record<string, any>
 export type FeedList = NonNullable<Awaited<ReturnType<typeof getFeedList>>>

@@ -1,6 +1,5 @@
-import Parser from "rss-parser"
-
 import type { FeedInfo } from "./notion"
+import type Parser from "rss-parser"
 
 export function notNullish<T>(v: T | null | undefined): v is NonNullable<T> {
   return v != null

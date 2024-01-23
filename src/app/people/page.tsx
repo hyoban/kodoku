@@ -7,7 +7,7 @@ import { getFeedInfoList } from "~/lib/unsafe"
 
 export const revalidate = 3600
 
-const ICON_MAP: Map<string, string> = new Map([
+const ICON_MAP = new Map<string, string>([
   ["twitter.com", "i-simple-icons-twitter"],
   ["github.com", "i-simple-icons-github"],
   ["www.youtube.com", "i-simple-icons-youtube"],
