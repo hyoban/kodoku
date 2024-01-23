@@ -82,11 +82,11 @@ export async function getFilters(
 
   if (convertToLowerCase) {
     typeFilter.forEach((i, index) => {
-      typeFilter[index] = i.toLowerCase()
+      typeFilter[index] = i?.toLowerCase()
     })
 
     languageFilter.forEach((i, index) => {
-      languageFilter[index] = i.toLowerCase()
+      languageFilter[index] = i?.toLowerCase()
     })
   }
 
@@ -132,13 +132,13 @@ export async function getFeedList(
             .filter((feed) => {
               if (
                 type.toLowerCase() !== "all" &&
-                feed.feedInfo.type.toLowerCase() !== type.toLowerCase()
+                feed.feedInfo.type?.toLowerCase() !== type.toLowerCase()
               ) {
                 return false
               }
               if (
                 language.toLowerCase() !== "all" &&
-                feed.feedInfo.language.toLowerCase() !== language.toLowerCase()
+                feed.feedInfo.language?.toLowerCase() !== language.toLowerCase()
               ) {
                 return false
               }

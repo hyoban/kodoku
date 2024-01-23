@@ -34,7 +34,7 @@ export default async function SubscriptionPage({
             return (
               <Tabs defaultValue={slug} key={index}>
                 <TabsList>
-                  {filters[index]?.map((filter) => (
+                  {filters[index]?.filter(Boolean).map((filter) => (
                     <Link
                       key={filter}
                       href={

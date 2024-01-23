@@ -19,7 +19,7 @@ export default async function SubscriptionPage() {
             return (
               <Tabs defaultValue="all" key={index}>
                 <TabsList>
-                  {filter.map((filter) => (
+                  {filter.filter(Boolean).map((filter) => (
                     <Link
                       key={filter}
                       href={

@@ -48,9 +48,9 @@ export async function getFeedInfoList(): Promise<FeedInfo[] | undefined> {
         title: page.properties.ID.title[0].plain_text,
         url: page.properties.Homepage.url,
         feedUrl: page.properties.RSS.url,
-        avatar: page.cover.external.url,
-        type: page.properties.Type.select.name,
-        language: page.properties.Language.select.name,
+        avatar: page.cover?.external?.url,
+        type: page.properties.Type.select?.name,
+        language: page.properties.Language.select?.name,
         useCover: page.properties.UseCover.checkbox,
         socials:
           Object.keys(page.properties).map((j) => {
