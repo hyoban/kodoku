@@ -14,7 +14,7 @@ export function MainNav({ items }: MainNavProps) {
   return (
     <nav className="flex items-center gap-4 md:gap-10">
       <Link href="/" className="font-bold text-xl flex items-center gap-2">
-        <Image src={Icon} alt={siteConfig.name} className="w-8 h-8" />
+        <Image src={Icon} alt={siteConfig.name} className="size-8" />
         <span className="hidden sm:inline">{siteConfig.name}</span>
       </Link>
       {!!items?.length && (

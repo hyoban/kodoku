@@ -44,7 +44,7 @@ export default async function SubscriptionPage() {
               <AvatarImage asChild src={feedInfo.avatar ?? ""}>
                 <Image
                   src={feedInfo.avatar ?? ""}
-                  className="h-12 w-12 shrink-0 grow-0 rounded-full bg-white object-cover"
+                  className="size-12 shrink-0 grow-0 rounded-full bg-white object-cover"
                   alt="avatar"
                   width={48}
                   height={48}
