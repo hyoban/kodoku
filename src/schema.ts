@@ -9,7 +9,7 @@ export const feedInfoSchema = z.object({
   url: z.string().nullable(),
   feedUrl: z.string().nullable(),
   avatar: z.string().nullable().optional(),
-  socials: z.array(z.string().optional()),
+  socials: z.array(z.string()),
 })
 
 export type FeedInfo = z.infer<typeof feedInfoSchema>

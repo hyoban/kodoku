@@ -53,11 +53,13 @@ export async function getFeedInfoList(): Promise<FeedInfo[] | undefined> {
         language: page.properties.Language.select?.name,
         useCover: page.properties.UseCover.checkbox,
         socials:
-          Object.keys(page.properties).map((j) => {
-            if (page.properties[j].type === "url" && page.properties[j].url) {
-              return page.properties[j].url
-            }
-          }) ?? [],
+          Object.keys(page.properties)
+            .map((j) => {
+              if (page.properties[j].type === "url" && page.properties[j].url) {
+                return page.properties[j].url
+              }
+            })
+            .filter(Boolean) ?? [],
       }
 
       const result = feedInfoSchema.safeParse(feedInfo)
