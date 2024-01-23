@@ -8,7 +8,6 @@ export const revalidate = 3600
 
 export default async function SubscriptionPage() {
   const filters = await getFilters()
-  if (!filters) return null
   const feedList = (await getFeedList()) ?? []
 
   return (

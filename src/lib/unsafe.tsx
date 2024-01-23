@@ -36,9 +36,9 @@ export function getFeedContent(item: FeedItem): string {
   )
 }
 
-export async function getFeedInfoList(): Promise<FeedInfo[] | undefined> {
+export async function getFeedInfoList(): Promise<FeedInfo[]> {
   const feedInfoListInDB = await getDatabaseItems(feedId)
-  if (!feedInfoListInDB) return
+  if (!feedInfoListInDB) return []
 
   return feedInfoListInDB
     .map((i) => {

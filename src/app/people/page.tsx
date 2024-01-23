@@ -29,7 +29,6 @@ function IconLink({ link }: { link: string }) {
 
 export default async function SubscriptionPage() {
   const feedInfoList = await getFeedInfoList()
-  if (!feedInfoList) return null
 
   return (
     <div className="m-5 sm:m-10">

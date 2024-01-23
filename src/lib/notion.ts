@@ -72,7 +72,6 @@ export async function getFilters(
   includeAll = true,
 ) {
   const feedInfoList = feedInfoListFromArg ?? (await getFeedInfoList())
-  if (!feedInfoList) return
 
   const typeFilter = Array.from(new Set(feedInfoList.map((i) => i.type))).sort()
 
@@ -107,7 +106,7 @@ export async function getFeedList(
   console.log("start getFeedList at" + new Date().toISOString())
   console.time("getFeedList")
   const feedInfoList = feedInfoListFromArg ?? (await getFeedInfoList())
-  if (!feedInfoList) return
+
   try {
     const feedList = await Promise.all(
       feedInfoList

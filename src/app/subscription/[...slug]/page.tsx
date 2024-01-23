@@ -17,11 +17,8 @@ export default async function SubscriptionPage({
   }
 }) {
   if (params.slug.length !== 2) notFound()
-
   const feedInfoList = await getFeedInfoList()
-  if (!feedInfoList) return null
   const filters = await getFilters(feedInfoList)
-  if (!filters) return null
 
   const feedList =
     (await getFeedList(feedInfoList, params.slug[0], params.slug[1])) ?? []
@@ -62,7 +59,6 @@ export default async function SubscriptionPage({
 
 export async function generateStaticParams() {
   const filter = await getFilters()
-  if (!filter) return []
 
   return [
     ...filter[0].flatMap((type) =>
