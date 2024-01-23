@@ -45,9 +45,13 @@ export default function FeedListGroup({ feedList }: { feedList: FeedList }) {
                         </Link>
                       </CardTitle>
                       <CardDescription>
-                        <Link href={feed.feedInfo.url}>
-                          {feed.feedInfo.title}
-                        </Link>
+                        {feed.feedInfo.url ? (
+                          <Link href={feed.feedInfo.url}>
+                            {feed.feedInfo.title}
+                          </Link>
+                        ) : (
+                          feed.feedInfo.title
+                        )}
                       </CardDescription>
                       <CardDescription>
                         {dayjs(feed.isoDate).tz(timeZone).format("MM-DD HH:mm")}

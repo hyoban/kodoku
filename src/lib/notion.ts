@@ -5,6 +5,7 @@ import dayjs from "dayjs"
 import Parser from "rss-parser"
 
 import { siteConfig } from "~/config/site"
+import { env } from "~/env"
 
 import { getFeedInfoList } from "./unsafe"
 import { isFeedItemValid, joinFeedItemUrl, timeout } from "./utils"
@@ -13,8 +14,8 @@ import type { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpo
 
 const { timeZone } = siteConfig
 
-const notionToken = process.env.NOTION_TOKEN!
-export const feedId = process.env.NOTION_FEED_ID!
+const notionToken = env.NOTION_TOKEN
+export const feedId = env.NOTION_FEED_ID
 
 const headers = {
   Accept: "application/json",
@@ -112,6 +113,7 @@ export async function getFeedList(
       feedInfoList
         .filter((i) => i.feedUrl)
         .map(async (i) => {
+          if (!i.feedUrl) return []
           const feed = await parseRssFeed(i.feedUrl)
           if (!feed) return []
           return feed.items
@@ -121,7 +123,7 @@ export async function getFeedList(
                 ...j,
                 id: j.id as string | undefined,
                 link: joinFeedItemUrl(
-                  feed.feedUrl ? feed.link! : i.url,
+                  feed.feedUrl ? feed.link! : i.url!,
                   j.link,
                 ),
                 feedInfo: i,

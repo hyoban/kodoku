@@ -1,6 +1,7 @@
 import Image from "next/image"
 
 import Link from "~/components/link"
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { Separator } from "~/components/ui/separator"
 import { getFeedInfoList } from "~/lib/unsafe"
 import { cn } from "~/lib/utils"
@@ -39,25 +40,33 @@ export default async function SubscriptionPage() {
             key={feedInfo.id}
             className="group mx-auto my-4 flex w-full max-w-xl items-center rounded-md px-4 py-3 hover:bg-accent"
           >
-            <Image
-              src={feedInfo.avatar}
-              className="h-12 w-12 shrink-0 grow-0 rounded-full bg-white object-cover"
-              alt="avatar"
-              width={48}
-              height={48}
-            />
+            <Avatar>
+              <AvatarImage asChild src={feedInfo.avatar ?? ""}>
+                <Image
+                  src={feedInfo.avatar ?? ""}
+                  className="h-12 w-12 shrink-0 grow-0 rounded-full bg-white object-cover"
+                  alt="avatar"
+                  width={48}
+                  height={48}
+                />
+              </AvatarImage>
+              <AvatarFallback>
+                {feedInfo.title.slice(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
             <div className="ml-4 flex w-full flex-col self-stretch">
               <div className="flex grow flex-col sm:flex-row sm:items-center sm:justify-between">
-                <Link href={feedInfo.url} className="flex items-center">
+                {feedInfo.url ? (
+                  <Link href={feedInfo.url} className="flex items-center">
+                    <h3 className="text-lg font-semibold">{feedInfo.title}</h3>
+                  </Link>
+                ) : (
                   <h3 className="text-lg font-semibold">{feedInfo.title}</h3>
-                </Link>
-
+                )}
                 <span className="my-2 flex gap-3">
-                  {feedInfo.socials
-                    .filter((link) => link)
-                    .map((link) => (
-                      <IconLink key={link} link={link} />
-                    ))}
+                  {feedInfo.socials.filter(Boolean).map((link) => (
+                    <IconLink key={link} link={link} />
+                  ))}
                 </span>
               </div>
               <Separator className="group-hover:bg-accent" />

@@ -1,7 +1,10 @@
+import { feedInfoSchema } from "~/schema"
+
 import { feedId, getDatabaseItems } from "./notion"
 import { extractFirstImageUrl } from "./utils"
 
 import type { FeedItem } from "./notion"
+import type { FeedInfo } from "~/schema"
 
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -33,37 +36,36 @@ export function getFeedContent(item: FeedItem): string {
   )
 }
 
-export async function getFeedInfoList() {
+export async function getFeedInfoList(): Promise<FeedInfo[] | undefined> {
   const feedInfoListInDB = await getDatabaseItems(feedId)
   if (!feedInfoListInDB) return
 
-  return feedInfoListInDB.map((i) => {
-    const page = i as Record<string, any>
-    return {
-      id: i.id,
-      title: page.properties.ID.title[0].plain_text,
-      url: page.properties.Homepage.url,
-      feedUrl: page.properties.RSS.url,
-      avatar: page.cover.external.url,
-      type: page.properties.Type.select.name,
-      language: page.properties.Language.select.name,
-      useCover: page.properties.UseCover.checkbox,
-      socials:
-        Object.keys(page.properties).map((j) => {
-          if (page.properties[j].type === "url" && page.properties[j].url) {
-            return page.properties[j].url
-          }
-        }) ?? [],
-    } as {
-      id: string
-      title: string
-      url: string
-      feedUrl?: string | undefined
-      avatar: string
-      type: string
-      language: string
-      useCover: boolean
-      socials: string[]
-    }
-  })
+  return feedInfoListInDB
+    .map((i) => {
+      const page = i as Record<string, any>
+      const feedInfo = {
+        id: i.id,
+        title: page.properties.ID.title[0].plain_text,
+        url: page.properties.Homepage.url,
+        feedUrl: page.properties.RSS.url,
+        avatar: page.cover.external.url,
+        type: page.properties.Type.select.name,
+        language: page.properties.Language.select.name,
+        useCover: page.properties.UseCover.checkbox,
+        socials:
+          Object.keys(page.properties).map((j) => {
+            if (page.properties[j].type === "url" && page.properties[j].url) {
+              return page.properties[j].url
+            }
+          }) ?? [],
+      }
+
+      const result = feedInfoSchema.safeParse(feedInfo)
+      if (!result.success) {
+        console.error(result.error, feedInfo)
+        return
+      }
+      return result.data
+    })
+    .filter(Boolean)
 }
