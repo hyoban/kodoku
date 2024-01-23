@@ -13,10 +13,12 @@ import {
   CardTitle,
 } from "~/components/ui/card"
 import { siteConfig } from "~/config/site"
-import { getFeedListGroupedByYearAndMonth, type FeedList } from "~/lib/notion"
+import { getFeedListGroupedByYearAndMonth } from "~/lib/notion"
 import { getFeedContent } from "~/lib/unsafe"
 
 import RevalidateAt from "./revalidate-at"
+
+import type { FeedList } from "~/lib/notion"
 
 const { timeZone } = siteConfig
 

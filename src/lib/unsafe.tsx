@@ -1,11 +1,14 @@
+import { feedId, getDatabaseItems } from "./notion"
+import { extractFirstImageUrl } from "./utils"
+
+import type { FeedItem } from "./notion"
+
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { feedId, getDatabaseItems, type FeedItem } from "./notion"
-import { extractFirstImageUrl } from "./utils"
 
 export function getFeedContent(item: FeedItem): string {
   if (item.feedInfo.useCover) {

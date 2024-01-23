@@ -1,7 +1,8 @@
 import NextLink from "next/link"
-import type { LinkProps } from "next/link"
 
 import { isExternalLink } from "~/lib/utils"
+
+import type { LinkProps } from "next/link"
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
