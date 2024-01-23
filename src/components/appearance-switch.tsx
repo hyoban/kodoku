@@ -1,3 +1,5 @@
+"use client"
+
 import { useDark } from "~/hooks/use-dark"
 import { cn } from "~/lib/utils"
 

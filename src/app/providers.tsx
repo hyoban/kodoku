@@ -1,3 +1,5 @@
+"use client"
+
 import { Provider as JotaiProvider } from "jotai"
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
