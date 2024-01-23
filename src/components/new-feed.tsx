@@ -34,7 +34,10 @@ export function NewFeedDialog() {
     startTransition(async () => {
       const error = await addFeedInfoAction(feedInfo)
       if (error) {
+        console.error(error)
         toast.error(error)
+      } else {
+        toast.success("Feed added")
       }
     })
   }
@@ -62,7 +65,7 @@ export function NewFeedDialog() {
           <Input name="feedUrl" className="col-span-3" />
           <ParseButton />
         </form>
-        <pre className="text-xs">
+        <pre className="text-xs overflow-auto">
           <code>{JSON.stringify(feedInfo, null, 2)}</code>
         </pre>
         {!!feedInfo && (

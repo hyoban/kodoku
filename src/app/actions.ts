@@ -1,5 +1,7 @@
 "use server"
 
+import { normalizeURL } from "ufo"
+
 import { addFeedInfo } from "~/lib/notion"
 import { parseRssFeed } from "~/lib/rss"
 import { getFeedInfoList } from "~/lib/unsafe"
@@ -22,7 +24,25 @@ export async function parseFeedInfoAction(
 
 export async function addFeedInfoAction(feedInfo: FeedInfoWithoutId) {
   const currentFeedList = await getFeedInfoList()
-  if (currentFeedList.some((feed) => feed.feedUrl === feedInfo.feedUrl)) {
+  if (
+    currentFeedList.some((feed) => {
+      if (
+        feed.url !== null &&
+        feedInfo.url !== null &&
+        normalizeURL(feed.url) === normalizeURL(feedInfo.url)
+      ) {
+        return true
+      }
+      if (
+        feed.feedUrl !== null &&
+        feedInfo.feedUrl !== null &&
+        normalizeURL(feed.feedUrl) === normalizeURL(feedInfo.feedUrl)
+      ) {
+        return true
+      }
+      return false
+    })
+  ) {
     return "Feed already exists"
   }
   const result = await addFeedInfo(feedInfo)

@@ -31,11 +31,13 @@ export async function addFeedInfo(feedInfo: FeedInfoWithoutId) {
   const options = {
     parent: { database_id },
     properties: {
-      title: {
-        text: {
-          content: feedInfo.title,
+      title: [
+        {
+          text: {
+            content: feedInfo.title,
+          },
         },
-      },
+      ],
       Homepage: feedInfo.url,
       RSS: feedInfo.feedUrl,
     },
