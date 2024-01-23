@@ -13,8 +13,8 @@ import type { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpo
 
 const { timeZone } = siteConfig
 
-const notionToken = process.env["NOTION_TOKEN"]!
-export const feedId = process.env["NOTION_FEED_ID"]!
+const notionToken = process.env.NOTION_TOKEN!
+export const feedId = process.env.NOTION_FEED_ID!
 
 const headers = {
   Accept: "application/json",
@@ -119,7 +119,7 @@ export async function getFeedList(
             .map((j) => {
               return {
                 ...j,
-                id: j["id"] as string | undefined,
+                id: j.id as string | undefined,
                 link: joinFeedItemUrl(
                   feed.feedUrl ? feed.link! : i.url,
                   j.link,

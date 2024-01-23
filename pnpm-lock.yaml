@@ -22,6 +22,15 @@ dependencies:
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
+  jotai:
+    specifier: ^2.6.2
+    version: 2.6.2(@types/react@18.2.48)(react@18.2.0)
+  jotai-dark:
+    specifier: ^0.2.3
+    version: 0.2.3(jotai-effect@0.3.2)(jotai@2.6.2)
+  jotai-effect:
+    specifier: ^0.3.2
+    version: 0.3.2(jotai@2.6.2)
   lucide-react:
     specifier: ^0.314.0
     version: 0.314.0(react@18.2.0)
@@ -2477,6 +2486,40 @@ packages:
     resolution: {integrity: sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==}
     hasBin: true
     dev: true
+
+  /jotai-dark@0.2.3(jotai-effect@0.3.2)(jotai@2.6.2):
+    resolution: {integrity: sha512-Ynj/jTlQ773ChETMSAcohDrU/J7yyb6i0hGd4hjie56OfqVWvSTQP6wvokruBTve2UnqrAqEhjaMS9J7zI3VAw==}
+    peerDependencies:
+      jotai: '>=2.5.0'
+      jotai-effect: ^0.2.3
+    dependencies:
+      jotai: 2.6.2(@types/react@18.2.48)(react@18.2.0)
+      jotai-effect: 0.3.2(jotai@2.6.2)
+    dev: false
+
+  /jotai-effect@0.3.2(jotai@2.6.2):
+    resolution: {integrity: sha512-gfHYmA8Xbru2phaPI7DLB7su2EKpJcVyZZCK+xuLuA+1v5BxKJOmR80q9x2W0W0pHn1HMUa3wYTGPsjg9z23Ag==}
+    peerDependencies:
+      jotai: '>=2.5.0'
+    dependencies:
+      jotai: 2.6.2(@types/react@18.2.48)(react@18.2.0)
+    dev: false
+
+  /jotai@2.6.2(@types/react@18.2.48)(react@18.2.0):
+    resolution: {integrity: sha512-kl4KguU1Fr+tFiLi3A3h9qPEzhvLTTDA10DO3QZAz6k7BEaQJ+qvSBwolzonnfNI4QzEovyQfUqVgnRxfnnQVQ==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=17.0.0'
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      '@types/react': 18.2.48
+      react: 18.2.0
+    dev: false
 
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}

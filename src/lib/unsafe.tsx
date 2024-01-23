@@ -12,14 +12,14 @@ import type { FeedItem } from "./notion"
 
 export function getFeedContent(item: FeedItem): string {
   if (item.feedInfo.useCover) {
-    if (item["image"]?.url) {
-      return item["image"].url
+    if (item.image?.url) {
+      return item.image.url
     }
     if (item.enclosure?.url && item.enclosure.type?.startsWith("image")) {
       return item.enclosure.url
     }
-    if (item["itunes"]?.image) {
-      return item["itunes"].image
+    if (item.itunes?.image) {
+      return item.itunes.image
     }
     const cover = extractFirstImageUrl(
       item["content:encoded"] ?? item.content ?? "",
@@ -41,20 +41,17 @@ export async function getFeedInfoList() {
     const page = i as Record<string, any>
     return {
       id: i.id,
-      title: page["properties"].ID.title[0].plain_text,
-      url: page["properties"].Homepage.url,
-      feedUrl: page["properties"].RSS.url,
-      avatar: page["cover"].external.url,
-      type: page["properties"].Type.select.name,
-      language: page["properties"].Language.select.name,
-      useCover: page["properties"].UseCover.checkbox,
+      title: page.properties.ID.title[0].plain_text,
+      url: page.properties.Homepage.url,
+      feedUrl: page.properties.RSS.url,
+      avatar: page.cover.external.url,
+      type: page.properties.Type.select.name,
+      language: page.properties.Language.select.name,
+      useCover: page.properties.UseCover.checkbox,
       socials:
-        Object.keys(page["properties"]).map((j) => {
-          if (
-            page["properties"][j].type === "url" &&
-            page["properties"][j].url
-          ) {
-            return page["properties"][j].url
+        Object.keys(page.properties).map((j) => {
+          if (page.properties[j].type === "url" && page.properties[j].url) {
+            return page.properties[j].url
           }
         }) ?? [],
     } as {

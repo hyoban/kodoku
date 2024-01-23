@@ -1,10 +1,9 @@
 import "./globals.css"
 
-import { TailwindIndicator, ThemeProvider } from "@hyoban/components"
-import { Analytics } from "@vercel/analytics/react"
-
 import { SiteHeader } from "~/components/site-header"
 import { siteConfig } from "~/config/site"
+
+import Providers from "./providers"
 
 import type { Metadata } from "next"
 
@@ -35,14 +34,12 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning className="h-full">
         <head />
         <body className="h-full bg-background">
-          <ThemeProvider>
+          <Providers>
             <div className="relative flex h-full flex-col">
               <SiteHeader />
               <div className="flex-1">{children}</div>
             </div>
-            <TailwindIndicator />
-          </ThemeProvider>
-          <Analytics />
+          </Providers>
         </body>
       </html>
     </>
