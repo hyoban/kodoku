@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useRef, useState, useTransition } from "react"
 import { useFormStatus } from "react-dom"
 import { toast } from "sonner"
 
@@ -29,6 +29,8 @@ function ParseButton() {
 export function NewFeedDialog() {
   const [isPending, startTransition] = useTransition()
   const [feedInfo, setFeedInfo] = useState<FeedInfoWithoutId | undefined>()
+  const feedUrlInputRef = useRef<HTMLInputElement>(null)
+
   function addFeed() {
     if (!feedInfo) return
     startTransition(async () => {
@@ -38,6 +40,11 @@ export function NewFeedDialog() {
         toast.error(error)
       } else {
         toast.success("Feed added")
+      }
+      setFeedInfo(undefined)
+      if (feedUrlInputRef.current) {
+        feedUrlInputRef.current.value = ""
+        feedUrlInputRef.current.focus()
       }
     })
   }
@@ -62,7 +69,7 @@ export function NewFeedDialog() {
             setFeedInfo(response)
           }}
         >
-          <Input name="feedUrl" className="col-span-3" />
+          <Input name="feedUrl" ref={feedUrlInputRef} />
           <ParseButton />
         </form>
         <pre className="text-xs overflow-auto">
