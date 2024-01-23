@@ -5,6 +5,25 @@ import type { FeedInfo } from "./notion"
 import type { ClassValue } from "clsx"
 import type Parser from "rss-parser"
 
+const ICON_MAP = [
+  ["twitter.com", "i-simple-icons-twitter", "Twitter"],
+  ["github.com", "i-simple-icons-github", "GitHub"],
+  ["youtube.com", "i-simple-icons-youtube", "YouTube"],
+  ["bilibili.com", "i-simple-icons-bilibili", "Bilibili"],
+  ["discord.com", "i-simple-icons-discord", "Discord"],
+  ["t.me", "i-simple-icons-telegram", "Telegram"],
+] as const
+
+export function getPlatformIcon(url: string): string | undefined {
+  const icon = ICON_MAP.find(([domain]) => url.includes(domain))
+  return icon?.[1]
+}
+
+export function getPlatformName(url: string): string | undefined {
+  const name = ICON_MAP.find(([domain]) => url.includes(domain))
+  return name?.[2]
+}
+
 export function notNullish<T>(v: T | null | undefined): v is NonNullable<T> {
   return v != null
 }

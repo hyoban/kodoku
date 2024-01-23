@@ -8,7 +8,7 @@ import { env } from "~/env"
 
 import { parseRssFeed } from "./rss"
 import { getFeedInfoList } from "./unsafe"
-import { isFeedItemValid, joinFeedItemUrl } from "./utils"
+import { getPlatformName, isFeedItemValid, joinFeedItemUrl } from "./utils"
 
 import type { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints"
 import type { FeedInfoWithoutId } from "~/schema"
@@ -40,6 +40,12 @@ export async function addFeedInfo(feedInfo: FeedInfoWithoutId) {
       ],
       Homepage: feedInfo.url,
       RSS: feedInfo.feedUrl,
+      ...Object.fromEntries(
+        feedInfo.socials.map((i) => {
+          const platformName = getPlatformName(i)
+          return [platformName, i]
+        }) as [string, string][],
+      ),
     },
     ...(feedInfo.avatar
       ? {

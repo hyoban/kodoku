@@ -7,25 +7,17 @@ import { NewFeedDialog } from "~/components/new-feed"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { Separator } from "~/components/ui/separator"
 import { getFeedInfoList } from "~/lib/unsafe"
-import { cn } from "~/lib/utils"
+import { getPlatformIcon } from "~/lib/utils"
 
 export const revalidate = 3600
 
-const ICON_MAP = new Map<string, string>([
-  ["twitter.com", "i-simple-icons-twitter"],
-  ["github.com", "i-simple-icons-github"],
-  ["www.youtube.com", "i-simple-icons-youtube"],
-  ["space.bilibili.com", "i-simple-icons-bilibili"],
-  ["discord.com", "i-simple-icons-discord"],
-  ["t.me", "i-simple-icons-telegram"],
-])
-
 function IconLink({ link }: { link: string }) {
-  if (!ICON_MAP.get(new URL(link).hostname)) return null
+  const icon = getPlatformIcon(link)
+  if (!icon) return null
 
   return (
     <Link href={link} className="flex items-center text-sm">
-      <div className={cn(ICON_MAP.get(new URL(link).hostname))}></div>
+      <div className={icon}></div>
     </Link>
   )
 }
