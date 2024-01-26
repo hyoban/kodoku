@@ -1,6 +1,6 @@
 "use client"
 
-import { Provider as JotaiProvider } from "jotai"
+import { createStore, Provider as JotaiProvider } from "jotai"
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
@@ -23,10 +23,12 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
   )
 }
 
+const store = createStore()
+
 export default function Providers({ children }: React.PropsWithChildren) {
   return (
     <ThemeProvider>
-      <JotaiProvider>{children}</JotaiProvider>
+      <JotaiProvider store={store}>{children}</JotaiProvider>
     </ThemeProvider>
   )
 }
