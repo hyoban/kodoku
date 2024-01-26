@@ -3,6 +3,7 @@
 import { useRef, useState, useTransition } from "react"
 import { useFormStatus } from "react-dom"
 import { toast } from "sonner"
+import { normalizeURL } from "ufo"
 
 import { addFeedInfoAction, parseFeedInfoAction } from "~/app/actions"
 import { Button } from "~/components/ui/button"
@@ -15,6 +16,7 @@ import {
 } from "~/components/ui/dialog"
 import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
+import { isError } from "~/schema"
 
 import type { FeedInfoWithoutId } from "~/schema"
 
@@ -27,11 +29,23 @@ function ParseButton() {
   )
 }
 
-export function NewFeedDialog() {
+export function NewFeedDialog({
+  existingFeedUrls,
+}: {
+  existingFeedUrls?: string[]
+}) {
   const [isPending, startTransition] = useTransition()
   const [feedInfo, setFeedInfo] = useState<FeedInfoWithoutId | undefined>()
   const [newSocial, setNewSocial] = useState("")
   const feedUrlInputRef = useRef<HTMLInputElement>(null)
+
+  function reset() {
+    setFeedInfo(undefined)
+    if (feedUrlInputRef.current) {
+      feedUrlInputRef.current.value = ""
+      feedUrlInputRef.current.focus()
+    }
+  }
 
   function addFeed() {
     if (!feedInfo) return
@@ -43,11 +57,7 @@ export function NewFeedDialog() {
       } else {
         toast.success("Feed added")
       }
-      setFeedInfo(undefined)
-      if (feedUrlInputRef.current) {
-        feedUrlInputRef.current.value = ""
-        feedUrlInputRef.current.focus()
-      }
+      reset()
     })
   }
 
@@ -67,8 +77,23 @@ export function NewFeedDialog() {
           action={async (formData) => {
             const feedUrl = formData.get("feedUrl")
             if (!feedUrl) return
-            const response = await parseFeedInfoAction(feedUrl as string)
-            setFeedInfo(response)
+            if (
+              existingFeedUrls
+                ?.map(normalizeURL)
+                .includes(normalizeURL(feedUrl as string))
+            ) {
+              reset()
+              toast.error("Feed already exists")
+              return
+            }
+
+            const result = await parseFeedInfoAction(feedUrl as string)
+            if (isError(result)) {
+              reset()
+              toast.error(result)
+              return
+            }
+            setFeedInfo(result)
           }}
         >
           <Input name="feedUrl" ref={feedUrlInputRef} />

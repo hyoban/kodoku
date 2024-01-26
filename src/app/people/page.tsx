@@ -28,6 +28,11 @@ async function FeedInfoList() {
 
   return (
     <>
+      <NewFeedDialog
+        existingFeedUrls={feedInfoList
+          .map((feedInfo) => feedInfo.feedUrl)
+          .filter(Boolean)}
+      />
       {feedInfoList
         .sort((a, b) =>
           env.NODE_ENV === "development"
@@ -79,7 +84,6 @@ async function FeedInfoList() {
 export default function Page() {
   return (
     <div className="m-5 sm:m-10 self-center md:min-w-[30rem] flex flex-col">
-      <NewFeedDialog />
       <Suspense fallback={<Loading />}>
         <FeedInfoList />
       </Suspense>

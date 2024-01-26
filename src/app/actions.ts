@@ -6,13 +6,22 @@ import { addFeedInfo } from "~/lib/notion"
 import { parseRssFeed } from "~/lib/rss"
 import { getFeedInfoList } from "~/lib/unsafe"
 
-import type { FeedInfoWithoutId } from "~/schema"
+import type { FeedInfoWithoutId, Result } from "~/schema"
+
+async function isFeedExist(feedUrl: string) {
+  const currentFeedList = await getFeedInfoList()
+  return currentFeedList.some(
+    (feed) =>
+      feed.feedUrl !== null &&
+      normalizeURL(feed.feedUrl) === normalizeURL(feedUrl),
+  )
+}
 
 export async function parseFeedInfoAction(
   feedUrl: string,
-): Promise<FeedInfoWithoutId> {
+): Promise<Result<FeedInfoWithoutId>> {
   const feed = await parseRssFeed(feedUrl)
-  if (!feed) throw new Error("feed is null")
+  if (!feed) return "Feed is null"
   return {
     title: feed.title ?? "",
     url: feed.link ?? "",
@@ -23,26 +32,7 @@ export async function parseFeedInfoAction(
 }
 
 export async function addFeedInfoAction(feedInfo: FeedInfoWithoutId) {
-  const currentFeedList = await getFeedInfoList()
-  if (
-    currentFeedList.some((feed) => {
-      if (
-        feed.url !== null &&
-        feedInfo.url !== null &&
-        normalizeURL(feed.url) === normalizeURL(feedInfo.url)
-      ) {
-        return true
-      }
-      if (
-        feed.feedUrl !== null &&
-        feedInfo.feedUrl !== null &&
-        normalizeURL(feed.feedUrl) === normalizeURL(feedInfo.feedUrl)
-      ) {
-        return true
-      }
-      return false
-    })
-  ) {
+  if (feedInfo.feedUrl && (await isFeedExist(feedInfo.feedUrl))) {
     return "Feed already exists"
   }
   const result = await addFeedInfo(feedInfo)

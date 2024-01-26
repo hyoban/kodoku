@@ -14,3 +14,10 @@ export const feedInfoSchema = z.object({
 
 export type FeedInfo = z.infer<typeof feedInfoSchema>
 export type FeedInfoWithoutId = Omit<FeedInfo, "id">
+
+export type Error = string
+export type Success<T> = T
+export type Result<T> = Success<T> | Error
+
+export const isError = <T>(result: Result<T>): result is Error =>
+  typeof result === "string"
