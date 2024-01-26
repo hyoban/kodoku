@@ -6,6 +6,7 @@ import { toast } from "sonner"
 import { normalizeURL } from "ufo"
 
 import { addFeedInfoAction, parseFeedInfoAction } from "~/app/actions"
+import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { Button } from "~/components/ui/button"
 import {
   Dialog,
@@ -17,6 +18,8 @@ import {
 import { Input } from "~/components/ui/input"
 import { Label } from "~/components/ui/label"
 import { isError } from "~/schema"
+
+import { IconLink } from "./icon-link"
 
 import type { FeedInfoWithoutId } from "~/schema"
 
@@ -99,9 +102,6 @@ export function NewFeedDialog({
           <Input name="feedUrl" ref={feedUrlInputRef} />
           <ParseButton />
         </form>
-        <pre className="text-xs overflow-auto">
-          <code>{JSON.stringify(feedInfo, null, 2)}</code>
-        </pre>
         {!!feedInfo && (
           <>
             <div className="grid w-full max-w-sm items-center gap-1.5">
@@ -116,8 +116,15 @@ export function NewFeedDialog({
                 }}
               />
             </div>
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label>Avatar</Label>
+            <div className="flex w-full items-center gap-1.5">
+              {feedInfo.avatar ? (
+                <Avatar>
+                  <AvatarImage src={feedInfo.avatar} />
+                  <AvatarFallback>Av</AvatarFallback>
+                </Avatar>
+              ) : (
+                <Label>Avatar</Label>
+              )}
               <Input
                 value={feedInfo.avatar ?? ""}
                 onChange={(e) => {
@@ -128,9 +135,11 @@ export function NewFeedDialog({
                 }}
               />
             </div>
-            {feedInfo.socials.map((social) => (
-              <p key={social}>{social}</p>
-            ))}
+            <div className="flex w-full items-center gap-2">
+              {feedInfo.socials.map((social) => (
+                <IconLink key={social} link={social} />
+              ))}
+            </div>
             <div className="flex w-full max-w-sm items-center gap-1.5">
               <Input
                 value={newSocial}

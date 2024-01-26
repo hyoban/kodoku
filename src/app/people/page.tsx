@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { Suspense } from "react"
 
+import { IconLink } from "~/components/icon-link"
 import Link from "~/components/link"
 import Loading from "~/components/loading"
 import { NewFeedDialog } from "~/components/new-feed"
@@ -8,20 +9,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { Separator } from "~/components/ui/separator"
 import { env } from "~/env"
 import { getFeedInfoList } from "~/lib/unsafe"
-import { getPlatformIcon } from "~/lib/utils"
 
 export const revalidate = 3600
-
-function IconLink({ link }: { link: string }) {
-  const icon = getPlatformIcon(link)
-  if (!icon) return null
-
-  return (
-    <Link href={link} className="flex items-center text-sm">
-      <div className={icon}></div>
-    </Link>
-  )
-}
 
 async function FeedInfoList() {
   const feedInfoList = await getFeedInfoList()
