@@ -6,7 +6,7 @@ import type { LinkProps } from "next/link"
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
-export default function Link({
+export function Link({
   href,
   children,
   ...props

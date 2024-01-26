@@ -1,3 +1,4 @@
+/* eslint-disable @eslint-react/react/no-dangerously-set-innerhtml */
 "use client"
 
 import { createStore, Provider as JotaiProvider } from "jotai"
@@ -25,7 +26,7 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 const store = createStore()
 
-export default function Providers({ children }: React.PropsWithChildren) {
+export function Providers({ children }: React.PropsWithChildren) {
   return (
     <ThemeProvider>
       <JotaiProvider store={store}>{children}</JotaiProvider>

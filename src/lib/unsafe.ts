@@ -30,7 +30,7 @@ export function getFeedContent(item: FeedItem): string {
     return cover ?? ""
   }
   return (
-    Array.from(item.contentSnippet ?? "")
+    [...(item.contentSnippet ?? "")]
       .slice(0, 100)
       .join("") + "..."
   )

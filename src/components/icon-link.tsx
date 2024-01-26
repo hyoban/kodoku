@@ -1,6 +1,6 @@
 import { getPlatformIcon } from "~/lib/utils"
 
-import Link from "./link"
+import { Link } from "./link"
 
 export function IconLink({ link }: { link: string }) {
   const icon = getPlatformIcon(link)

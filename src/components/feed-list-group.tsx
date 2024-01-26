@@ -3,7 +3,7 @@ import "~/lib/dayjs"
 
 import dayjs from "dayjs"
 
-import Link from "~/components/link"
+import { Link } from "~/components/link"
 import {
   Card,
   CardContent,
@@ -16,13 +16,13 @@ import { siteConfig } from "~/config/site"
 import { getFeedListGroupedByYearAndMonth } from "~/lib/notion"
 import { getFeedContent } from "~/lib/unsafe"
 
-import RevalidateAt from "./revalidate-at"
+import { RevalidateAt } from "./revalidate-at"
 
 import type { FeedList } from "~/lib/notion"
 
 const { timeZone } = siteConfig
 
-export default function FeedListGroup({ feedList }: { feedList: FeedList }) {
+export function FeedListGroup({ feedList }: { feedList: FeedList }) {
   const feedListGroupedByYearAndMonth =
     getFeedListGroupedByYearAndMonth(feedList)
   return (

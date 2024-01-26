@@ -1,6 +1,6 @@
 import Balancer from "react-wrap-balancer"
 
-import Link from "~/components/link"
+import { Link } from "~/components/link"
 import { buttonVariants } from "~/components/ui/button"
 import { siteConfig } from "~/config/site"
 

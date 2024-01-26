@@ -2,7 +2,7 @@ import "~/lib/dayjs"
 
 import dayjs from "dayjs"
 
-const RevalidateAt = () => {
+export const RevalidateAt = () => {
   return (
     <div className="my-10 font-mono text-sm opacity-70">
       <span>Revalidate at: </span>
@@ -10,5 +10,3 @@ const RevalidateAt = () => {
     </div>
   )
 }
-
-export default RevalidateAt

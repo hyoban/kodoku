@@ -1,7 +1,7 @@
 import Image from "next/image"
 
 import Icon from "~/app/android-chrome-512x512.png"
-import Link from "~/components/link"
+import { Link } from "~/components/link"
 import { siteConfig } from "~/config/site"
 
 import type { NavItem } from "~/config/site"
@@ -20,10 +20,10 @@ export function MainNav({ items }: MainNavProps) {
       {!!items?.length && (
         <>
           {items.map(
-            (item, index) =>
+            (item) =>
               item.href && (
                 <Link
-                  key={index}
+                  key={item.href}
                   href={item.href}
                   className="text-lg font-semibold text-muted-foreground"
                 >

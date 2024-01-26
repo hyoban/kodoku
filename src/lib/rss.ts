@@ -12,15 +12,13 @@ export async function parseRssFeed(
     const feed = await timeout(3000, parser.parseURL(feedUrl))
     return feed
   } catch (e) {
-    if (e instanceof Error) {
-      if (
+    if (e instanceof Error && (
         e.message === "timeout" ||
         !e.message.includes("Non-whitespace before first tag.")
-      ) {
+      )) {
         console.error(e.message, feedUrl)
         return null
       }
-    }
 
     console.error("parseRssFeed", e)
   }

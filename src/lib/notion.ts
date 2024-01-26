@@ -75,7 +75,7 @@ export async function getDatabaseItems(databaseId: string) {
       },
     ).then((i) => i.json())) as QueryDatabaseResponse
 
-    if (response.results.length) return response.results
+    if (response.results.length > 0) return response.results
   } catch (e) {
     console.error("getDatabaseItemList", e)
   }
@@ -89,20 +89,18 @@ export async function getFilters(
 ) {
   const feedInfoList = feedInfoListFromArg ?? (await getFeedInfoList())
 
-  const typeFilter = Array.from(new Set(feedInfoList.map((i) => i.type))).sort()
+  const typeFilter = [...new Set(feedInfoList.map((i) => i.type))].sort()
 
-  const languageFilter = Array.from(
-    new Set(feedInfoList.map((i) => i.language)),
-  ).sort()
+  const languageFilter = [...new Set(feedInfoList.map((i) => i.language))].sort()
 
   if (convertToLowerCase) {
-    typeFilter.forEach((i, index) => {
+    for (const [index, i] of typeFilter.entries()) {
       typeFilter[index] = i?.toLowerCase()
-    })
+    }
 
-    languageFilter.forEach((i, index) => {
+    for (const [index, i] of languageFilter.entries()) {
       languageFilter[index] = i?.toLowerCase()
-    })
+    }
   }
 
   if (includeAll) {
@@ -179,13 +177,12 @@ export async function getFeedList(
     // sort by published time
     const finalFeedList = enableAutoFilter
       ? feedList
-          .map((i) => {
+          .flatMap((i) => {
             if (i.length > maxNumberOfFeedSentPerAuthor) {
               return i.slice(0, maxNumberOfFeedSentPerAuthor)
             }
             return i
           })
-          .flat()
           .sort((a, b) => {
             if (a.isoDate && b.isoDate) {
               return (
