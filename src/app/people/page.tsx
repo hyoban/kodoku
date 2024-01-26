@@ -6,6 +6,7 @@ import Loading from "~/components/loading"
 import { NewFeedDialog } from "~/components/new-feed"
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
 import { Separator } from "~/components/ui/separator"
+import { env } from "~/env"
 import { getFeedInfoList } from "~/lib/unsafe"
 import { getPlatformIcon } from "~/lib/utils"
 
@@ -28,7 +29,11 @@ async function FeedInfoList() {
   return (
     <>
       {feedInfoList
-        .sort((a, b) => a.title.localeCompare(b.title))
+        .sort((a, b) =>
+          env.NODE_ENV === "development"
+            ? a.title.localeCompare(b.title)
+            : Math.random() - 0.5,
+        )
         .map((feedInfo) => (
           <div
             key={feedInfo.id}
