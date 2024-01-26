@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@radix-ui/react-avatar':
     specifier: ^1.0.4
@@ -20,8 +24,8 @@ dependencies:
     specifier: ^1.0.4
     version: 1.0.4(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0)(react@18.2.0)
   '@t3-oss/env-nextjs':
-    specifier: ^0.7.1
-    version: 0.7.1(typescript@5.3.3)(zod@3.22.4)
+    specifier: ^0.8.0
+    version: 0.8.0(typescript@5.3.3)(zod@3.22.4)
   class-variance-authority:
     specifier: ^0.7.0
     version: 0.7.0
@@ -32,17 +36,17 @@ dependencies:
     specifier: ^1.11.10
     version: 1.11.10
   jotai:
-    specifier: ^2.6.2
-    version: 2.6.2(@types/react@18.2.48)(react@18.2.0)
+    specifier: ^2.6.3
+    version: 2.6.3(@types/react@18.2.48)(react@18.2.0)
   jotai-dark:
-    specifier: ^0.2.3
-    version: 0.2.3(jotai-effect@0.3.2)(jotai@2.6.2)
+    specifier: ^0.2.4
+    version: 0.2.4(jotai-effect@0.4.0)(jotai@2.6.3)
   jotai-effect:
-    specifier: ^0.3.2
-    version: 0.3.2(jotai@2.6.2)
+    specifier: ^0.4.0
+    version: 0.4.0(jotai@2.6.3)
   lucide-react:
-    specifier: ^0.314.0
-    version: 0.314.0(react@18.2.0)
+    specifier: ^0.315.0
+    version: 0.315.0(react@18.2.0)
   next:
     specifier: ^14.1.0
     version: 14.1.0(@babel/core@7.23.7)(react-dom@18.2.0)(react@18.2.0)
@@ -79,8 +83,8 @@ devDependencies:
     specifier: ^4.1.1
     version: 4.1.1(prettier@3.2.4)
   '@iconify-json/lucide':
-    specifier: ^1.1.157
-    version: 1.1.157
+    specifier: ^1.1.159
+    version: 1.1.159
   '@iconify-json/mdi':
     specifier: ^1.1.64
     version: 1.1.64
@@ -93,12 +97,9 @@ devDependencies:
   '@total-typescript/ts-reset':
     specifier: ^0.5.1
     version: 0.5.1
-  '@types/eslint':
-    specifier: ^8.56.2
-    version: 8.56.2
   '@types/node':
-    specifier: ^18.19.8
-    version: 18.19.8
+    specifier: ^18.19.10
+    version: 18.19.10
   '@types/react':
     specifier: ^18.2.48
     version: 18.2.48
@@ -433,8 +434,8 @@ packages:
       - supports-color
     dev: true
 
-  /@iconify-json/lucide@1.1.157:
-    resolution: {integrity: sha512-r53yiAAL6EZocHuHdeV2tL6G23aU70HdMEMs8sfv3SLyxwv4DSDHZ64yVj4lD12t8nkTxO6Lkj79yY1NQDn8dA==}
+  /@iconify-json/lucide@1.1.159:
+    resolution: {integrity: sha512-D2fF8YPm/Cjii9zviQATVOI8aNwCpOyMR6h/kKEENuyCOoarUsyK4WAeOvEDFcjZlgHKaB8K0u+FWMrmX+k2bw==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
@@ -1087,10 +1088,10 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@t3-oss/env-core@0.7.1(typescript@5.3.3)(zod@3.22.4):
-    resolution: {integrity: sha512-3+SQt39OlmSaRLqYVFv8uRm1BpFepM5TIiMytRqO9cjH+wB77o6BIJdeyM5h5U4qLBMEzOJWCY4MBaU/rLwbYw==}
+  /@t3-oss/env-core@0.8.0(typescript@5.3.3)(zod@3.22.4):
+    resolution: {integrity: sha512-Tc1pg0KH/tJeI0Z1s/Isp1VsGDj1N03ZAYFV8GjWgMxytF/ve0Dv+opjmTapHICRv8qiB1Y/fsTjkWNMpKPRCQ==}
     peerDependencies:
-      typescript: '>=4.7.2'
+      typescript: '>=5.0.0'
       zod: ^3.0.0
     peerDependenciesMeta:
       typescript:
@@ -1100,33 +1101,22 @@ packages:
       zod: 3.22.4
     dev: false
 
-  /@t3-oss/env-nextjs@0.7.1(typescript@5.3.3)(zod@3.22.4):
-    resolution: {integrity: sha512-tQDbNLGCOvKGi+JoGuJ/CJInJI7/kLWJqtgGppAKS7ZFLdVOqZYR/uRjxlXOWPnxmUKF8VswOAsq7fXUpNZDhA==}
+  /@t3-oss/env-nextjs@0.8.0(typescript@5.3.3)(zod@3.22.4):
+    resolution: {integrity: sha512-bJyoE8of4QmqZN7a49iLJAbUq4graScb9ezXzvnuIVr9JP43C093vmy55hT1uZL533CwiPz8zo1INwyAS6qnHw==}
     peerDependencies:
-      typescript: '>=4.7.2'
+      typescript: '>=5.0.0'
       zod: ^3.0.0
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@t3-oss/env-core': 0.7.1(typescript@5.3.3)(zod@3.22.4)
+      '@t3-oss/env-core': 0.8.0(typescript@5.3.3)(zod@3.22.4)
       typescript: 5.3.3
       zod: 3.22.4
     dev: false
 
   /@total-typescript/ts-reset@0.5.1:
     resolution: {integrity: sha512-AqlrT8YA1o7Ff5wPfMOL0pvL+1X+sw60NN6CcOCqs658emD6RfiXhF7Gu9QcfKBH7ELY2nInLhKSCWVoNL70MQ==}
-    dev: true
-
-  /@types/eslint@8.56.2:
-    resolution: {integrity: sha512-uQDwm1wFHmbBbCZCqAlq6Do9LYwByNZHWzXppSnay9SuwJ+VRbjkbLABer54kcPnMSlG6Fdiy2yaFXm/z9Z5gw==}
-    dependencies:
-      '@types/estree': 1.0.5
-      '@types/json-schema': 7.0.15
-    dev: true
-
-  /@types/estree@1.0.5:
-    resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
     dev: true
 
   /@types/json-schema@7.0.15:
@@ -1140,12 +1130,12 @@ packages:
   /@types/node-fetch@2.6.11:
     resolution: {integrity: sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==}
     dependencies:
-      '@types/node': 18.19.8
+      '@types/node': 18.19.10
       form-data: 4.0.0
     dev: true
 
-  /@types/node@18.19.8:
-    resolution: {integrity: sha512-g1pZtPhsvGVTwmeVoexWZLTQaOvXwoSq//pTL0DHeNzUDrFnir4fgETdhjhIxjVnN+hKOuh98+E1eMLnUXstFg==}
+  /@types/node@18.19.10:
+    resolution: {integrity: sha512-IZD8kAM02AW1HRDTPOlz3npFava678pr8Ie9Vp8uRhBROXAv8MXT2pCnGZZAKYdromsNQLHQcfWQ6EOatVLtqA==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -2746,26 +2736,26 @@ packages:
     hasBin: true
     dev: true
 
-  /jotai-dark@0.2.3(jotai-effect@0.3.2)(jotai@2.6.2):
-    resolution: {integrity: sha512-Ynj/jTlQ773ChETMSAcohDrU/J7yyb6i0hGd4hjie56OfqVWvSTQP6wvokruBTve2UnqrAqEhjaMS9J7zI3VAw==}
+  /jotai-dark@0.2.4(jotai-effect@0.4.0)(jotai@2.6.3):
+    resolution: {integrity: sha512-E/Wn2HC3aPO15d1DLtLYlkC2jfe4LgtH56yGL+HCRz5nS8g7vUNIP1CeIhKB9KqCW/2mGBE8+04wy0s84sCofg==}
     peerDependencies:
       jotai: '>=2.5.0'
-      jotai-effect: ^0.2.3
+      jotai-effect: '*'
     dependencies:
-      jotai: 2.6.2(@types/react@18.2.48)(react@18.2.0)
-      jotai-effect: 0.3.2(jotai@2.6.2)
+      jotai: 2.6.3(@types/react@18.2.48)(react@18.2.0)
+      jotai-effect: 0.4.0(jotai@2.6.3)
     dev: false
 
-  /jotai-effect@0.3.2(jotai@2.6.2):
-    resolution: {integrity: sha512-gfHYmA8Xbru2phaPI7DLB7su2EKpJcVyZZCK+xuLuA+1v5BxKJOmR80q9x2W0W0pHn1HMUa3wYTGPsjg9z23Ag==}
+  /jotai-effect@0.4.0(jotai@2.6.3):
+    resolution: {integrity: sha512-2p6hhKqsvP1k6vC0sLwWGU6SF5j3Ca6/XI1zi2JCQPZDPO0vsTX49C9nlfm58sJWLZeGrgyseYTPAeINGXfKew==}
     peerDependencies:
       jotai: '>=2.5.0'
     dependencies:
-      jotai: 2.6.2(@types/react@18.2.48)(react@18.2.0)
+      jotai: 2.6.3(@types/react@18.2.48)(react@18.2.0)
     dev: false
 
-  /jotai@2.6.2(@types/react@18.2.48)(react@18.2.0):
-    resolution: {integrity: sha512-kl4KguU1Fr+tFiLi3A3h9qPEzhvLTTDA10DO3QZAz6k7BEaQJ+qvSBwolzonnfNI4QzEovyQfUqVgnRxfnnQVQ==}
+  /jotai@2.6.3(@types/react@18.2.48)(react@18.2.0):
+    resolution: {integrity: sha512-0htSJ2d6426ZdSEYHncJHXY6Lkgde1Hc2HE/ADIRi9d2L3hQL+jLKY1LkWBMeCNyOSlKH8+1u/Gc33Ox0uq21Q==}
     engines: {node: '>=12.20.0'}
     peerDependencies:
       '@types/react': '>=17.0.0'
@@ -2911,8 +2901,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /lucide-react@0.314.0(react@18.2.0):
-    resolution: {integrity: sha512-c2zOW7TOyKxPCaSs1og2lFdoI3SR4iii3yrZJU2Zpdc78nOw4fUmrcFNultaCiwZcr4CyiKdzjMdvKNlBBk+UQ==}
+  /lucide-react@0.315.0(react@18.2.0):
+    resolution: {integrity: sha512-HHPhBRuubJLTERwI3czCgHCrYEtQSuUnniBwR/YHH4rNZXeqtOxyEX05lxpyTxlDr/ugKE+MM9/pWy+iju7xpw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
     dependencies:

@@ -1,5 +1,4 @@
-/** @type {import("eslint").Linter.Config} */
-const config = {
+module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: true,
@@ -54,5 +53,3 @@ const config = {
     "tailwindcss/classnames-order": "off",
   },
 }
-
-module.exports = config
