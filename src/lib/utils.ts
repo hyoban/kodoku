@@ -51,11 +51,14 @@ export function isFeedItemValid(
   item: Parser.Item & { id?: string },
   feedInfo: FeedInfo,
 ): boolean {
-  if (feedInfo.type === "GitHub" && feedInfo.feedUrl?.endsWith(".atom") && 
-      ["PushEvent"].some((i) => {
-        return item.id?.includes(i)
-      })
-    ) return false
+  if (
+    feedInfo.type === "GitHub" &&
+    feedInfo.feedUrl?.endsWith(".atom") &&
+    ["PushEvent"].some((i) => {
+      return item.id?.includes(i)
+    })
+  )
+    return false
 
   if (!item.link) return false
   if (item.link.includes("[object Object]")) return false

@@ -29,11 +29,7 @@ export function getFeedContent(item: FeedItem): string {
     )
     return cover ?? ""
   }
-  return (
-    [...(item.contentSnippet ?? "")]
-      .slice(0, 100)
-      .join("") + "..."
-  )
+  return [...(item.contentSnippet ?? "")].slice(0, 100).join("") + "..."
 }
 
 export async function getFeedInfoList(): Promise<FeedInfo[]> {

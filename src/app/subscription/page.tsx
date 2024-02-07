@@ -15,7 +15,7 @@ export default async function SubscriptionPage() {
       <div className="flex flex-col gap-4 md:flex-row">
         {filters.map((filter, index) => {
           return (
-            // eslint-disable-next-line @eslint-react/jsx/no-array-index-key
+            // eslint-disable-next-line @eslint-react/no-array-index-key
             <Tabs defaultValue="all" key={index}>
               <TabsList>
                 {filter.filter(Boolean).map((filter) => (

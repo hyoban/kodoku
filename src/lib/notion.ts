@@ -91,7 +91,9 @@ export async function getFilters(
 
   const typeFilter = [...new Set(feedInfoList.map((i) => i.type))].sort()
 
-  const languageFilter = [...new Set(feedInfoList.map((i) => i.language))].sort()
+  const languageFilter = [
+    ...new Set(feedInfoList.map((i) => i.language)),
+  ].sort()
 
   if (convertToLowerCase) {
     for (const [index, i] of typeFilter.entries()) {

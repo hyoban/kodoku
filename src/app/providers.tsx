@@ -1,4 +1,4 @@
-/* eslint-disable @eslint-react/react/no-dangerously-set-innerhtml */
+/* eslint-disable @eslint-react/dom/no-dangerously-set-innerhtml */
 "use client"
 
 import { createStore, Provider as JotaiProvider } from "jotai"
