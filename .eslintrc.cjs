@@ -6,7 +6,6 @@ module.exports = {
     "plugin:@eslint-react/all-legacy",
     "plugin:react-hooks/recommended",
     "plugin:@next/next/recommended",
-    "plugin:tailwindcss/recommended",
     "prettier",
   ],
   plugins: ["@typescript-eslint"],
@@ -17,11 +16,6 @@ module.exports = {
   },
   root: true,
   ignorePatterns: ["**/*.js", "**/*.cjs", "**/*.mjs"],
-  settings: {
-    tailwindcss: {
-      callees: ["cn", "cva", "ctx..*"],
-    },
-  },
   rules: {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
@@ -67,8 +61,6 @@ module.exports = {
         message: "We should not use Enum",
       },
     ],
-
-    "tailwindcss/classnames-order": "off",
   },
   overrides: [
     {
