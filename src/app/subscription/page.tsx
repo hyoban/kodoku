@@ -1,8 +1,8 @@
-import { FeedListGroup } from "~/components/feed-list-group"
-import { Link } from "~/components/link"
-import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs"
-import { getFeedList, getFilters } from "~/lib/notion"
-import { capitalize } from "~/lib/utils"
+import { FeedListGroup } from '~/components/feed-list-group'
+import { Link } from '~/components/link'
+import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs'
+import { getFeedList, getFilters } from '~/lib/notion'
+import { capitalize } from '~/lib/utils'
 
 export const revalidate = 3600
 
@@ -18,7 +18,7 @@ export default async function SubscriptionPage() {
             // eslint-disable-next-line @eslint-react/no-array-index-key
             <Tabs defaultValue="all" key={index}>
               <TabsList>
-                {filter.filter(Boolean).map((filter) => (
+                {filter.filter(Boolean).map(filter => (
                   <Link
                     key={filter}
                     href={

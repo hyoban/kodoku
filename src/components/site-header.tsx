@@ -1,7 +1,7 @@
-import { AppearanceSwitch } from "~/components/appearance-switch"
-import { Link } from "~/components/link"
-import { MainNav } from "~/components/main-nav"
-import { siteConfig } from "~/config/site"
+import { AppearanceSwitch } from '~/components/appearance-switch'
+import { Link } from '~/components/link'
+import { MainNav } from '~/components/main-nav'
+import { siteConfig } from '~/config/site'
 
 export function SiteHeader() {
   return (

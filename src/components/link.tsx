@@ -1,8 +1,8 @@
-import NextLink from "next/link"
+import NextLink from 'next/link'
 
-import { isExternalLink } from "~/lib/utils"
+import { isExternalLink } from '~/lib/utils'
 
-import type { LinkProps } from "next/link"
+import type { LinkProps } from 'next/link'
 
 type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>
 
@@ -10,11 +10,11 @@ export function Link({
   href,
   children,
   ...props
-}: Optional<LinkProps, "href"> & {
+}: Optional<LinkProps, 'href'> & {
   children: React.ReactNode
-} & React.PropsWithoutRef<JSX.IntrinsicElements["a"]>) {
+} & React.PropsWithoutRef<JSX.IntrinsicElements['a']>) {
   if (href) {
-    if (typeof href === "string" && isExternalLink(href)) {
+    if (typeof href === 'string' && isExternalLink(href)) {
       return (
         <a href={href} {...props} target="_blank" rel="noopener noreferrer">
           {children}
@@ -27,7 +27,8 @@ export function Link({
         {children}
       </NextLink>
     )
-  } else {
+  }
+  else {
     return children as JSX.Element
   }
 }

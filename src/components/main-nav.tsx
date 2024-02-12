@@ -1,12 +1,12 @@
-import Image from "next/image"
+import Image from 'next/image'
 
-import Icon from "~/app/android-chrome-512x512.png"
-import { Link } from "~/components/link"
-import { siteConfig } from "~/config/site"
+import Icon from '~/app/android-chrome-512x512.png'
+import { Link } from '~/components/link'
+import { siteConfig } from '~/config/site'
 
-import type { NavItem } from "~/config/site"
+import type { NavItem } from '~/config/site'
 
-interface MainNavProps {
+type MainNavProps = {
   items?: NavItem[]
 }
 
@@ -20,7 +20,7 @@ export function MainNav({ items }: MainNavProps) {
       {!!items?.length && (
         <>
           {items.map(
-            (item) =>
+            item =>
               item.href && (
                 <Link
                   key={item.href}

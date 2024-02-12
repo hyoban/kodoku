@@ -1,7 +1,7 @@
 /* eslint-disable @eslint-react/dom/no-dangerously-set-innerhtml */
-"use client"
+'use client'
 
-import { createStore, Provider as JotaiProvider } from "jotai"
+import { createStore, Provider as JotaiProvider } from 'jotai'
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
   return (
@@ -18,7 +18,8 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
                 document.documentElement.classList.toggle("dark", !0);
             })();`,
         }}
-      ></script>
+      >
+      </script>
       {children}
     </>
   )

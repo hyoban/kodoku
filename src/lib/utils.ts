@@ -1,17 +1,17 @@
-import { clsx } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
-import type { FeedInfo } from "./notion"
-import type { ClassValue } from "clsx"
-import type Parser from "rss-parser"
+import type { FeedInfo } from './notion'
+import type { ClassValue } from 'clsx'
+import type Parser from 'rss-parser'
 
 const ICON_MAP = [
-  ["twitter.com", "i-simple-icons-twitter", "Twitter"],
-  ["github.com", "i-simple-icons-github", "GitHub"],
-  ["youtube.com", "i-simple-icons-youtube", "YouTube"],
-  ["bilibili.com", "i-simple-icons-bilibili", "Bilibili"],
-  ["discord.com", "i-simple-icons-discord", "Discord"],
-  ["t.me", "i-simple-icons-telegram", "Telegram"],
+  ['twitter.com', 'i-simple-icons-twitter', 'Twitter'],
+  ['github.com', 'i-simple-icons-github', 'GitHub'],
+  ['youtube.com', 'i-simple-icons-youtube', 'YouTube'],
+  ['bilibili.com', 'i-simple-icons-bilibili', 'Bilibili'],
+  ['discord.com', 'i-simple-icons-discord', 'Discord'],
+  ['t.me', 'i-simple-icons-telegram', 'Telegram'],
 ] as const
 
 export function getPlatformIcon(url: string): string | undefined {
@@ -30,21 +30,27 @@ export function notNullish<T>(v: T | null | undefined): v is NonNullable<T> {
 
 export function extractFirstImageUrl(html: string): string | undefined {
   const img = html.match(/<img.*?src="(.*?)"/)
-  if (!img) return
+  if (!img)
+    return
   return img[1]
 }
 
 export function isExternalLink(url?: string): boolean {
-  if (!url) return false
-  return url.startsWith("http") || url.startsWith("//")
+  if (!url)
+    return false
+  return url.startsWith('http') || url.startsWith('//')
 }
 
 export function joinFeedItemUrl(feedUrl: string, itemUrl?: string): string {
-  if (!itemUrl) return feedUrl
-  if (isExternalLink(itemUrl)) return itemUrl
-  if (feedUrl.endsWith("/")) feedUrl = feedUrl.slice(0, -1)
-  if (itemUrl.startsWith("/")) itemUrl = itemUrl.slice(1)
-  return feedUrl + "/" + itemUrl
+  if (!itemUrl)
+    return feedUrl
+  if (isExternalLink(itemUrl))
+    return itemUrl
+  if (feedUrl.endsWith('/'))
+    feedUrl = feedUrl.slice(0, -1)
+  if (itemUrl.startsWith('/'))
+    itemUrl = itemUrl.slice(1)
+  return `${feedUrl}/${itemUrl}`
 }
 
 export function isFeedItemValid(
@@ -52,19 +58,24 @@ export function isFeedItemValid(
   feedInfo: FeedInfo,
 ): boolean {
   if (
-    feedInfo.type === "GitHub" &&
-    feedInfo.feedUrl?.endsWith(".atom") &&
-    ["PushEvent"].some((i) => {
+    feedInfo.type === 'GitHub'
+    && feedInfo.feedUrl?.endsWith('.atom')
+    && ['PushEvent'].some((i) => {
       return item.id?.includes(i)
     })
   )
     return false
 
-  if (!item.link) return false
-  if (item.link.includes("[object Object]")) return false
-  if (!item.title) return false
-  if (!item.isoDate) return false
-  if (item.title === "No title") return false
+  if (!item.link)
+    return false
+  if (item.link.includes('[object Object]'))
+    return false
+  if (!item.title)
+    return false
+  if (!item.isoDate)
+    return false
+  if (item.title === 'No title')
+    return false
   return true
 }
 
@@ -80,7 +91,7 @@ export function timeout<T>(
 ): Promise<Awaited<T>> {
   return Promise.race([
     delay(ms).then(() => {
-      throw new Error("timeout")
+      throw new Error('timeout')
     }),
     promise,
   ])

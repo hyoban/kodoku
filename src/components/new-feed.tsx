@@ -1,27 +1,27 @@
-"use client"
+'use client'
 
-import { useRef, useState, useTransition } from "react"
-import { useFormStatus } from "react-dom"
-import { toast } from "sonner"
-import { normalizeURL } from "ufo"
+import { useRef, useState, useTransition } from 'react'
+import { useFormStatus } from 'react-dom'
+import { toast } from 'sonner'
+import { normalizeURL } from 'ufo'
 
-import { addFeedInfoAction, parseFeedInfoAction } from "~/app/actions"
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar"
-import { Button } from "~/components/ui/button"
+import { addFeedInfoAction, parseFeedInfoAction } from '~/app/actions'
+import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar'
+import { Button } from '~/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "~/components/ui/dialog"
-import { Input } from "~/components/ui/input"
-import { Label } from "~/components/ui/label"
-import { isError } from "~/schema"
+} from '~/components/ui/dialog'
+import { Input } from '~/components/ui/input'
+import { Label } from '~/components/ui/label'
+import { isError } from '~/schema'
 
-import { IconLink } from "./icon-link"
+import { IconLink } from './icon-link'
 
-import type { FeedInfoWithoutId } from "~/schema"
+import type { FeedInfoWithoutId } from '~/schema'
 
 function ParseButton() {
   const { pending } = useFormStatus()
@@ -39,26 +39,28 @@ export function NewFeedDialog({
 }) {
   const [isPending, startTransition] = useTransition()
   const [feedInfo, setFeedInfo] = useState<FeedInfoWithoutId | undefined>()
-  const [newSocial, setNewSocial] = useState("")
+  const [newSocial, setNewSocial] = useState('')
   const feedUrlInputRef = useRef<HTMLInputElement>(null)
 
   function reset() {
     setFeedInfo(undefined)
     if (feedUrlInputRef.current) {
-      feedUrlInputRef.current.value = ""
+      feedUrlInputRef.current.value = ''
       feedUrlInputRef.current.focus()
     }
   }
 
   function addFeed() {
-    if (!feedInfo) return
+    if (!feedInfo)
+      return
     startTransition(async () => {
       const error = await addFeedInfoAction(feedInfo)
       if (error) {
         console.error(error)
         toast.error(error)
-      } else {
-        toast.success("Feed added")
+      }
+      else {
+        toast.success('Feed added')
       }
       reset()
     })
@@ -78,15 +80,16 @@ export function NewFeedDialog({
         <form
           className="flex gap-4 items-center"
           action={async (formData) => {
-            const feedUrl = formData.get("feedUrl")
-            if (!feedUrl) return
+            const feedUrl = formData.get('feedUrl')
+            if (!feedUrl)
+              return
             if (
               existingFeedUrls
                 ?.map(normalizeURL)
                 .includes(normalizeURL(feedUrl as string))
             ) {
               reset()
-              toast.error("Feed already exists")
+              toast.error('Feed already exists')
               return
             }
 
@@ -117,16 +120,18 @@ export function NewFeedDialog({
               />
             </div>
             <div className="flex w-full items-center gap-1.5">
-              {feedInfo.avatar ? (
-                <Avatar>
-                  <AvatarImage src={feedInfo.avatar} />
-                  <AvatarFallback>Av</AvatarFallback>
-                </Avatar>
-              ) : (
-                <Label>Avatar</Label>
-              )}
+              {feedInfo.avatar
+                ? (
+                  <Avatar>
+                    <AvatarImage src={feedInfo.avatar} />
+                    <AvatarFallback>Av</AvatarFallback>
+                  </Avatar>
+                  )
+                : (
+                  <Label>Avatar</Label>
+                  )}
               <Input
-                value={feedInfo.avatar ?? ""}
+                value={feedInfo.avatar ?? ''}
                 onChange={(e) => {
                   setFeedInfo({
                     ...feedInfo,
@@ -136,7 +141,7 @@ export function NewFeedDialog({
               />
             </div>
             <div className="flex w-full items-center gap-2">
-              {feedInfo.socials.map((social) => (
+              {feedInfo.socials.map(social => (
                 <IconLink key={social} link={social} />
               ))}
             </div>
@@ -153,7 +158,7 @@ export function NewFeedDialog({
                     ...feedInfo,
                     socials: [...feedInfo.socials, newSocial],
                   })
-                  setNewSocial("")
+                  setNewSocial('')
                 }}
               >
                 Add social

@@ -1,8 +1,8 @@
-import Balancer from "react-wrap-balancer"
+import Balancer from 'react-wrap-balancer'
 
-import { Link } from "~/components/link"
-import { buttonVariants } from "~/components/ui/button"
-import { siteConfig } from "~/config/site"
+import { Link } from '~/components/link'
+import { buttonVariants } from '~/components/ui/button'
+import { siteConfig } from '~/config/site'
 
 export default function IndexPage() {
   return (
@@ -19,13 +19,13 @@ export default function IndexPage() {
       <div className="flex flex-col gap-4 sm:flex-row">
         <Link
           href={siteConfig.links.vercel}
-          className={buttonVariants({ size: "lg" })}
+          className={buttonVariants({ size: 'lg' })}
         >
           Deploy Now
         </Link>
         <Link
           href={siteConfig.links.notion}
-          className={buttonVariants({ variant: "outline", size: "lg" })}
+          className={buttonVariants({ variant: 'outline', size: 'lg' })}
         >
           Notion Template
         </Link>

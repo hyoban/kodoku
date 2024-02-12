@@ -1,10 +1,10 @@
-import { feedInfoSchema } from "~/schema"
+import { feedInfoSchema } from '~/schema'
 
-import { feedId, getDatabaseItems } from "./notion"
-import { extractFirstImageUrl } from "./utils"
+import { feedId, getDatabaseItems } from './notion'
+import { extractFirstImageUrl } from './utils'
 
-import type { FeedItem } from "./notion"
-import type { FeedInfo } from "~/schema"
+import type { FeedItem } from './notion'
+import type { FeedInfo } from '~/schema'
 
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -18,23 +18,24 @@ export function getFeedContent(item: FeedItem): string {
     if (item.image?.url) {
       return item.image.url
     }
-    if (item.enclosure?.url && item.enclosure.type?.startsWith("image")) {
+    if (item.enclosure?.url && item.enclosure.type?.startsWith('image')) {
       return item.enclosure.url
     }
     if (item.itunes?.image) {
       return item.itunes.image
     }
     const cover = extractFirstImageUrl(
-      item["content:encoded"] ?? item.content ?? "",
+      item['content:encoded'] ?? item.content ?? '',
     )
-    return cover ?? ""
+    return cover ?? ''
   }
-  return [...(item.contentSnippet ?? "")].slice(0, 100).join("") + "..."
+  return `${[...(item.contentSnippet ?? '')].slice(0, 100).join('')}...`
 }
 
 export async function getFeedInfoList(): Promise<FeedInfo[]> {
   const feedInfoListInDB = await getDatabaseItems(feedId)
-  if (!feedInfoListInDB) return []
+  if (!feedInfoListInDB)
+    return []
 
   return feedInfoListInDB
     .map((i) => {
@@ -51,7 +52,7 @@ export async function getFeedInfoList(): Promise<FeedInfo[]> {
         socials:
           Object.keys(page.properties)
             .map((j) => {
-              if (page.properties[j].type === "url" && page.properties[j].url) {
+              if (page.properties[j].type === 'url' && page.properties[j].url) {
                 return page.properties[j].url
               }
             })

@@ -1,12 +1,12 @@
-import "./globals.css"
+import './globals.css'
 
-import { SiteHeader } from "~/components/site-header"
-import { Toaster } from "~/components/ui/sonner"
-import { siteConfig } from "~/config/site"
+import { SiteHeader } from '~/components/site-header'
+import { Toaster } from '~/components/ui/sonner'
+import { siteConfig } from '~/config/site'
 
-import { Providers } from "./providers"
+import { Providers } from './providers'
 
-import type { Metadata } from "next"
+import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
@@ -15,9 +15,9 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: '/favicon.ico',
+    shortcut: '/favicon-16x16.png',
+    apple: '/apple-touch-icon.png',
   },
 }
 

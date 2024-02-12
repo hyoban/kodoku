@@ -1,18 +1,18 @@
 /* eslint-disable no-console */
-import "~/lib/dayjs"
+import '~/lib/dayjs'
 
-import dayjs from "dayjs"
+import dayjs from 'dayjs'
 
-import { siteConfig } from "~/config/site"
-import { env } from "~/env"
+import { siteConfig } from '~/config/site'
+import { env } from '~/env'
 
-import { parseRssFeed } from "./rss"
-import { getFeedInfoList } from "./unsafe"
-import { getPlatformName, isFeedItemValid, joinFeedItemUrl } from "./utils"
+import { parseRssFeed } from './rss'
+import { getFeedInfoList } from './unsafe'
+import { getPlatformName, isFeedItemValid, joinFeedItemUrl } from './utils'
 
-import type { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints"
-import type { FeedInfoWithoutId } from "~/schema"
-import type Parser from "rss-parser"
+import type { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints'
+import type { FeedInfoWithoutId } from '~/schema'
+import type Parser from 'rss-parser'
 
 const { timeZone } = siteConfig
 
@@ -20,10 +20,10 @@ const notionToken = env.NOTION_TOKEN
 export const feedId = env.NOTION_FEED_ID
 
 const headers = {
-  Accept: "application/json",
-  "Content-Type": "application/json",
-  "Notion-Version": "2022-06-28",
-  Authorization: `Bearer ${notionToken}`,
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'Notion-Version': '2022-06-28',
+  'Authorization': `Bearer ${notionToken}`,
 }
 
 export async function addFeedInfo(feedInfo: FeedInfoWithoutId) {
@@ -44,13 +44,13 @@ export async function addFeedInfo(feedInfo: FeedInfoWithoutId) {
         feedInfo.socials.map((i) => {
           const platformName = getPlatformName(i)
           return [platformName, i]
-        }) as [string, string][],
+        }) as Array<[string, string]>,
       ),
     },
     ...(feedInfo.avatar
       ? {
           cover: {
-            type: "external",
+            type: 'external',
             external: {
               url: feedInfo.avatar,
             },
@@ -58,11 +58,11 @@ export async function addFeedInfo(feedInfo: FeedInfoWithoutId) {
         }
       : {}),
   }
-  return fetch("https://api.notion.com/v1/pages", {
-    method: "POST",
+  return fetch('https://api.notion.com/v1/pages', {
+    method: 'POST',
     headers,
     body: JSON.stringify(options),
-  }).then((response) => response.json())
+  }).then(response => response.json())
 }
 
 export async function getDatabaseItems(databaseId: string) {
@@ -70,14 +70,16 @@ export async function getDatabaseItems(databaseId: string) {
     const response = (await fetch(
       `https://api.notion.com/v1/databases/${databaseId}/query`,
       {
-        method: "POST",
+        method: 'POST',
         headers,
       },
-    ).then((i) => i.json())) as QueryDatabaseResponse
+    ).then(i => i.json())) as QueryDatabaseResponse
 
-    if (response.results.length > 0) return response.results
-  } catch (e) {
-    console.error("getDatabaseItemList", e)
+    if (response.results.length > 0)
+      return response.results
+  }
+  catch (e) {
+    console.error('getDatabaseItemList', e)
   }
   return null
 }
@@ -89,10 +91,10 @@ export async function getFilters(
 ) {
   const feedInfoList = feedInfoListFromArg ?? (await getFeedInfoList())
 
-  const typeFilter = [...new Set(feedInfoList.map((i) => i.type))].sort()
+  const typeFilter = [...new Set(feedInfoList.map(i => i.type))].sort()
 
   const languageFilter = [
-    ...new Set(feedInfoList.map((i) => i.language)),
+    ...new Set(feedInfoList.map(i => i.language)),
   ].sort()
 
   if (convertToLowerCase) {
@@ -106,8 +108,8 @@ export async function getFilters(
   }
 
   if (includeAll) {
-    typeFilter.unshift(convertToLowerCase ? "all" : "All")
-    languageFilter.unshift(convertToLowerCase ? "all" : "All")
+    typeFilter.unshift(convertToLowerCase ? 'all' : 'All')
+    languageFilter.unshift(convertToLowerCase ? 'all' : 'All')
   }
 
   return [typeFilter, languageFilter] as const
@@ -115,24 +117,26 @@ export async function getFilters(
 
 export async function getFeedList(
   feedInfoListFromArg?: FeedInfoList,
-  type = "all",
-  language = "all",
+  type = 'all',
+  language = 'all',
   enableAutoFilter = true,
 ) {
-  console.log("start getFeedList at" + new Date().toISOString())
-  console.time("getFeedList")
+  console.log(`start getFeedList at${new Date().toISOString()}`)
+  console.time('getFeedList')
   const feedInfoList = feedInfoListFromArg ?? (await getFeedInfoList())
 
   try {
     const feedList = await Promise.all(
       feedInfoList
-        .filter((i) => i.feedUrl)
+        .filter(i => i.feedUrl)
         .map(async (i) => {
-          if (!i.feedUrl) return []
+          if (!i.feedUrl)
+            return []
           const feed = await parseRssFeed(i.feedUrl)
-          if (!feed) return []
+          if (!feed)
+            return []
           return feed.items
-            .filter((j) => isFeedItemValid(j, i))
+            .filter(j => isFeedItemValid(j, i))
             .map((j) => {
               return {
                 ...j,
@@ -146,14 +150,14 @@ export async function getFeedList(
             })
             .filter((feed) => {
               if (
-                type.toLowerCase() !== "all" &&
-                feed.feedInfo.type?.toLowerCase() !== type.toLowerCase()
+                type.toLowerCase() !== 'all'
+                  && feed.feedInfo.type?.toLowerCase() !== type.toLowerCase()
               ) {
                 return false
               }
               if (
-                language.toLowerCase() !== "all" &&
-                feed.feedInfo.language?.toLowerCase() !== language.toLowerCase()
+                language.toLowerCase() !== 'all'
+                && feed.feedInfo.language?.toLowerCase() !== language.toLowerCase()
               ) {
                 return false
               }
@@ -171,7 +175,7 @@ export async function getFeedList(
     )
 
     const numberOfFeedSent = 100
-    const numberOfAuthor = feedList.filter((i) => i.length > 0).length
+    const numberOfAuthor = feedList.filter(i => i.length > 0).length
     const maxNumberOfFeedSentPerAuthor = Math.floor(
       (numberOfFeedSent / numberOfAuthor) * 1.5,
     )
@@ -179,45 +183,46 @@ export async function getFeedList(
     // sort by published time
     const finalFeedList = enableAutoFilter
       ? feedList
-          .flatMap((i) => {
-            if (i.length > maxNumberOfFeedSentPerAuthor) {
-              return i.slice(0, maxNumberOfFeedSentPerAuthor)
-            }
-            return i
-          })
-          .sort((a, b) => {
-            if (a.isoDate && b.isoDate) {
-              return (
-                new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
-              )
-            }
-            return 0
-          })
-          .slice(0, numberOfFeedSent)
+        .flatMap((i) => {
+          if (i.length > maxNumberOfFeedSentPerAuthor) {
+            return i.slice(0, maxNumberOfFeedSentPerAuthor)
+          }
+          return i
+        })
+        .sort((a, b) => {
+          if (a.isoDate && b.isoDate) {
+            return (
+              new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
+            )
+          }
+          return 0
+        })
+        .slice(0, numberOfFeedSent)
       : feedList
-          .flat()
-          .sort((a, b) => {
-            if (a.isoDate && b.isoDate) {
-              return (
-                new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
-              )
-            }
-            return 0
-          })
-          // max 100 feeds
-          .slice(0, 100)
+        .flat()
+        .sort((a, b) => {
+          if (a.isoDate && b.isoDate) {
+            return (
+              new Date(b.isoDate).getTime() - new Date(a.isoDate).getTime()
+            )
+          }
+          return 0
+        })
+      // max 100 feeds
+        .slice(0, 100)
 
-    console.timeEnd("getFeedList")
+    console.timeEnd('getFeedList')
     return finalFeedList
-  } catch (e) {
-    console.error("getFeedList", e)
+  }
+  catch (e) {
+    console.error('getFeedList', e)
   }
   return null
 }
 
 export function getFeedListGroupedByYearAndMonth(feedListFromArg: FeedList) {
   return feedListFromArg.reduce<Record<string, FeedList>>((acc, feed) => {
-    const feedYearWithMonth = dayjs(feed.isoDate).tz(timeZone).format("YYYY MM")
+    const feedYearWithMonth = dayjs(feed.isoDate).tz(timeZone).format('YYYY MM')
     if (!acc[feedYearWithMonth]) {
       acc[feedYearWithMonth] = []
     }
