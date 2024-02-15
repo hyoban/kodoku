@@ -1,12 +1,12 @@
 import './globals.css'
 
+import type { Metadata } from 'next'
+
 import { SiteHeader } from '~/components/site-header'
 import { Toaster } from '~/components/ui/sonner'
 import { siteConfig } from '~/config/site'
 
 import { Providers } from './providers'
-
-import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {

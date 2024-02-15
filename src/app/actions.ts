@@ -5,7 +5,6 @@ import { normalizeURL } from 'ufo'
 import { addFeedInfo } from '~/lib/notion'
 import { parseRssFeed } from '~/lib/rss'
 import { getFeedInfoList } from '~/lib/unsafe'
-
 import type { FeedInfoWithoutId, Result } from '~/schema'
 
 async function isFeedExist(feedUrl: string) {

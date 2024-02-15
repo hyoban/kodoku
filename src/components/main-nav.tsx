@@ -2,9 +2,8 @@ import Image from 'next/image'
 
 import Icon from '~/app/android-chrome-512x512.png'
 import { Link } from '~/components/link'
-import { siteConfig } from '~/config/site'
-
 import type { NavItem } from '~/config/site'
+import { siteConfig } from '~/config/site'
 
 type MainNavProps = {
   items?: NavItem[]

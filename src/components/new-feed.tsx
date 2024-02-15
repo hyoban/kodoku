@@ -17,11 +17,10 @@ import {
 } from '~/components/ui/dialog'
 import { Input } from '~/components/ui/input'
 import { Label } from '~/components/ui/label'
+import type { FeedInfoWithoutId } from '~/schema'
 import { isError } from '~/schema'
 
 import { IconLink } from './icon-link'
-
-import type { FeedInfoWithoutId } from '~/schema'
 
 function ParseButton() {
   const { pending } = useFormStatus()

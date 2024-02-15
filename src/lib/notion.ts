@@ -1,18 +1,17 @@
 /* eslint-disable no-console */
 import '~/lib/dayjs'
 
+import type { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints'
 import dayjs from 'dayjs'
+import type Parser from 'rss-parser'
 
 import { siteConfig } from '~/config/site'
 import { env } from '~/env'
+import type { FeedInfoWithoutId } from '~/schema'
 
 import { parseRssFeed } from './rss'
 import { getFeedInfoList } from './unsafe'
 import { getPlatformName, isFeedItemValid, joinFeedItemUrl } from './utils'
-
-import type { QueryDatabaseResponse } from '@notionhq/client/build/src/api-endpoints'
-import type { FeedInfoWithoutId } from '~/schema'
-import type Parser from 'rss-parser'
 
 const { timeZone } = siteConfig
 
@@ -221,14 +220,15 @@ export async function getFeedList(
 }
 
 export function getFeedListGroupedByYearAndMonth(feedListFromArg: FeedList) {
-  return feedListFromArg.reduce<Record<string, FeedList>>((acc, feed) => {
+  const feedList = {} as Record<string, FeedList>
+  for (const feed of feedListFromArg) {
     const feedYearWithMonth = dayjs(feed.isoDate).tz(timeZone).format('YYYY MM')
-    if (!acc[feedYearWithMonth]) {
-      acc[feedYearWithMonth] = []
+    if (!feedList[feedYearWithMonth]) {
+      feedList[feedYearWithMonth] = []
     }
-    acc[feedYearWithMonth]?.push(feed)
-    return acc
-  }, {})
+    feedList[feedYearWithMonth]?.push(feed)
+  }
+  return feedList
 }
 
 export type FeedInfoList = NonNullable<

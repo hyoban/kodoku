@@ -1,10 +1,9 @@
+import type { FeedInfo } from '~/schema'
 import { feedInfoSchema } from '~/schema'
 
+import type { FeedItem } from './notion'
 import { feedId, getDatabaseItems } from './notion'
 import { extractFirstImageUrl } from './utils'
-
-import type { FeedItem } from './notion'
-import type { FeedInfo } from '~/schema'
 
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */

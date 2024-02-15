@@ -1,9 +1,9 @@
+import type { ClassValue } from 'clsx'
 import { clsx } from 'clsx'
+import type Parser from 'rss-parser'
 import { twMerge } from 'tailwind-merge'
 
 import type { FeedInfo } from './notion'
-import type { ClassValue } from 'clsx'
-import type Parser from 'rss-parser'
 
 const ICON_MAP = [
   ['twitter.com', 'i-simple-icons-twitter', 'Twitter'],

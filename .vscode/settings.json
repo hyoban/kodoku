@@ -1,22 +1,24 @@
 {
-  "[javascript][javascriptreact][typescript][typescriptreact][json][jsonc]": {
+  "[javascript][javascriptreact][typescript][typescriptreact]": {
     "editor.formatOnSave": false
   },
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.organizeImports": "never"
-  },
-  "eslint.rules.customizations": [
-    { "rule": "@stylistic/*", "severity": "off" },
-    { "rule": "jsonc/auto", "severity": "off" }
-  ],
+  "eslint.experimental.useFlatConfig": true,
   "eslint.validate": [
     "javascript",
     "javascriptreact",
     "typescript",
-    "typescriptreact",
-    "json",
-    "jsonc"
+    "typescriptreact"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.rules.customizations": [
+    { "rule": "@stylistic/*", "severity": "off" },
+    { "rule": "simple-import-sort/*", "severity": "off" },
+    { "rule": "import/first", "severity": "off" },
+    { "rule": "import/newline-after-import", "severity": "off" },
+    { "rule": "import/no-duplicates", "severity": "off" },
+    { "rule": "antfu/import-dedupe", "severity": "off" }
   ],
 
   "typescript.tsdk": "node_modules/typescript/lib"
